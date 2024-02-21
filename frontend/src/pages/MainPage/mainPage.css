@@ -1,0 +1,25 @@
+.contentCardsButton {
+    padding: 15px 25px;
+    background-color: #314557;
+    border-radius: 30px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    text-decoration: none;
+    color: #FFFFFF;
+    border: 1px solid #314557;
+    cursor: pointer;
+    margin-top: 95px;
+    margin-bottom: 95px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: 300ms;
+}
+
+.contentCardsButton:hover {
+    background: #FFFFFF;
+    color: #314557;
+    border: #314557 1px solid;
+    cursor: pointer;
+}

@@ -1,0 +1,158 @@
+.registrateCenter {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.registrateHeaderText {
+    text-align: center;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 60px;
+    color: #969696;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.registrateHeaderText::before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 75px;
+    height: 57px;
+    background-image: url(../../../public/svg/logo.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 75px 57px;
+}
+
+.registrateContent {
+    border: 1px solid #B1B1B1;
+    border-radius: 3px;
+    padding-left: 200px;
+    padding-right: 200px;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    margin-bottom: 20px;
+}
+
+.registrateFormInput {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 253px;
+    height: 28px;
+    border: none;
+    border-bottom: 2px solid #AFAFAF;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.registrateFormInput:focus-visible {
+    outline: none;
+}
+
+
+.registrateFormInput::placeholder {
+    text-align: center;
+    color: #D3D3D3;
+    font-size: 13px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+}
+
+.registrateFormText {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 13px;
+    text-align: center;
+    color: #D3D3D3;
+    margin: 32px 0;
+}
+
+.registrateButton {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    color: rgba(199, 199, 199, 0.91);
+    letter-spacing: -0.075em;
+    background: #591E4A;
+    border-radius: 3px;
+    width: 181px;
+    height: 42px;
+    border: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 37px;
+    display: block;
+    transition: 300ms;
+}
+
+
+.registrateButton:hover {
+    color: #732D61;
+    border: 2px solid #732D61;
+    background: #FFFFFF;
+}
+
+.registrateFooter {
+    display: flex;
+    align-items: start;
+    margin-left: -48px;
+}
+
+
+.registrateFooterInput {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.registrateFooterInput+label {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+}
+
+.registrateFooterInput+label::before {
+    margin-right: 28px;
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    background-image: url(../../../public/svg/RememberMe.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 20px;
+}
+
+.registrateFooterInput:checked+label::before {
+    background-image: url(../../../public/svg/RememberMeActive.svg);
+}
+
+
+.registrateFooterText {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 11px;
+    width: 350px;
+}
+
+.registrateFooterInput {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    margin-right: 28px;
+}

@@ -1,0 +1,41 @@
+.header {
+    padding: 30px 10px;
+    background-color: #591E4A;
+}
+
+
+.headerContent {
+    margin-left: auto;
+    margin-right: auto;
+    width: calc(100% - 20px);
+    max-width: 1200px;
+    display: flex;
+}
+
+.headerMenu {
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.headerMenuItem {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.headerMenuItem:hover {
+    color: rgba(243, 242, 242, 0.73);
+}
+
+.headerMenuItem_active {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}

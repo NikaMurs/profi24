@@ -1,0 +1,212 @@
+.signInCenter {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.signIn {
+    width: 363px;
+}
+
+.signInHeader {
+    display: flex;
+}
+
+.signInHeaderText {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 60px;
+    color: #969696;
+    text-transform: uppercase;
+    position: relative;
+    margin: 0 auto;
+    display: block;
+}
+
+.signInHeaderText::before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 75px;
+    height: 57px;
+    background-image: url(../../../public/svg/logo.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 75px 57px;
+}
+
+.signInMain {
+    margin-top: 80px;
+}
+
+.signInFormInput {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-bottom: solid 1px #989898;
+    padding-left: 44px;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+.signInFormInput:focus-visible {
+    outline: none;
+}
+
+.signInFormInput:nth-child(2) {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.signInFormInput::placeholder {
+    color: #D3D3D3;
+    font-size: 16px;
+    font-family: 'NotoSans';
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.085em;
+}
+
+.phoneIcon {
+    background-image: url(../../../public/svg/phone.svg);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: 12px center;
+}
+
+.passwordIcon {
+    background-image: url(../../../public/svg/password.svg);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: 12px center;
+}
+
+.signInPasswordWindow {
+    display: flex;
+    margin-top: 20px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.signInRemeberPasswordGroup {
+    cursor: pointer;
+}
+
+.signInRemeberPassword {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    width: 1px;
+    height: 1px;
+}
+
+.signInRemeberPasswordText::before {
+    margin-right: 9px;
+    margin-left: 9px;
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    background-image: url(../../../public/svg/RememberMe.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 20px;
+}
+
+.signInRemeberPassword:checked~.signInRemeberPasswordText::before {
+    background-image: url(../../../public/svg/RememberMeActive.svg);
+}
+
+.signInRemeberPasswordText {
+    font-family: 'NotoSans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #AEAEAE;
+    letter-spacing: -0.085em;
+}
+
+.signInForgotPassword {
+    font-family: 'NotoSans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #D3D3D3;
+    text-decoration: none;
+    margin-right: 14px;
+    letter-spacing: -0.085em;
+}
+
+.signInForgotPassword:hover {
+    color: rgba(89, 30, 74, 0.67);
+}
+
+.signInButton {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    color: rgba(199, 199, 199, 0.91);
+    text-transform: uppercase;
+    letter-spacing: -0.085em;
+    background: #591E4A;
+    border-radius: 3px;
+    width: 239px;
+    height: 64px;
+    border: none;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    transition: 300ms;
+}
+
+
+.signInButton:hover {
+    color: #732D61;
+    border: 2px solid #732D61;
+    background: #FFFFFF;
+    cursor: pointer;
+}
+
+.signInRegistrate {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.085em;
+    color: #A5A5A5;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.signInRegistrate::after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 28px;
+    height: 11px;
+    background-image: url(../../../public/svg/Arrow.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 28px 11px;
+    margin-left: 20px;
+}
+
+.signInRegistrate:hover {
+    color: #591E4A;
+}
+
+.signInRegistrate:hover::after {
+    background-image: url(../../../public/svg/ArrowHover.svg);
+}

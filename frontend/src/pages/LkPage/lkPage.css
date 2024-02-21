@@ -1,0 +1,193 @@
+.lkTopContent {
+    background: rgba(89, 30, 74, 0.15);
+    border-radius: 11px;
+    display: flex;
+    justify-content: center;
+    margin: 25px;
+}
+
+.lkTop {
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-around;
+    height: 400px;
+}
+
+.lkTopLeft {
+    display: flex;
+    width: 45%;
+}
+
+.lkTopButtons {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.lkButton {
+    background: #591E4A;
+    border: none;
+    border-radius: 35px;
+    color: #FFFFFF;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    width: 215px;
+    height: 60px;
+    transition: 300ms;
+}
+
+.lkButton:hover {
+    background: #FFFFFF;
+    color: #591E4A;
+    border: #591E4A 1px solid;
+    cursor: pointer;
+}
+
+.lkTopRight {
+    width: 50%;
+    position: relative;
+}
+
+
+.lkTopLogOut button {
+    position: absolute;
+    top: 35px;
+    right: 0px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: #C4C4C4;
+    border: none;
+    background: none;
+    transition: 300ms;
+}
+
+.lkTopLogOut button:hover {
+    cursor: pointer;
+    color: #591E4A
+}
+
+.lkTopUser {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.lkTopUser h2 {
+    width: 100%;
+    text-align: center;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    color: rgba(49, 69, 87, 0.8);
+}
+
+.lkTopUser p {
+    text-align: center;
+    width: 100%;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: rgba(49, 69, 87, 0.8);
+    margin: 5px;
+}
+
+.lkTopUserMedal {
+    width: 80px;
+    height: 90px;
+    background-image: url(../../../public/svg/MedalBronze.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 20px;
+}
+
+.lkTopUserStatus {
+    color: #864A00;
+}
+
+.lkTopAccount {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.lkTopAccount p {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    color: #314557;
+}
+
+.lkTopAccountMoney {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    color: #591E4A;
+}
+
+.lkButtonDeposit {
+    margin-left: 15px;
+    background: #314557;
+    border: 1px solid #314557;
+    border-radius: 35px;
+    color: #FFFFFF;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    width: 160px;
+    height: 45px;
+    cursor: pointer;
+    transition: 300ms;
+}
+
+.lkButtonDeposit:hover {
+    color: #314557;
+    background-color: #FFFFFF;
+    border: #314557 1px solid;
+}
+
+.lkFooter {
+    margin-top: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.lkFooterButtons {
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.lkFooterContent {
+    width: 100%;
+    margin-top: 60px;
+    margin-bottom: 180px;
+}
+
+.lkFooterContent p {
+    width: 100%;
+    text-align: center;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: rgba(49, 69, 87, 0.8);
+}

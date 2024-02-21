@@ -1,0 +1,10 @@
+.main {
+    min-height: calc(100vh - 110px - 330px);
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: start;
+  }
+  

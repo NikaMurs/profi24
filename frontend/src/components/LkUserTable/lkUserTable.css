@@ -1,0 +1,48 @@
+.lkTableWrapper {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.lkTable {
+    text-align: center;
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.lkTable,
+.lkTable td,
+.lkTable th {
+    box-sizing: border-box;
+    border: 1px solid #000000;
+    padding: 0;
+    width: 1300px;
+}
+
+.lkTable td,
+.lkTable th {
+    height: 25px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.tableButton {
+    margin-top: 4px;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    padding: 0;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.tableButton_active {
+    background-image: url('../../../public/svg/blueCheck.svg');
+}

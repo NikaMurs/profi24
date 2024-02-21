@@ -1,0 +1,38 @@
+.contentCards {
+    margin: 40px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.contentCardsLine {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.contentCardsLine:nth-child(n+2) {
+    margin-top: 45px;
+}
+
+.contentCard {
+    margin-bottom: 40px;
+    width: 250px;
+    padding: 70px 10px;
+    background-color: grey;
+    border-radius: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    cursor: pointer;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.contentCardsLine:nth-child(n+2) {
+    margin-top: 45px;
+
+}
