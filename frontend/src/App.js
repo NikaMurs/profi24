@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import MainPage from './pages/MainPage/MainPage'
 import ProductsPage from './pages/ProductsPage/ProductsPage'
 import BalancePage from './pages/BalancePage/BalancePage'
@@ -9,6 +9,8 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 
 import MainLayout from './components/MainLayout/MainLayout';
+import AdminOrders from './admin/AdminOrders';
+import AdminUsers from './admin/AdminUsers'
 
 function App() {
   return (
@@ -20,6 +22,11 @@ function App() {
       <Route path='/lk' element={<MainLayout><LkPage /></MainLayout>} />
       <Route path='/login' element={<LoginPage />} />
       <Route path='/registration' element={<RegistrationPage />} />
+
+      <Route path='/admin' element={<Navigate to='/admin/orders' />} />
+      <Route path='/admin/orders' element={<AdminOrders />} />
+      <Route path='/admin/users' element={<AdminUsers />} />
+
     </Routes>
   );
 }

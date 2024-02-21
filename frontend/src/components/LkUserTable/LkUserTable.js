@@ -9,7 +9,7 @@ export default function LkUserTable() {
                 <tbody>
                     <tr>
                         <td style={{ width: '30px' }}>№</td>
-                        <td style={{ width: '30px' }}><button class="tableButton tableButton_active"></button></td>
+                        <td style={{ width: '30px' }}><button className="tableButton tableButton_active"></button></td>
                         <td style={{ width: '105px' }}>Статус</td>
                         <td style={{ width: '60px' }}>Готовность</td>
                         <td style={{ width: '75px' }}>Номер заказа</td>
