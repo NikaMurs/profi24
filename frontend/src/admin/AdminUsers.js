@@ -6,7 +6,7 @@ export default function AdminOrders() {
 
     function TableRow() {
         return (
-            <tr style={{ backgroundColor: '#ECECEC' }}>
+            <tr>
                 <td style={{ width: '30px' }}>
                     <button className="tableButton tableButton_greenCheck" style={{ backgroundColor: '#ECECEC' }}></button>
                 </td>
@@ -43,7 +43,7 @@ export default function AdminOrders() {
     return (
         <>
             <Header />
-            <div id="table2">
+            <div>
                 <h3 className="tablesTitle">Юзеры 2000</h3>
                 <table>
                     <tbody>

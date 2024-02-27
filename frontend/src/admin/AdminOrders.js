@@ -43,7 +43,7 @@ export default function AdminOrders() {
     return (
         <>
             <Header />
-            <div id="table1">
+            <div>
                 <h3 className="tablesTitle">Заказы 2000</h3>
                 <table style={{ fontSize: '12px' }}>
                     <tbody>
