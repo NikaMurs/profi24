@@ -1,6 +1,6 @@
 import './supportPage.css'
 
-export default function Support(){
+export default function SupportPage(){
 
     return (
         'Поддержка'
