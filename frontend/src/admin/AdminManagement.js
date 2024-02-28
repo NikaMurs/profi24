@@ -1,5 +1,11 @@
 import './style.css'
 import Header from './components/Header'
+import TableFor from './managmentTables/TableFor'
+import TablePap from './managmentTables/TablePap'
+import TableBas from './managmentTables/TableBas'
+import TableTco from './managmentTables/TableTco'
+import TableVar from './managmentTables/TableVar'
+import TableNco from './managmentTables/TableNco'
 
 
 export default function AdminManagement() {
@@ -71,6 +77,14 @@ export default function AdminManagement() {
             </div >
 
             <h2 className="mainTitle">Фотопечать Lay-Flat</h2>
+
+            <TableFor />
+            <TablePap />
+            <TableBas />
+            <TableTco />
+            <TableVar />
+            <TableVar />
+            <TableNco />
         </>
     )
 }
