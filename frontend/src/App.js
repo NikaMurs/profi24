@@ -16,6 +16,7 @@ import AdminInvoice from './admin/AdminInvoice';
 import AdminLogin from './admin/AdminLogin';
 import AdminIsLoged from './admin/components/AdminIsLoged';
 import CalculatorPage from './pages/CalculatorPage/CalculatorPage';
+import UserIsLoged from './functions/UserIsLoged';
 
 function App() {
 
@@ -27,7 +28,7 @@ function App() {
       <Route path='/products' element={<MainLayout><ProductsPage /></MainLayout>} />
       <Route path='/balance' element={<MainLayout><BalancePage /></MainLayout>} />
       <Route path='/support' element={<MainLayout><SupportPage /></MainLayout>} />
-      <Route path='/lk' element={<MainLayout><LkPage /></MainLayout>} />
+      <Route path='/lk' element={<UserIsLoged><MainLayout><LkPage /></MainLayout></UserIsLoged>} />
       <Route path='/login' element={<LoginPage />} />
       <Route path='/registration' element={<RegistrationPage />} />
       <Route path='/calculator' element={<MainLayout><CalculatorPage /></MainLayout>} />

@@ -3,7 +3,7 @@ export default function LkUserTableRow() {
     return (
         <tr>
             <td style={{ width: '30px' }}>1</td>
-            <td style={{ width: '30px' }}><button class="tableButton"></button></td>
+            <td style={{ width: '30px' }}><button className="tableButton"></button></td>
             <td style={{ width: '105px' }}>Готов к отправке в печать</td>
             <td style={{ width: '60px' }}>0%</td>
             <td style={{ width: '75px' }}>11</td>

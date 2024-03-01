@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './style.css'
 import getCookie from '../functions/getCookie';
 
 export default function AdminLogin() {
+    const navigate = useNavigate();
 
     useEffect(()=>{
         if (getCookie('isAdminLoged')) {
             if (getCookie('isAdminLoged') === 'true') {
-                window.location.href = '/admin';
+                navigate('/admin')
             }
         }
     }, [])
@@ -32,7 +34,7 @@ export default function AdminLogin() {
     function handleClick() {
         if (login === '123' && password === '456') {
             document.cookie = "isAdminLoged=true; path=/admin;"
-            window.location.href = '/admin';
+            navigate('/admin')
         } else {
             alert('Неверные данные')
         }

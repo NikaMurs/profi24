@@ -1,6 +1,34 @@
 import LkUserTable from '../../components/LkUserTable/LkUserTable'
 import './lkPage.css'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import deleteCookie from '../../functions/deleteCookie'
+
 export default function LkPage() {
+    const navigate = useNavigate();
+    const user = useSelector((state) => state.user)
+
+    function formatNumber(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+
+    function getBonusStatusText(status) {
+        switch (status) {
+            case 'bronze':
+                return 'Бронзовый'
+            case 'silver':
+                return 'Серебряный'
+            case 'gold':
+                return 'Золотой'
+            default:
+                return 'Бронзовый'
+        }
+    }
+
+    function handleClickLogout() {
+        deleteCookie('isUserLoged');
+        navigate('/')
+    }
 
     return (
         <>
@@ -9,24 +37,24 @@ export default function LkPage() {
                     <div className="lkTop">
                         <div className="lkTopLeft">
                             <div className="lkTopButtons">
-                                <button className="lkButton">Создать заказ</button>
+                                <button className="lkButton" onClick={()=>{navigate('/products')}}>Создать заказ</button>
                                 <button className="lkButton">Активные заказы</button>
                                 <button className="lkButton">Завершённые заказы</button>
                             </div>
                         </div>
                         <div className="lkTopRight">
                             <div className="lkTopLogOut">
-                                <button>Выход</button>
+                                <button onClick={handleClickLogout}>Выход</button>
                             </div>
                             <div className="lkTopUser">
-                                <h2>User</h2>
+                                <h2>{`${user.name} ${user.surname}`}</h2>
                                 <div className="lkTopUserMedal"></div>
-                                <p>Бонусный рейтинг: <span className="lkTopUserStatus">Бронзовый</span></p>
-                                <p>Бонусный счет: ___БОНУСНЫЙ СЧЕТ___ р.</p>
-                                <p>При пополнении баланса, за каждые внесённые 25000 рублей Вам будет начислятся 1% бонусов</p>
+                                <p>Бонусный рейтинг: <span className="lkTopUserStatus">{getBonusStatusText(user.bonusStatus)}</span></p>
+                                <p>Бонусный счет: {formatNumber(user.bonus)} р.</p>
+                                <p>При пополнении баланса, за каждые внесённые 25 000 рублей Вам будет начислятся 1% бонусов</p>
                             </div>
                             <div className="lkTopAccount">
-                                <p>Лицевой счет: <span className="lkTopAccountMoney">___БАЛАНС СЧЕТА___</span> р.</p>
+                                <p>Лицевой счет: <span className="lkTopAccountMoney">{formatNumber(user.money)}</span> р.</p>
                                 <button className="lkButtonDeposit">Пополнить</button>
                             </div>
                         </div>
