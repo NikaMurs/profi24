@@ -17,8 +17,41 @@ import AdminLogin from './admin/AdminLogin';
 import AdminIsLoged from './admin/components/AdminIsLoged';
 import CalculatorPage from './pages/CalculatorPage/CalculatorPage';
 import UserIsLoged from './functions/UserIsLoged';
+import moment from 'moment';
+import { useSelector } from 'react-redux'
+import 'moment/locale/ru';
+import getCookie from './functions/getCookie';
+import { useEffect } from 'react';
+import { userActions } from './redux/userReducer';
+import { useDispatch } from 'react-redux';
+
+
+moment.locale('ru');
+
 
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user)
+
+  useEffect(() => {
+    if (getCookie('isUserLoged') && user.isLogin === false) {
+      fetch("/localFetch/userShortInfo.json")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Ошибка запроса");
+          }
+          return response.json();
+        })
+        .then(data => {
+          dispatch(userActions.setUser(data.user))
+        })
+        .catch(error => {
+          console.error("Ошибка при обработке ответа:", error);
+        });
+    }
+  }, [])
+
+
 
 
 
@@ -26,12 +59,11 @@ function App() {
     <Routes>
       <Route path='/' element={<MainLayout><MainPage /></MainLayout>} />
       <Route path='/products' element={<MainLayout><ProductsPage /></MainLayout>} />
-      <Route path='/balance' element={<MainLayout><BalancePage /></MainLayout>} />
+      <Route path='/balance' element={<UserIsLoged><MainLayout><BalancePage /></MainLayout></UserIsLoged>} />
       <Route path='/support' element={<MainLayout><SupportPage /></MainLayout>} />
       <Route path='/lk' element={<UserIsLoged><MainLayout><LkPage /></MainLayout></UserIsLoged>} />
-      <Route path='/login' element={<LoginPage />} />
       <Route path='/registration' element={<RegistrationPage />} />
-      <Route path='/calculator' element={<MainLayout><CalculatorPage /></MainLayout>} />
+      <Route path='/calculator/:productId' element={<MainLayout><CalculatorPage /></MainLayout>} />
 
       <Route path='/admin' element={<AdminIsLoged><Navigate to='/admin/orders' /></AdminIsLoged>} />
       <Route path='/admin/orders' element={<AdminIsLoged><AdminOrders /></AdminIsLoged>} />

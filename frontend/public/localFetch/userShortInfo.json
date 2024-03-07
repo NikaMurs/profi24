@@ -1,0 +1,11 @@
+{
+    "user": {
+        "id": 1,
+        "surname": "Вахренев",
+        "name": "Аким",
+        "secondName": "Андреевич",
+        "money": 10000,
+        "bonus": 500,
+        "bonusStatus": "bronze"
+    }
+}

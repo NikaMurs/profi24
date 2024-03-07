@@ -30,7 +30,7 @@ export default function LoginPage() {
     function handleClick() {
         if (login === '123' && password === '456') {
             document.cookie = "isUserLoged=true; path=/;"
-            navigate('/lk')
+            navigate(0)
         } else {
             alert('Неверные данные')
         }

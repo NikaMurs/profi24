@@ -1,0 +1,141 @@
+{
+    "product": {
+        "id": 1,
+        "title": "Фотопечать Lay-flat",
+        "calculatorSettings": [
+            {
+                "id": "for",
+                "title": "Формат"
+            },
+            {
+                "id": "pap",
+                "title": "Тип бумаги"
+            },
+            {
+                "id": "bas",
+                "title": "Основа страниц"
+            },
+            {
+                "id": "tco",
+                "title": "Тип обложки"
+            },
+            {
+                "id": "var",
+                "title": "Вариант обложки"
+            },
+            {
+                "id": "cnt",
+                "title": "Количество разворотов"
+            }
+        ],
+        "for": [
+            {
+                "id": 1,
+                "title": "20x20",
+                "price": 75,
+                "basePrice": 10,
+                "size": "4800x2400"
+            },
+            {
+                "id": 2,
+                "title": "20x30",
+                "price": 100,
+                "basePrice": 12,
+                "size": "3500x2800"
+            },
+            {
+                "id": 3,
+                "title": "30x30",
+                "price": 150,
+                "basePrice": 16,
+                "size": "3500x7000"
+            },
+            {
+                "id": 4,
+                "title": "20x60",
+                "price": 100,
+                "basePrice": 12,
+                "size": "2400x7000"
+            }
+        ],
+        "pap": [
+            {
+                "id": 1,
+                "title": "Fuji глянец",
+                "width": 0.12
+            },
+            {
+                "id": 2,
+                "title": "Fuji Lustre",
+                "width": 0.12
+            }
+        ],
+        "bas": [
+            {
+                "id": 1,
+                "title": "Без основы",
+                "price": 1,
+                "width": 0.01
+            },
+            {
+                "id": 2,
+                "title": "Основа 0,3 мм",
+                "price": 8,
+                "width": 0.3
+            },
+            {
+                "id": 3,
+                "title": "Основа 0,6 мм",
+                "price": 16,
+                "width": 0.6
+            }
+        ],
+        "tco": [
+            {
+                "id": 1,
+                "title": "Классическая фотообложка",
+                "multiplier": 21
+            },
+            {
+                "id": 2,
+                "title": "Натуральная ткань",
+                "multiplier": 25
+            },
+            {
+                "id": 3,
+                "title": "Журнальная мягкая",
+                "multiplier": 15
+            }
+        ],
+        "var": [
+            {
+                "id": 1,
+                "title": "Глянцевая ламинация"
+            },
+            {
+                "id": 2,
+                "title": "Матовая ламинация"
+            }
+        ],
+        "nco": [
+            {
+                "id": 1,
+                "forTitle": "20x20",
+                "width": 6,
+                "size": "5551х2953"
+            },
+            {
+                "id": 2,
+                "forTitle": "20x20",
+                "width": 8,
+                "size": "5510х2953"
+            },
+            {
+                "id": 3,
+                "forTitle": "20x20",
+                "width": 10,
+                "size": "5520х2953"
+            }
+        ]
+    }
+}
