@@ -1,11 +1,12 @@
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import (Integer,
                         String,
                         MetaData,
                         TIMESTAMP,
-                        func)
+                        func,
+                        ForeignKey)
 
 metadata = MetaData()
 
@@ -152,7 +153,8 @@ class Order_plus(Base):
     __table_args__ = {'extend_existing': True}
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False, default=False)
-    order_id: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
+    order_id = mapped_column(Integer, ForeignKey('orders.id'), nullable=False)
+    order = relationship('Orders', back_populates='order_plus')
     etap_1: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
     etap_2: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
     etap_3: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
@@ -170,7 +172,8 @@ class Order_text(Base):
     __table_args__ = {'extend_existing': True}
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False, default=False)
-    order_id: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
+    order_id = mapped_column(Integer, ForeignKey('orders.id'), nullable=False)
+    order = relationship('Orders', back_populates='order_text')
     t1: Mapped[str] = mapped_column(String(4, collation='utf8_general_ci'), nullable=False, default=False)
     t2: Mapped[str] = mapped_column(String(4, collation='utf8_general_ci'), nullable=False, default=False)
     t3: Mapped[str] = mapped_column(String(4, collation='utf8_general_ci'), nullable=False, default=False)
@@ -199,6 +202,7 @@ class Pap(Base):
     text_3: Mapped[str] = mapped_column(String(100, collation='utf8_general_ci'), nullable=False, default=False)
     note: Mapped[str] = mapped_column(String(100, collation='utf8_general_ci'), nullable=False, default=False)
 
+
 # Придется переписывать логику для платежей (в зависимости от стороненого API)
 class Pay_log(Base):
     __tablename__ = 'pay_log'
@@ -210,7 +214,8 @@ class Pay_log(Base):
     pls: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
     mns: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
     method: Mapped[str] = mapped_column(String(3, collation='utf8_general_ci'), nullable=False, default=False)
-    user_id: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
+    user_id = mapped_column(Integer, ForeignKey('user.id'), nullable=False)
+    user = relationship('User', back_populates='pay_logs')
     bank_inf: Mapped[str] = mapped_column(String(100, collation='utf8_general_ci'), nullable=False, default=False)
     note_pay: Mapped[str] = mapped_column(String(100, collation='utf8_general_ci'), nullable=False, default=False)
     note_admin: Mapped[str] = mapped_column(String(100, collation='utf8_general_ci'), nullable=False, default=False)
@@ -222,7 +227,8 @@ class Pf(Base):
     __table_args__ = {'extend_existing': True}
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False, default=False)
-    order_id: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
+    order_id = mapped_column(Integer, ForeignKey('orders.id'), nullable=False)
+    order = relationship('Orders', back_populates='pfs')
     number_book: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
     place: Mapped[str] = mapped_column(String(100, collation='utf8_general_ci'), nullable=False, default=False)
     foto_id: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
@@ -270,15 +276,12 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     __table_args__ = {'extend_existing': True}
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False, default=False)
-    tel: Mapped[str] = mapped_column(String(12, collation='utf8_general_ci'), nullable=False, default=False)
     firstname: Mapped[str] = mapped_column(String(25, collation='utf8_general_ci'), nullable=False, default=False)
     name: Mapped[str] = mapped_column(String(50, collation='utf8_general_ci'), nullable=False, default=False)
     surname: Mapped[str] = mapped_column(String(25, collation='utf8_general_ci'), nullable=False, default=False)
     country: Mapped[str] = mapped_column(String(25, collation='utf8_general_ci'), nullable=False, default=False)
     city: Mapped[str] = mapped_column(String(25, collation='utf8_general_ci'), nullable=False, default=False)
-    mail: Mapped[str] = mapped_column(String(25, collation='utf8_general_ci'), nullable=False, default=False)
     site: Mapped[str] = mapped_column(String(25, collation='utf8_general_ci'), nullable=False, default=False)
-    pasw: Mapped[str] = mapped_column(String(30, collation='utf8_general_ci'), nullable=False, default=False)
     profession: Mapped[str] = mapped_column(String(200, collation='utf8_general_ci'), nullable=False, default=False)
     pvk: Mapped[str] = mapped_column(String(30, collation='utf8_general_ci'), nullable=False, default=False)
     count_book: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
@@ -299,6 +302,9 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     text_5: Mapped[str] = mapped_column(String(50, collation='utf8_general_ci'), nullable=False, default=False)
     text_6: Mapped[str] = mapped_column(String(50, collation='utf8_general_ci'), nullable=False, default=False)
     text_7: Mapped[str] = mapped_column(String(50, collation='utf8_general_ci'), nullable=False, default=False)
+    pay_logs = relationship('Pay_log', back_populates='user')
+    pfs = relationship('Pf', back_populates='order')
+    orders = relationship('Orders', back_populates='user')
 
 
 class User_pay(Base):
@@ -308,7 +314,8 @@ class User_pay(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False, default=False)
     invoice_id: Mapped[str] = mapped_column(String(50, collation='utf8_general_ci'), nullable=False, default=False)
     sum: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
-    user_id: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
+    user_id = mapped_column(Integer, ForeignKey('user.id'), nullable=False)
+    user = relationship('User', back_populates='user_pays')
     status: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
 
 
