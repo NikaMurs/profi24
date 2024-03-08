@@ -4,7 +4,8 @@ from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import (Integer,
                         String,
                         MetaData,
-                        TIMESTAMP)
+                        TIMESTAMP,
+                        func)
 
 metadata = MetaData()
 
@@ -38,7 +39,7 @@ class Bonus(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False, default=False)
     date: Mapped[TIMESTAMP] = mapped_column(TIMESTAMP, nullable=False, default=False)  # дата (формат ?)
-    tim: Mapped[TIMESTAMP] = mapped_column(TIMESTAMP, nullable=False, default=False)  # время (формат ?)
+    tim: Mapped[TIMESTAMP] = mapped_column(TIMESTAMP, nullable=False, server_default=func.now())  # время (формат ?)
     pls: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
     mns: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
     method: Mapped[str] = mapped_column(String(3, collation='utf8_general_ci'), nullable=False, default=False)
@@ -205,7 +206,7 @@ class Pay_log(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False, default=False)
     dat: Mapped[TIMESTAMP] = mapped_column(TIMESTAMP, nullable=False, default=False) # дата (формат ?)
-    tim: Mapped[TIMESTAMP] = mapped_column(TIMESTAMP, nullable=False, default=False) # время (формат ?)
+    tim: Mapped[TIMESTAMP] = mapped_column(TIMESTAMP, nullable=False, server_default=func.now()) # время (формат ?)
     pls: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
     mns: Mapped[int] = mapped_column(Integer, nullable=False, default=False)
     method: Mapped[str] = mapped_column(String(3, collation='utf8_general_ci'), nullable=False, default=False)
