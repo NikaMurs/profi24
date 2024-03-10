@@ -148,7 +148,7 @@ class Orders(Base):
     additionally: Mapped[str] = mapped_column(String(100, collation='utf8_general_ci'), nullable=False, default=False)
 
 
-class Order_plus(Base):
+class OrderPlus(Base):
     __tablename__ = 'orders'
     __table_args__ = {'extend_existing': True}
 
