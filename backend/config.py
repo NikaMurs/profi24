@@ -15,6 +15,7 @@ TEST_PASSWORD = getenv("TEST_PASSWORD")
 TEST_MYSQL_DATABASE = getenv("TEST_DATABASE_NAME")
 TEST_MYSQL_SERVER = getenv("TEST_HOST")
 
+SECRET = getenv("SECRET")
 
 # Переменные для шифрования
 # SECRET_KEY = getenv("SECRET_KEY")
