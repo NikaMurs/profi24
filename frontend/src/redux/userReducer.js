@@ -6,7 +6,7 @@ const initialState = {
     surname: '',
     name: '',
     secondName: '',
-    money: 0,
+    money: 0.00,
     bonus: 0,
     bonusStatus: 'bronze',
 }

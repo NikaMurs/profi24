@@ -4,7 +4,7 @@
         "surname": "Вахренев",
         "name": "Аким",
         "secondName": "Андреевич",
-        "money": 10000,
+        "money": 10000.00,
         "bonus": 500,
         "bonusStatus": "bronze"
     }

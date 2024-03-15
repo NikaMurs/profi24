@@ -24,6 +24,7 @@ import getCookie from './functions/getCookie';
 import { useEffect } from 'react';
 import { userActions } from './redux/userReducer';
 import { useDispatch } from 'react-redux';
+import LkEditPage from './pages/LkEditPage/LkEditPage';
 
 
 moment.locale('ru');
@@ -62,6 +63,7 @@ function App() {
       <Route path='/balance' element={<UserIsLoged><MainLayout><BalancePage /></MainLayout></UserIsLoged>} />
       <Route path='/support' element={<MainLayout><SupportPage /></MainLayout>} />
       <Route path='/lk' element={<UserIsLoged><MainLayout><LkPage /></MainLayout></UserIsLoged>} />
+      <Route path='/lk/edit' element={<UserIsLoged><MainLayout><LkEditPage /></MainLayout></UserIsLoged>} />
       <Route path='/registration' element={<RegistrationPage />} />
       <Route path='/calculator/:productId' element={<MainLayout><CalculatorPage /></MainLayout>} />
 

@@ -87,18 +87,23 @@ export default function LkPage() {
                             <div className="lkTopUser">
                                 <h2>{`${user.name} ${user.surname}`}</h2>
                                 <div className="lkTopUserMedal"></div>
-                                <p>Бонусный рейтинг: <span className="lkTopUserStatus">{getBonusStatusText(user.bonusStatus)}</span></p>
-                                <p>Бонусный счет: {formatPrice(user.bonus)} р.</p>
-                                <p>При пополнении баланса, за каждые внесённые 25 000 рублей Вам будет начислятся 1% бонусов</p>
+                                <div className="lkTopUserText">
+                                    <p>Бонусный рейтинг: <span className="lkTopUserStatus">{getBonusStatusText(user.bonusStatus)}</span></p>
+                                    <p>Бонусный счет: {formatPrice(user.bonus)} р.</p>
+                                    <p>При пополнении баланса, за каждые внесённые 25&#160;000 рублей Вам будет начислятся 1% бонусов</p>
+                                </div>
+                                <button className="lkButtonEditUserInfo" style={{width: '60%'}} onClick={()=>{navigate('/lk/edit')}}>Редактировать личные данные</button>
+
                             </div>
                             <div className="lkTopAccount">
                                 <p>Лицевой счет: <span className="lkTopAccountMoney">{formatPrice(user.money)}</span> р.</p>
                                 <button className="lkButtonDeposit">Пополнить</button>
                             </div>
+
                         </div>
                     </div>
                 </div>
-                <LkUserTable filters={filters} orders={orders} selectedOrders={selectedOrders} setSelectedOrders={setSelectedOrders}/>
+                <LkUserTable filters={filters} orders={orders} selectedOrders={selectedOrders} setSelectedOrders={setSelectedOrders} />
                 <div className="lkFooter">
                     {filters !== 'inWork' ? <></> : (
                         <div className="lkFooterButtons">
