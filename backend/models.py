@@ -1,9 +1,8 @@
-from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import (Integer,
                         String,
-                        MetaData)
+                        MetaData, Boolean)
 
 metadata = MetaData()
 
@@ -23,7 +22,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(length=100), nullable=False)
     country: Mapped[str] = mapped_column(String(length=100))
     city: Mapped[str] = mapped_column(String(length=100))
-    is_active: bool
-    is_superuser: bool
-    is_verified: bool
+    is_active: Mapped[bool] = mapped_column(Boolean)
+    is_superuser: Mapped[bool] = mapped_column(Boolean)
+    is_verified: Mapped[bool] = mapped_column(Boolean)
 

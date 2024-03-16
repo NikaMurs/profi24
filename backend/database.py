@@ -1,9 +1,7 @@
 from typing import AsyncGenerator
-from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 from config import TEST_MYSQL_SERVER, TEST_USER, TEST_PASSWORD, TEST_MYSQL_DATABASE
-from models import User
 
 
 DATABASE_URL = f"mysql+aiomysql://{TEST_USER}:{TEST_PASSWORD}@{TEST_MYSQL_SERVER}/{TEST_MYSQL_DATABASE}"
@@ -26,6 +24,3 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
     async with async_session_maker() as session:
         yield session
 
-
-async def get_user_db(session: AsyncSession = Depends(get_async_session)):
-    yield SQLAlchemyUserDatabase(session, User)
