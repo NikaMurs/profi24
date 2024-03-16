@@ -1,20 +1,16 @@
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import (Integer,
                         String,
-                        MetaData,
-                        TIMESTAMP,
-                        func,
-                        ForeignKey)
+                        MetaData)
 
 metadata = MetaData()
 
 Base = declarative_base(metadata=metadata)
 
 
-# TODO Разобраться с обязательными и необязательными полями
-class User(SQLAlchemyBaseUserTable[int], Base):
+class User(Base):
     __tablename__ = 'user'
     __table_args__ = {'extend_existing': True}
 
