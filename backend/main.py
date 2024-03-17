@@ -1,13 +1,15 @@
+from datetime import timedelta
 from fastapi import FastAPI, status, Depends, HTTPException, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login import LoginManager
-from fastapi_login.exceptions import InvalidCredentialsException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from password import verify_password
+from password import verify_password, get_password_hash
 from models import User
+from schemas import UserCreate, Message
 from database import get_async_session, async_session_maker
 from config import SECRET
+from typing import Dict, Any
 
 app = FastAPI(
     title="Заказ печати"
@@ -17,7 +19,8 @@ manager = LoginManager(SECRET,
                        "/login",
                        use_cookie=True,
                        cookie_name='custom-cookie-name',
-                       use_header=False)
+                       use_header=False,
+                       default_expiry=timedelta(hours=72))
 
 
 @manager.user_loader()
@@ -28,35 +31,66 @@ async def get_user(telephone: str):
         return result.scalar()
 
 
-@app.get("/test", status_code=status.HTTP_200_OK)
-async def read_user(telephone: str,
-                    db: AsyncSession = Depends(get_async_session)):
-    data = await get_user(db, telephone)
-    if data is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return data
-
-
-@app.post("/login")
+@app.post("/login",
+          tags=["auth"],
+          response_model=Dict[str, Any],
+          status_code=status.HTTP_200_OK)
 async def login(response: Response,
-                data: OAuth2PasswordRequestForm = Depends(),
-                db: AsyncSession = Depends(get_async_session)):
+                data: OAuth2PasswordRequestForm = Depends()):
     telephone = data.username
     password = data.password
 
-    user = await get_user(db, telephone)
+    user = await get_user(telephone)
     if not user:
-        # you can return any response or error of your choice
-        raise InvalidCredentialsException
+        raise status.HTTP_404_NOT_FOUND
     elif verify_password(password, user.hashed_password):
-        raise InvalidCredentialsException
-
-    access_token = manager.create_access_token(data={"sub": telephone})
-    manager.set_cookie(response, access_token)
-    return {"access_token": access_token}
+        access_token = manager.create_access_token(data={"sub": telephone})
+        manager.set_cookie(response, access_token)
+        return {"access_token": access_token}
 
 
-@app.get("/protected")
+async def create_user(db: AsyncSession,
+                      user: UserCreate):
+    existing_user = await db.execute(select(User).where(User.telephone == user.telephone))
+    existing_user = existing_user.scalars().first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="User with this telephone already exists")
+
+    password = get_password_hash(user.hashed_password)
+    data = User(
+        telephone=user.telephone,
+        hashed_password=password,
+        is_active=True
+    )
+
+    db.add(data)
+    await db.commit()
+    await db.refresh(data)
+    await db.close()
+    return data
+
+
+@app.post("/registration",
+          tags=["auth"],
+          response_model=Message,
+          status_code=status.HTTP_201_CREATED)
+async def registration(user: UserCreate,
+                       db: AsyncSession = Depends(get_async_session)):
+    await create_user(db=db, user=user)
+    return {"message": "CREATED"}
+
+
+@app.post("/logout",
+          tags=["auth"],
+          response_model=Message,
+          status_code=status.HTTP_200_OK)
+def logout(response: Response,
+           user=Depends(manager)):
+    manager.set_cookie(response=response, token="")
+    return {"message": "done"}
+
+
+@app.get("/profile")
 def protected_route(user=Depends(manager)):
     return {"user": user}
 
