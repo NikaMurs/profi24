@@ -1,5 +1,5 @@
 from datetime import timedelta
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 from fastapi_login import LoginManager
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -30,7 +30,7 @@ async def create_user(db: AsyncSession,
     existing_user = await db.execute(select(User).where(User.telephone == user.telephone))
     existing_user = existing_user.scalars().first()
     if existing_user:
-        raise HTTPException(status_code=400, detail="User with this telephone already exists")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User with this telephone already exists")
 
     password = get_password_hash(user.hashed_password)
     data = User(
