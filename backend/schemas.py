@@ -26,3 +26,13 @@ class UserCreate(BaseModel):
 class Message(BaseModel):
     """Вывод сообщения об ошибке/успехе"""
     message: str
+
+
+class UserTelephone(BaseModel):
+    """Шаблон телефона"""
+    telephone: str
+
+
+class ForgetPassword(BaseModel):
+    """Шаблон пароля"""
+    hashed_password: str

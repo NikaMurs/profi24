@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from auth.password import get_password_hash
 from models import User
-from schemas import UserCreate, Message
+from schemas import UserCreate, Message, ForgetPassword
 from database import get_async_session, async_session_maker
 from config import SECRET
 
@@ -44,4 +44,18 @@ async def create_user(db: AsyncSession,
     await db.refresh(data)
     await db.close()
     return data
+
+
+async def forgot_password(db: AsyncSession,
+                          telephone: str,
+                          password: str):
+    user = await db.execute(select(User).where(User.telephone == telephone))
+    user = user.scalars().first()
+    if user:
+        new_password = get_password_hash(password)
+        user.hashed_password = new_password
+        await db.commit()
+        return True
+    else:
+        return None
 
