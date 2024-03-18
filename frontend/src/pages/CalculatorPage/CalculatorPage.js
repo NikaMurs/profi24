@@ -279,7 +279,7 @@ export default function CalculatorPage() {
                                 <p className="innerCardItemRangeText">Количество разворотов</p>
                                 <div className="rangeWrapper">
                                     <label className="rangeLabelAmount" id="rangeLabelAmount0">{numberOfSpreads}</label>
-                                    <input className="rangeAmount" id="rangeAmount0" type="range" min="1" max="20" step="1" value={numberOfSpreads} onChange={handleSpreadChange} />
+                                    <input className="rangeAmount" id="rangeAmount0" type="range" min="1" max={data.cnt} step="1" value={numberOfSpreads} onChange={handleSpreadChange} />
                                 </div>
                             </div>
                             <div className="innerCardItemRange">

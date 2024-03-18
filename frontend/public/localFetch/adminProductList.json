@@ -1,0 +1,26 @@
+{
+    "products": [
+        {
+            "isActive": true,
+            "title": "Фотопечать Lay-Flat",
+            "shortTitle": "Photo LF",
+            "id": 1,
+            "img" : "url",
+            "text1": "1111",
+            "text2": "2222",
+            "text3": "3333",
+            "notes": "Примечание"
+        },
+        {
+            "isActive": false,
+            "title": "Полиграфическая",
+            "shortTitle": "X-LF",
+            "id": 2,
+            "img" : "",
+            "text1": "2_1111",
+            "text2": "2_2222",
+            "text3": "3_3333",
+            "notes": "п_Примечание"
+        }
+    ]
+}

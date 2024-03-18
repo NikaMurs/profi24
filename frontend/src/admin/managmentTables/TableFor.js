@@ -1,38 +1,41 @@
 import '../style.css'
 
-export default function TableFor() {
-
-    function TableRow() {
+export default function TableFor({ data }) {
+    function TableRow({ el, ind }) {
         return (
             <tr>
-                <td style={{ width: '30px' }}><button class="tableButton tableButton_blueCheck"></button>
+                <td style={{ width: '30px' }}><button className="tableButton" /></td>
+                <td style={{ width: '30px' }}>{ind + 1}</td>
+                <td style={{ width: '30px' }}><button className={el.isActive ? 'tableButton tableButton_greenButton' : 'tableButton tableButton_redButton'} /></td>
+                <td style={{ width: '60px' }}>{el.id}</td>
+                <td style={{ width: '60px' }}>{el.title}</td>
+                <td style={{ width: '60px', borderCollapse: 'collapse' }}>
+                    <button style={{ width: '50%' }} className='tableButton tableButton_greenCheck' />
+                    <button style={{ width: '50%' }} className='tableButton tableButton_greyDowland' />
                 </td>
-                <td style={{ width: '30px' }}>1</td>
-                <td style={{ width: '30px' }}><button className='tableButton tableButton_greenButton' /></td>
-                <td style={{ width: '60px' }}>1</td>
-                <td style={{ width: '60px' }}>20x20</td>
-                <td style={{ width: '60px', borderCollapse: 'collapse' }}><button style={{ width: '50%' }} className='tableButton tableButton_greenCheck' /><button style={{ width: '50%' }} className='tableButton tableButton_greyDowland' /></td>
-                <td style={{ width: '60px' }}>75</td>
-                <td style={{ width: '62px' }}>10</td>
-                <td style={{ width: '31px' }}><button className='tableButton tableButton_greenCheck' /></td>
-                <td style={{ width: '121px' }}>20x20</td>
-                <td style={{ width: '120px' }}>Т2</td>
-                <td style={{ width: '120px' }}>Т3</td>
-                <td style={{ width: '100px' }}>4800x2400</td>
-                <td style={{ width: '317px' }}>Примечание</td>
+                <td style={{ width: '60px' }}>{el.price}</td>
+                <td style={{ width: '62px' }}>{el.basePrice}</td>
+                <td style={{ width: '31px' }}>
+                    <button className='tableButton tableButton_greenCheck' />
+                </td>
+                <td style={{ width: '121px' }}>{el.text1}</td>
+                <td style={{ width: '120px' }}>{el.text2}</td>
+                <td style={{ width: '120px' }}>{el.text3}</td>
+                <td style={{ width: '100px' }}>{el.size}</td>
+                <td style={{ width: '317px' }}>{el.notes}</td>
             </tr>
         )
     }
 
     return (
         <div id="table2">
-            <h3 class="tablesTitle">Формат (FOR)</h3>
+            <h3 className="tablesTitle">Формат (FOR)</h3>
             <table id="table_forr">
                 <tbody id="forr_tbody">
                     <tr style={{ backgroundColor: '#ECECEC' }}>
-                        <td style={{ width: '30px' }}><button class="tableButton tableButton_greenPlus" onclick="add_line('forr')" style={{ backgroundColor: '#ECECEC' }}></button>
+                        <td style={{ width: '30px' }}><button className="tableButton tableButton_greenPlus" style={{ backgroundColor: '#ECECEC' }}></button>
                         </td>
-                        <td style={{ width: '30px' }}><button class="tableButton tableButton_redTrash" onclick="del_line('forr')" style={{ backgroundColor: '#ECECEC' }}></button>
+                        <td style={{ width: '30px' }}><button className="tableButton tableButton_redTrash" style={{ backgroundColor: '#ECECEC' }}></button>
                         </td>
                         <td style={{ width: '30px' }}>Вкл</td>
                         <td style={{ width: '60px' }}>Арт</td>
@@ -49,7 +52,9 @@ export default function TableFor() {
                         <td style={{ width: '100px' }}>Целевой размер</td>
                         <td style={{ width: '317px' }}>Прим.</td>
                     </tr>
-                    <TableRow />
+                    {data.map((el, ind) => {
+                        return <TableRow el={el} ind={ind}  key={`for_${el.id}`}/>
+                    })}
                 </tbody>
             </table>
         </div>

@@ -1,37 +1,40 @@
 import '../style.css'
 
-export default function TableBas() {
+export default function TableBas({ data }) {
 
-    function TableRow() {
+    function TableRow({ el, ind }) {
         return (
-                <tr>
-                    <td style={{ width: '30px' }}><button class="tableButton tableButton_blueCheck"></button></td>
-                    <td style={{ width: '30px' }}>1</td>
-                    <td style={{ width: '30px' }}><button className='tableButton tableButton_greenButton' /></td>
-                    <td style={{ width: '30px' }}>1</td>
-                    <td style={{ width: '100px' }}>Без основы</td>
-                    <td style={{ width: '60px', borderCollapse: 'collapse' }}><button style={{ width: '50%' }} className='tableButton tableButton_greenCheck' /><button style={{ width: '50%' }} className='tableButton tableButton_greyDowland' /></td>
-                    <td style={{ width: '80px' }}>0.01</td>
-                    <td style={{ width: '55px' }}>0.25</td>
-                    <td style={{ width: '55px' }}>1</td>
-                    <td style={{ width: '60px' }}>30</td>
-                    <td style={{ width: '122px' }}>Без основы</td>
-                    <td style={{ width: '120px' }}>1111</td>
-                    <td style={{ width: '115px' }}>2222</td>
-                    <td style={{ width: '313px' }}>Примечание</td>
-                </tr>
+            <tr>
+                <td style={{ width: '30px' }}><button className="tableButton tableButton_blueCheck"></button></td>
+                <td style={{ width: '30px' }}>{ind + 1}</td>
+                <td style={{ width: '30px' }}><button className={el.isActive ? 'tableButton tableButton_greenButton' : 'tableButton tableButton_redButton'} /></td>
+                <td style={{ width: '30px' }}>{el.id}</td>
+                <td style={{ width: '100px' }}>{el.title}</td>
+                <td style={{ width: '60px', borderCollapse: 'collapse' }}>
+                    <button style={{ width: '50%' }} className='tableButton tableButton_greenCheck' />
+                    <button style={{ width: '50%' }} className='tableButton tableButton_greyDowland' />
+                </td>
+                <td style={{ width: '80px' }}>{el.width}</td>
+                <td style={{ width: '55px' }}>{el.weight}</td>
+                <td style={{ width: '55px' }}>{el.price}</td>
+                <td style={{ width: '60px' }}>{el.maxCount}</td>
+                <td style={{ width: '122px' }}>{el.text1}</td>
+                <td style={{ width: '120px' }}>{el.text2}</td>
+                <td style={{ width: '115px' }}>{el.text3}</td>
+                <td style={{ width: '313px' }}>{el.notes}</td>
+            </tr>
         )
     }
 
     return (
         <div id="table4">
-            <h3 class="tablesTitle">Основа страниц (BAS)</h3>
+            <h3 className="tablesTitle">Основа страниц (BAS)</h3>
             <table id="table_bas">
                 <tbody id="bas_tbody">
                     <tr style={{ backgroundColor: '#ECECEC' }}>
-                        <td style={{ width: '30px' }}><button class="tableButton tableButton_greenPlus" style={{ backgroundColor: '#ECECEC' }}></button>
+                        <td style={{ width: '30px' }}><button className="tableButton tableButton_greenPlus" style={{ backgroundColor: '#ECECEC' }}></button>
                         </td>
-                        <td style={{ width: '30px' }}><button class="tableButton tableButton_redTrash" style={{ backgroundColor: '#ECECEC' }} ></button>
+                        <td style={{ width: '30px' }}><button className="tableButton tableButton_redTrash" style={{ backgroundColor: '#ECECEC' }} ></button>
                         </td>
                         <td style={{ width: '30px' }}>Вкл</td>
                         <td style={{ width: '30px' }}>Арт</td>
@@ -46,7 +49,9 @@ export default function TableBas() {
                         <td style={{ width: '115px' }}>Текст 3 (Параметры)</td>
                         <td style={{ width: '313px' }}>Прим.</td>
                     </tr>
-                    <TableRow />
+                    {data.map((el, ind) => {
+                        return <TableRow el={el} ind={ind} key={`bas_${el.id}`}/>
+                    })}
                 </tbody>
             </table>
         </div>

@@ -1,32 +1,32 @@
 import '../style.css'
 
-export default function TableNco() {
+export default function TableNco({ data }) {
 
-    function TableRow() {
+    function TableRow({ el, ind }) {
         return (
             <tr>
-                <td style={{ width: '30px' }}><button class="tableButton tableButton_blueCheck"></button></td>
-                <td style={{ width: '30px' }}>1</td>
-                <td style={{ width: '30px' }}><button className='tableButton tableButton_greenButton' /></td>
-                <td style={{ width: '30px' }}>1</td>
-                <td style={{ width: '80px' }}>20x20</td>
-                <td style={{ width: '60px' }}>6</td>
-                <td style={{ width: '110px' }}>5551х2953</td>
-                <td style={{ width: '70px' }}>-</td>
-                <td style={{ width: '710px' }}>https://disk.yandex.ru/i/Ewng0SmKlBmHPw</td>
+                <td style={{ width: '30px' }}><button className="tableButton tableButton_blueCheck" /></td>
+                <td style={{ width: '30px' }}>{ind + 1}</td>
+                <td style={{ width: '30px' }}><button className={el.isActive ? 'tableButton tableButton_greenButton' : 'tableButton tableButton_redButton'} /></td>
+                <td style={{ width: '30px' }}>{el.id}</td>
+                <td style={{ width: '80px' }}>{el.format}</td>
+                <td style={{ width: '60px' }}>{el.width}</td>
+                <td style={{ width: '110px' }}>{el.size}</td>
+                <td style={{ width: '70px' }}>{el.weight}</td>
+                <td style={{ width: '710px' }}>{el.url}</td>
             </tr>
         )
     }
 
     return (
-        <div id="table9">
-            <h3 class="tablesTitle">Таблица напраляющих для обложек (NCO)</h3>
+        <div id="table8">
+            <h3 className="tablesTitle">Таблица напраляющих для обложек (NCO)</h3>
             <table id="table_nco">
                 <tbody id="nco_tbody">
                     <tr style={{ backgroundColor: '#ECECEC' }}>
-                        <td style={{ width: '30px' }}><button class="tableButton tableButton_greenPlus" style={{ backgroundColor: '#ECECEC' }}></button>
+                        <td style={{ width: '30px' }}><button className="tableButton tableButton_greenPlus" style={{ backgroundColor: '#ECECEC' }}></button>
                         </td>
-                        <td style={{ width: '30px' }}><button class="tableButton tableButton_redTrash" style={{ backgroundColor: '#ECECEC' }} ></button>
+                        <td style={{ width: '30px' }}><button className="tableButton tableButton_redTrash" style={{ backgroundColor: '#ECECEC' }} ></button>
                         </td>
                         <td style={{ width: '30px' }}>Вкл</td>
                         <td style={{ width: '30px' }}>Арт</td>
@@ -36,7 +36,9 @@ export default function TableNco() {
                         <td style={{ width: '70px' }}>Вес</td>
                         <td style={{ width: '710px' }}>Направляющие</td>
                     </tr>
-                    <TableRow />
+                    {data.map((el, ind) => {
+                        return <TableRow el={el} ind={ind} key={`nco_${el.id}`} />
+                    })}
                 </tbody>
             </table>
         </div>

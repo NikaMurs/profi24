@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react'
 import './style.css'
 import Header from './components/Header'
 import TableFor from './managmentTables/TableFor'
@@ -9,34 +10,75 @@ import TableNco from './managmentTables/TableNco'
 
 
 export default function AdminManagement() {
+    const [data, setData] = useState(null)
+    const [selectedProduct, setSelectedProduct] = useState(null)
+    const [productInfo, setProductInfo] = useState(null);
 
-    function TableRow() {
+    function handleButtonClick(e) {
+        const buttons = e.currentTarget.closest("tbody").querySelectorAll('.tableButton');
+        buttons.forEach(button => button.classList.remove('tableButton_blueCheck'));
+        e.currentTarget.classList.add('tableButton_blueCheck');
+        setSelectedProduct(e.currentTarget.id);
+    }
+
+    useEffect(() => {
+        if (selectedProduct !== null) {
+            fetch(`/localFetch/adminProductInfo${selectedProduct}.json`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Ошибка запроса");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setProductInfo(data);
+                })
+                .catch(error => {
+                    console.error("Ошибка при обработке ответа:", error);
+                });
+        }
+    }, [selectedProduct])
+
+    useEffect(() => {
+        fetch("/localFetch/adminProductList.json")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Ошибка запроса");
+                }
+                return response.json();
+            })
+            .then(data => {
+                setData(data.products);
+            })
+            .catch(error => {
+                console.error("Ошибка при обработке ответа:", error);
+            });
+    }, [])
+
+    function TableRow({ el, ind }) {
         return (
             <>
                 <tr>
                     <td style={{ width: '30px' }}>
-                        <button onclick="add_line('pro')"
-                            className="tableButton tableButton_blueCheck">
-                        </button>
+                        <button
+                            onClick={handleButtonClick}
+                            className="tableButton"
+                            id={el.id} />
                     </td>
-                    <td style={{ width: '30px' }}>1</td>
+                    <td style={{ width: '30px' }}>{ind + 1}</td>
                     <td style={{ width: '30px' }}>
-                        <button onclick="add_line('pro')"
-                            className="tableButton tableButton_redButton">
-                        </button>
+                        <button className={el.isActive ? 'tableButton tableButton_greenButton' : 'tableButton tableButton_redButton'} />
                     </td>
-                    <td style={{ width: '300px' }}>Фотопечать Lay-Flat</td>
-                    <td style={{ width: '100px' }}>Photo LF</td>
-                    <td style={{ width: '50px' }}>22</td>
+                    <td style={{ width: '300px' }}>{el.title}</td>
+                    <td style={{ width: '100px' }}>{el.shortTitle}</td>
+                    <td style={{ width: '50px' }}>{el.id}</td>
                     <td style={{ width: '60px' }}>
-                        <button onclick="add_line('pro')"
-                            className="tableButton tableButton_greyDowland">
-                        </button>
+                        <button className={el.img === '' ? 'tableButton tableButton_greyDowland' : 'tableButton tableButton_greenCheck'} />
                     </td>
-                    <td style={{ width: '120px' }}>1111</td>
-                    <td style={{ width: '120px' }}>2222</td>
-                    <td style={{ width: '120px' }}>3333</td>
-                    <td style={{ width: '240px' }}>Примечание</td>
+                    <td style={{ width: '120px' }}>{el.text1}</td>
+                    <td style={{ width: '120px' }}>{el.text2}</td>
+                    <td style={{ width: '120px' }}>{el.text3}</td>
+                    <td style={{ width: '240px' }}>{el.notes}</td>
                 </tr>
             </>
         )
@@ -50,13 +92,14 @@ export default function AdminManagement() {
                 <table id="table_pro">
                     <tbody id="pro_tbody">
                         <tr style={{ backgroundColor: '#ECECEC' }}>
-                            <td style={{ width: '30px' }}><button onclick="add_line('pro')"
-                                className="tableButton tableButton_greenPlus"
-                                style={{ backgroundColor: '#ECECEC' }}>
-                            </button>
+                            <td style={{ width: '30px' }}>
+                                <button
+                                    className="tableButton tableButton_greenPlus"
+                                    style={{ backgroundColor: '#ECECEC' }}>
+                                </button>
                             </td>
                             <td style={{ width: '30px' }}>
-                                <button onclick="del_pro_line()"
+                                <button
                                     className="tableButton tableButton_redTrash"
                                     style={{ backgroundColor: '#ECECEC' }}>
                                 </button>
@@ -71,20 +114,30 @@ export default function AdminManagement() {
                             <td style={{ width: '120px' }}>Текст 3</td>
                             <td style={{ width: '240px' }}>Прим.</td>
                         </tr>
-                        <TableRow />
+                        {useMemo(() => {
+                            return data?.map((el, ind) => {
+                                return <TableRow el={el} ind={ind} key={`pro_${el.id}`} />
+                            })
+                        }, [data])}
+
                     </tbody>
                 </table>
             </div >
 
-            <h2 className="mainTitle">Фотопечать Lay-Flat</h2>
 
-            <TableFor />
-            <TablePap />
-            <TableBas />
-            <TableTco />
-            <TableVar />
-            <TableVar />
-            <TableNco />
+            {productInfo === null ? <></> :
+                <>
+                    <h2 className="mainTitle">{productInfo.title}</h2>
+
+                    <TableFor data={productInfo.for} />
+                    <TablePap data={productInfo.pap} />
+                    <TableBas data={productInfo.bas} />
+                    <TableTco data={productInfo.tco} />
+                    <TableVar data={productInfo.var} />
+                    {/* <TableDop data={productInfo.dop}/> */}
+                    <TableNco data={productInfo.nco} />
+                </>}
+
         </>
     )
 }

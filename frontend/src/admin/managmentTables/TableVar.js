@@ -1,34 +1,37 @@
 import '../style.css'
 
-export default function TableVar() {
+export default function TableVar({ data }) {
 
-    function TableRow() {
+    function TableRow({ el, ind }) {
         return (
             <tr>
-                <td style={{ width: '30px' }}><button class="tableButton tableButton_blueCheck"></button></td>
-                <td style={{ width: '30px' }}>1</td>
-                <td style={{ width: '30px' }}><button className='tableButton tableButton_greenButton' /></td>
-                <td style={{ width: '30px' }}>1</td>
-                <td style={{ width: '200px' }}>УФ-лак</td>
-                <td style={{ width: '80px' }}>Лак</td>
-                <td style={{ width: '60px', borderCollapse: 'collapse' }}><button style={{ width: '50%' }} className='tableButton tableButton_greenCheck' /><button style={{ width: '50%' }} className='tableButton tableButton_greyDowland' /></td>
-                <td style={{ width: '120px' }}>1111</td>
-                <td style={{ width: '120px' }}>2222</td>
-                <td style={{ width: '120px' }}>3333</td>
-                <td style={{ width: '380px' }}>Примечание</td>
+                <td style={{ width: '30px' }}><button className="tableButton tableButton_blueCheck" /></td>
+                <td style={{ width: '30px' }}>{ind + 1}</td>
+                <td style={{ width: '30px' }}><button className={el.isActive ? 'tableButton tableButton_greenButton' : 'tableButton tableButton_redButton'} /></td>
+                <td style={{ width: '30px' }}>{el.id}</td>
+                <td style={{ width: '200px' }}>{el.title}</td>
+                <td style={{ width: '80px' }}>{el.shortTitle}</td>
+                <td style={{ width: '60px', borderCollapse: 'collapse' }}>
+                    <button style={{ width: '50%' }} className='tableButton tableButton_greenCheck' />
+                    <button style={{ width: '50%' }} className='tableButton tableButton_greyDowland' />
+                </td>
+                <td style={{ width: '120px' }}>{el.text1}</td>
+                <td style={{ width: '120px' }}>{el.text2}</td>
+                <td style={{ width: '120px' }}>{el.text3}</td>
+                <td style={{ width: '380px' }}>{el.notes}</td>
             </tr>
         )
     }
 
     return (
         <div id="table6">
-            <h3 class="tablesTitle">Варианты обложки (VAR-01)</h3>
+            <h3 className="tablesTitle">Варианты обложки (VAR-01)</h3>
             <table id="table_var01">
                 <tbody id="var01_tbody">
                     <tr style={{ backgroundColor: '#ECECEC' }}>
-                        <td style={{ width: '30px' }}><button class="tableButton tableButton_greenPlus" style={{ backgroundColor: '#ECECEC' }}></button>
+                        <td style={{ width: '30px' }}><button className="tableButton tableButton_greenPlus" style={{ backgroundColor: '#ECECEC' }}></button>
                         </td>
-                        <td style={{ width: '30px' }}><button class="tableButton tableButton_redTrash" style={{ backgroundColor: '#ECECEC' }} ></button>
+                        <td style={{ width: '30px' }}><button className="tableButton tableButton_redTrash" style={{ backgroundColor: '#ECECEC' }} ></button>
                         </td>
                         <td style={{ width: '30px' }}>Вкл</td>
                         <td style={{ width: '30px' }}>Арт</td>
@@ -40,7 +43,9 @@ export default function TableVar() {
                         <td style={{ width: '120px' }}>Текст 3</td>
                         <td style={{ width: '380px' }}>Прим.</td>
                     </tr>
-                    <TableRow />
+                    {data.map((el, ind) => {
+                        return <TableRow el={el} ind={ind} key={`var_${el.id}`} />
+                    })}
                 </tbody>
             </table>
         </div>
