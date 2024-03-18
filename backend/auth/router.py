@@ -2,7 +2,7 @@ from fastapi import status, Depends, Response, HTTPException, Cookie, Header
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from auth.password import verify_password
-from schemas import UserCreate, Message, UserTelephone
+from schemas import UserCreate, Message
 from database import get_async_session, async_session_maker
 from typing import Dict, Any, Optional
 from auth.settings import manager, get_user, create_user,forgot_password

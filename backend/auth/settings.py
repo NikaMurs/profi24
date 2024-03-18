@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from auth.password import get_password_hash
 from models import User
-from schemas import UserCreate, Message, ForgetPassword
+from schemas import UserCreate, Message
 from database import get_async_session, async_session_maker
 from config import SECRET
 
