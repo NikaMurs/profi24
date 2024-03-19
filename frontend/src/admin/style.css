@@ -1,6 +1,6 @@
 .wrapper_1200 {
     width: 1200px;
-    margin: 0 auto;
+    margin: 100px auto;
 }
 
 .hidden {
@@ -9,7 +9,7 @@
 
 .wrapper_2000 {
     width: 2000px;
-    margin: 0 auto;
+    margin: 100px auto;
 }
 
 body {

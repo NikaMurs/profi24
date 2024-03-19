@@ -11,9 +11,11 @@ export default function AdminInvoice() {
     return (
         <>
             <Header />
-            <InvoiceTableManualRefil />
-            <InvoiceTableMoneyLog />
-            <InvoiceTableBonusLog />
+            <div className='wrapper_1200'>
+                <InvoiceTableManualRefil/>
+                <InvoiceTableMoneyLog />
+                <InvoiceTableBonusLog />
+            </div>
         </>
     )
 }

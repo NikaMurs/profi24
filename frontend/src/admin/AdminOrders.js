@@ -43,77 +43,80 @@ export default function AdminOrders() {
     return (
         <>
             <Header />
-            <div>
-                <h3 className="tablesTitle">Заказы 2000</h3>
-                <table style={{ fontSize: '12px' }}>
-                    <tbody>
-                        <tr style={{ backgroundColor: '#ECECEC' }}>
-                            <td style={{ width: '80px' }}></td>
-                            <td style={{ width: '80px' }}></td>
-                            <td style={{ width: '30px' }}></td>
-                            <td style={{ width: '80px' }}></td>
-                            <td style={{ width: '30px' }}></td>
-                            <td style={{ width: '30px' }}>Класс</td>
-                            <td style={{ width: '30px' }}>С/Р</td>
-                            <td style={{ width: '80px' }}>PRO</td>
-                            <td style={{ width: '80px' }}>FOR</td>
-                            <td style={{ width: '80px' }}>PAP</td>
-                            <td style={{ width: '60px' }}>BAS</td>
-                            <td style={{ width: '80px' }}>TCO</td>
-                            <td style={{ width: '80px' }}>VAR</td>
-                            <td style={{ width: '150px' }}>DOP</td>
-                            <td style={{ width: '30px' }}>10</td>
-                            <td style={{ width: '30px' }}>10</td>
-                            <td style={{ width: '30px' }}>20</td>
-                            <td style={{ width: '30px' }}>10</td>
-                            <td style={{ width: '30px' }}>20</td>
-                            <td style={{ width: '30px' }}>10</td>
-                            <td style={{ width: '30px' }}>10</td>
-                            <td style={{ width: '30px' }}>10</td>
-                            <td style={{ width: '60px' }}></td>
-                            <td style={{ width: '30px' }}></td>
-                            <td style={{ width: '100px' }}></td>
-                            <td style={{ width: '150px' }}></td>
-                            <td style={{ width: '60px' }}></td>
-                            <td style={{ width: '100px' }}></td>
-                            <td style={{ width: '100px' }}></td>
-                            <td style={{ width: '190px' }}></td>
-                        </tr>
-                        <tr style={{ fontSize: '10px' }}>
-                            <td style={{ fontSize: '15px' }}>Дата приёма</td>
-                            <td style={{ fontSize: '15px' }}>Дата Гот.</td>
-                            <td style={{ fontSize: '15px' }}>Срок</td>
-                            <td style={{ fontSize: '15px' }}>Order</td>
-                            <td style={{ fontSize: '15px', backgroundColor: '#FFDAFD' }}>Or+</td>
-                            <td style={{ backgroundColor: '#FFDAFD' }}>Кол-во книг</td>
-                            <td style={{ backgroundColor: '#FFDAFD' }}>Кол-во р-в (страниц)</td>
-                            <td style={{ backgroundColor: '#FFDAFD' }}>Продукт</td>
-                            <td style={{ backgroundColor: '#FFDAFD' }}>Формат</td>
-                            <td style={{ backgroundColor: '#FFDAFD' }}>Бумага</td>
-                            <td style={{ backgroundColor: '#FFDAFD' }}>Основа</td>
-                            <td style={{ backgroundColor: '#FFDAFD' }}>Тип обложки</td>
-                            <td style={{ backgroundColor: '#FFDAFD' }}>Варианты</td>
-                            <td style={{ backgroundColor: '#FFDAFD' }}>Опции</td>
-                            <td style={{ backgroundColor: '#FFFD4D' }}>Принят</td>
-                            <td style={{ backgroundColor: '#FFFD4D' }}>Печ. блок</td>
-                            <td style={{ backgroundColor: '#FFFD4D' }}>Сбор. блок</td>
-                            <td style={{ backgroundColor: '#FFFD4D' }}>Печ. обл</td>
-                            <td style={{ backgroundColor: '#FFFD4D' }}>Сбор. обл</td>
-                            <td style={{ backgroundColor: '#FFFD4D' }}>Вклейка</td>
-                            <td style={{ backgroundColor: '#FFFD4D' }}>ОТК</td>
-                            <td style={{ backgroundColor: '#FFFD4D' }}>Упаковка</td>
-                            <td style={{ backgroundColor: '#FFFD4D' }}>0-100</td>
-                            <td style={{ backgroundColor: '#FFFD4D' }}>ТК</td>
-                            <td style={{ backgroundColor: '#FFFD4D' }}>Трек-номер</td>
-                            <td>Город</td>
-                            <td>ID ф-а</td>
-                            <td>Коммент наш</td>
-                            <td>Коммент юзера</td>
-                            <td></td>
-                        </tr>
-                        <TableRow />
-                    </tbody>
-                </table>
+            <div className='wrapper_2000'>
+
+                <div>
+                    <h3 className="tablesTitle">Заказы 2000</h3>
+                    <table style={{ fontSize: '12px' }}>
+                        <tbody>
+                            <tr style={{ backgroundColor: '#ECECEC' }}>
+                                <td style={{ width: '80px' }}></td>
+                                <td style={{ width: '80px' }}></td>
+                                <td style={{ width: '30px' }}></td>
+                                <td style={{ width: '80px' }}></td>
+                                <td style={{ width: '30px' }}></td>
+                                <td style={{ width: '30px' }}>Класс</td>
+                                <td style={{ width: '30px' }}>С/Р</td>
+                                <td style={{ width: '80px' }}>PRO</td>
+                                <td style={{ width: '80px' }}>FOR</td>
+                                <td style={{ width: '80px' }}>PAP</td>
+                                <td style={{ width: '60px' }}>BAS</td>
+                                <td style={{ width: '80px' }}>TCO</td>
+                                <td style={{ width: '80px' }}>VAR</td>
+                                <td style={{ width: '150px' }}>DOP</td>
+                                <td style={{ width: '30px' }}>10</td>
+                                <td style={{ width: '30px' }}>10</td>
+                                <td style={{ width: '30px' }}>20</td>
+                                <td style={{ width: '30px' }}>10</td>
+                                <td style={{ width: '30px' }}>20</td>
+                                <td style={{ width: '30px' }}>10</td>
+                                <td style={{ width: '30px' }}>10</td>
+                                <td style={{ width: '30px' }}>10</td>
+                                <td style={{ width: '60px' }}></td>
+                                <td style={{ width: '30px' }}></td>
+                                <td style={{ width: '100px' }}></td>
+                                <td style={{ width: '150px' }}></td>
+                                <td style={{ width: '60px' }}></td>
+                                <td style={{ width: '100px' }}></td>
+                                <td style={{ width: '100px' }}></td>
+                                <td style={{ width: '190px' }}></td>
+                            </tr>
+                            <tr style={{ fontSize: '10px' }}>
+                                <td style={{ fontSize: '15px' }}>Дата приёма</td>
+                                <td style={{ fontSize: '15px' }}>Дата Гот.</td>
+                                <td style={{ fontSize: '15px' }}>Срок</td>
+                                <td style={{ fontSize: '15px' }}>Order</td>
+                                <td style={{ fontSize: '15px', backgroundColor: '#FFDAFD' }}>Or+</td>
+                                <td style={{ backgroundColor: '#FFDAFD' }}>Кол-во книг</td>
+                                <td style={{ backgroundColor: '#FFDAFD' }}>Кол-во р-в (страниц)</td>
+                                <td style={{ backgroundColor: '#FFDAFD' }}>Продукт</td>
+                                <td style={{ backgroundColor: '#FFDAFD' }}>Формат</td>
+                                <td style={{ backgroundColor: '#FFDAFD' }}>Бумага</td>
+                                <td style={{ backgroundColor: '#FFDAFD' }}>Основа</td>
+                                <td style={{ backgroundColor: '#FFDAFD' }}>Тип обложки</td>
+                                <td style={{ backgroundColor: '#FFDAFD' }}>Варианты</td>
+                                <td style={{ backgroundColor: '#FFDAFD' }}>Опции</td>
+                                <td style={{ backgroundColor: '#FFFD4D' }}>Принят</td>
+                                <td style={{ backgroundColor: '#FFFD4D' }}>Печ. блок</td>
+                                <td style={{ backgroundColor: '#FFFD4D' }}>Сбор. блок</td>
+                                <td style={{ backgroundColor: '#FFFD4D' }}>Печ. обл</td>
+                                <td style={{ backgroundColor: '#FFFD4D' }}>Сбор. обл</td>
+                                <td style={{ backgroundColor: '#FFFD4D' }}>Вклейка</td>
+                                <td style={{ backgroundColor: '#FFFD4D' }}>ОТК</td>
+                                <td style={{ backgroundColor: '#FFFD4D' }}>Упаковка</td>
+                                <td style={{ backgroundColor: '#FFFD4D' }}>0-100</td>
+                                <td style={{ backgroundColor: '#FFFD4D' }}>ТК</td>
+                                <td style={{ backgroundColor: '#FFFD4D' }}>Трек-номер</td>
+                                <td>Город</td>
+                                <td>ID ф-а</td>
+                                <td>Коммент наш</td>
+                                <td>Коммент юзера</td>
+                                <td></td>
+                            </tr>
+                            <TableRow />
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
     )

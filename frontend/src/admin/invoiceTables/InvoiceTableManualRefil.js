@@ -8,12 +8,12 @@ export default function InvoiceTableManualRefil() {
                 <p className="moneyText">
                     Деньги: Поступило всего: <span style={{ color: '#FF0000' }}>1500</span>.
                     Списано всего: <span style={{ color: '#62B01E' }}>1000</span>. Баланс:
-                    <span style={{ color: '#00A3FF' }}>500</span>
+                    <span style={{ color: '#00A3FF' }}> 500</span>
                 </p>
                 <p className="moneyText">
                     Бонусы: Начислено всего: <span style={{ color: '#FF0000' }}>0</span>.
                     Списано всего: <span style={{ color: '#62B01E' }}>0</span>. Баланс:
-                    <span style={{ color: '#00A3FF' }}>0</span>
+                    <span style={{ color: '#00A3FF' }}> 0</span>
                 </p>
                 <h3 className="tablesTitle">Таблица ручного пополнения</h3>
                 <table>

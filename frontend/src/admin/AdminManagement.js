@@ -87,57 +87,58 @@ export default function AdminManagement() {
     return (
         <>
             <Header />
-            <div id="table1">
-                <h3 className="tablesTitle">Продукты (PRO)</h3>
-                <table id="table_pro">
-                    <tbody id="pro_tbody">
-                        <tr style={{ backgroundColor: '#ECECEC' }}>
-                            <td style={{ width: '30px' }}>
-                                <button
-                                    className="tableButton tableButton_greenPlus"
-                                    style={{ backgroundColor: '#ECECEC' }}>
-                                </button>
-                            </td>
-                            <td style={{ width: '30px' }}>
-                                <button
-                                    className="tableButton tableButton_redTrash"
-                                    style={{ backgroundColor: '#ECECEC' }}>
-                                </button>
-                            </td>
-                            <td style={{ width: '30px' }}>Вкл</td>
-                            <td style={{ width: '300px' }}>Имя</td>
-                            <td style={{ width: '100px' }}>Имя крат.</td>
-                            <td style={{ width: '50px' }}>Арт</td>
-                            <td style={{ width: '60px' }}>IMG</td>
-                            <td style={{ width: '120px' }}>Текст 1</td>
-                            <td style={{ width: '120px' }}>Текст 2</td>
-                            <td style={{ width: '120px' }}>Текст 3</td>
-                            <td style={{ width: '240px' }}>Прим.</td>
-                        </tr>
-                        {useMemo(() => {
-                            return data?.map((el, ind) => {
-                                return <TableRow el={el} ind={ind} key={`pro_${el.id}`} />
-                            })
-                        }, [data])}
+            <div className='wrapper_1200'>
+                <div id="table1">
+                    <h3 className="tablesTitle">Продукты (PRO)</h3>
+                    <table id="table_pro">
+                        <tbody id="pro_tbody">
+                            <tr style={{ backgroundColor: '#ECECEC' }}>
+                                <td style={{ width: '30px' }}>
+                                    <button
+                                        className="tableButton tableButton_greenPlus"
+                                        style={{ backgroundColor: '#ECECEC' }}>
+                                    </button>
+                                </td>
+                                <td style={{ width: '30px' }}>
+                                    <button
+                                        className="tableButton tableButton_redTrash"
+                                        style={{ backgroundColor: '#ECECEC' }}>
+                                    </button>
+                                </td>
+                                <td style={{ width: '30px' }}>Вкл</td>
+                                <td style={{ width: '300px' }}>Имя</td>
+                                <td style={{ width: '100px' }}>Имя крат.</td>
+                                <td style={{ width: '50px' }}>Арт</td>
+                                <td style={{ width: '60px' }}>IMG</td>
+                                <td style={{ width: '120px' }}>Текст 1</td>
+                                <td style={{ width: '120px' }}>Текст 2</td>
+                                <td style={{ width: '120px' }}>Текст 3</td>
+                                <td style={{ width: '240px' }}>Прим.</td>
+                            </tr>
+                            {useMemo(() => {
+                                return data?.map((el, ind) => {
+                                    return <TableRow el={el} ind={ind} key={`pro_${el.id}`} />
+                                })
+                            }, [data])}
 
-                    </tbody>
-                </table>
-            </div >
+                        </tbody>
+                    </table>
+                </div >
 
 
-            {productInfo === null ? <></> :
-                <>
-                    <h2 className="mainTitle">{productInfo.title}</h2>
+                {productInfo === null ? <></> :
+                    <>
+                        <h2 className="mainTitle">{productInfo.title}</h2>
 
-                    <TableFor data={productInfo.for} />
-                    <TablePap data={productInfo.pap} />
-                    <TableBas data={productInfo.bas} />
-                    <TableTco data={productInfo.tco} />
-                    <TableVar data={productInfo.var} />
-                    {/* <TableDop data={productInfo.dop}/> */}
-                    <TableNco data={productInfo.nco} />
-                </>}
-
+                        <TableFor data={productInfo.for} />
+                        <TablePap data={productInfo.pap} />
+                        <TableBas data={productInfo.bas} />
+                        <TableTco data={productInfo.tco} />
+                        <TableVar data={productInfo.var} />
+                        {/* <TableDop data={productInfo.dop}/> */}
+                        <TableNco data={productInfo.nco} />
+                    </>}
+            </div>
         </>
     )
 }

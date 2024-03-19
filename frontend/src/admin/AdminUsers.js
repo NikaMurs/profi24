@@ -43,44 +43,46 @@ export default function AdminOrders() {
     return (
         <>
             <Header />
-            <div>
-                <h3 className="tablesTitle">Юзеры 2000</h3>
-                <table>
-                    <tbody>
-                        <tr style={{ backgroundColor: '#ECECEC' }}>
-                            <td style={{ width: '30px' }}>
-                                <button className="tableButton tableButton_greenCheck" style={{ backgroundColor: '#ECECEC' }}></button>
-                            </td>
-                            <td style={{ width: '60px' }}>ID</td>
-                            <td style={{ width: '200px' }}>Фамилия Имя Отчество</td>
-                            <td style={{ width: '100px' }}>Телефон</td>
-                            <td style={{ width: '190px' }}>Мэйл</td>
-                            <td style={{ width: '30px' }}>
-                                <button className="tableButton tableButton_tg" style={{ backgroundColor: '#ECECEC' }}></button>
-                            </td>
-                            <td style={{ width: '30px' }}>
-                                <button className="tableButton tableButton_wa" style={{ backgroundColor: '#ECECEC' }}></button>
-                            </td>
-                            <td style={{ width: '53px' }}>Страна</td>
-                            <td style={{ width: '150px' }}>Город</td>
-                            <td style={{ width: '80px' }}>Баланс Деньги</td>
-                            <td style={{ width: '80px' }}>Внесено</td>
-                            <td style={{ width: '80px' }}>Списано</td>
-                            <td style={{ width: '80px' }}>Баланс Бонусы</td>
-                            <td style={{ width: '80px' }}>Зачислено</td>
-                            <td style={{ width: '80px' }}>Списано</td>
-                            <td style={{ width: '80px' }}>Возврат</td>
-                            <td style={{ width: '80px' }}>Бонусный Рейтинг</td>
-                            <td style={{ width: '80px' }}>Рейтинг общения</td>
-                            <td style={{ width: '80px', fontSize: '10px' }}>Рейтинг придирчивости</td>
-                            <td style={{ width: '80px' }}>История заказов</td>
-                            <td style={{ width: '88px' }}>История обращений</td>
-                            <td style={{ width: '115px' }}>Коммент (блокнот)</td>
-                            <td style={{ width: '70px' }}>Кол-во косяков</td>
-                        </tr>
-                        <TableRow />
-                    </tbody>
-                </table>
+            <div className='wrapper_2000'>
+                <div>
+                    <h3 className="tablesTitle">Юзеры 2000</h3>
+                    <table>
+                        <tbody>
+                            <tr style={{ backgroundColor: '#ECECEC' }}>
+                                <td style={{ width: '30px' }}>
+                                    <button className="tableButton tableButton_greenCheck" style={{ backgroundColor: '#ECECEC' }}></button>
+                                </td>
+                                <td style={{ width: '60px' }}>ID</td>
+                                <td style={{ width: '200px' }}>Фамилия Имя Отчество</td>
+                                <td style={{ width: '100px' }}>Телефон</td>
+                                <td style={{ width: '190px' }}>Мэйл</td>
+                                <td style={{ width: '30px' }}>
+                                    <button className="tableButton tableButton_tg" style={{ backgroundColor: '#ECECEC' }}></button>
+                                </td>
+                                <td style={{ width: '30px' }}>
+                                    <button className="tableButton tableButton_wa" style={{ backgroundColor: '#ECECEC' }}></button>
+                                </td>
+                                <td style={{ width: '53px' }}>Страна</td>
+                                <td style={{ width: '150px' }}>Город</td>
+                                <td style={{ width: '80px' }}>Баланс Деньги</td>
+                                <td style={{ width: '80px' }}>Внесено</td>
+                                <td style={{ width: '80px' }}>Списано</td>
+                                <td style={{ width: '80px' }}>Баланс Бонусы</td>
+                                <td style={{ width: '80px' }}>Зачислено</td>
+                                <td style={{ width: '80px' }}>Списано</td>
+                                <td style={{ width: '80px' }}>Возврат</td>
+                                <td style={{ width: '80px' }}>Бонусный Рейтинг</td>
+                                <td style={{ width: '80px' }}>Рейтинг общения</td>
+                                <td style={{ width: '80px', fontSize: '10px' }}>Рейтинг придирчивости</td>
+                                <td style={{ width: '80px' }}>История заказов</td>
+                                <td style={{ width: '88px' }}>История обращений</td>
+                                <td style={{ width: '115px' }}>Коммент (блокнот)</td>
+                                <td style={{ width: '70px' }}>Кол-во косяков</td>
+                            </tr>
+                            <TableRow />
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
     )
