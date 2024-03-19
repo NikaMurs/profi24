@@ -267,7 +267,7 @@ export default function CalculatorPage() {
                                                 <div className="innerCardItemBlockTitleWrapper">
                                                     <p className="innerCardItemBlockTitle">{el.title}</p>
                                                 </div>
-                                                <div className="innerCardItemBlockSquare"></div>
+                                                <div className="innerCardItemBlockSquare" style={{backgroundImage: `url('${el.img}`}}></div>
                                             </div>
                                         )
                                     })}

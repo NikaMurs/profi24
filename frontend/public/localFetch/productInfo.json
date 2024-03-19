@@ -34,14 +34,16 @@
                 "title": "20x20",
                 "price": 75,
                 "basePrice": 10,
-                "size": "4800x2400"
+                "size": "4800x2400",
+                "img": "https://masterpiecer-images.s3.yandex.net/e3f4c8d2a63711eea247fe19746b188b:upscaled"
             },
             {
                 "id": 2,
                 "title": "20x30",
                 "price": 100,
                 "basePrice": 12,
-                "size": "3500x2800"
+                "size": "3500x2800",
+                "img": "https://masterpiecer-images.s3.yandex.net/e3f4c8d2a63711eea247fe19746b188b:upscaled"
             },
             {
                 "id": 3,
@@ -62,7 +64,8 @@
             {
                 "id": 1,
                 "title": "Fuji глянец",
-                "width": 0.12
+                "width": 0.12,
+                "img": "https://avatars.mds.yandex.net/get-shedevrum/11476535/eace5b9dc35b11eeb2e97e2051c0c3c2/orig"
             },
             {
                 "id": 2,

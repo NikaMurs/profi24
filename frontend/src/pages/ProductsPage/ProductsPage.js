@@ -42,8 +42,10 @@ export default function ProductsPage() {
                     {chunkArray(data, 3).map((group, index) => (
                         <div key={index} className="contentCardsLine">
                             {group.map(product => (
-                                <Link key={product.id} className='contentCard' to={`/calculator/${product.id}`}>{product.title}</Link>
-                            ))}
+                                <Link key={product.id} className='contentCard' to={`/calculator/${product.id}`}>
+                                    <div className="backgroundImage" style={{ backgroundImage: `url('${product.img}')` }} />
+                                    <span>{product.title}</span>
+                                </Link>))}
                         </div>
                     ))}
                 </div>
