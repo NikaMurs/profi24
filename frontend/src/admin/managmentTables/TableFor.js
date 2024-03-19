@@ -10,8 +10,7 @@ export default function TableFor({ data }) {
                 <td style={{ width: '60px' }}>{el.id}</td>
                 <td style={{ width: '60px' }}>{el.title}</td>
                 <td style={{ width: '60px', borderCollapse: 'collapse' }}>
-                    <button style={{ width: '50%' }} className='tableButton tableButton_greenCheck' />
-                    <button style={{ width: '50%' }} className='tableButton tableButton_greyDowland' />
+                    <button style={{ width: '50%' }} className={el.img ? 'tableButton tableButton_greenCheck' : 'tableButton tableButton_greyDowland'}/>
                 </td>
                 <td style={{ width: '60px' }}>{el.price}</td>
                 <td style={{ width: '62px' }}>{el.basePrice}</td>
@@ -53,7 +52,7 @@ export default function TableFor({ data }) {
                         <td style={{ width: '317px' }}>Прим.</td>
                     </tr>
                     {data.map((el, ind) => {
-                        return <TableRow el={el} ind={ind}  key={`for_${el.id}`}/>
+                        return <TableRow el={el} ind={ind} key={`for_${el.id}`} />
                     })}
                 </tbody>
             </table>

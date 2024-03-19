@@ -5,10 +5,7 @@
             "isActive": true,
             "id": 1,
             "title": "20x20",
-            "img": [
-                "url1",
-                "url2"
-            ],
+            "img":  "url1",
             "price": 75,
             "basePrice": 10,
             "guideLines": "url3",
@@ -25,10 +22,7 @@
             "id": 1,
             "title": "Глянцевая Fuji Gloss",
             "shortTitle": "Fuji Gloss",
-            "img": [
-                "url1",
-                "url2"
-            ],
+            "img":  "url1",
             "width": 0.12,
             "text1": "1111",
             "text2": "2222",
@@ -41,10 +35,7 @@
             "isActive": true,
             "id": 1,
             "title": "Без основы",
-            "img": [
-                "url1",
-                "url2"
-            ],
+            "img":  "url1",
             "width": 0.01,
             "weight": 0.25,
             "price": 1,
@@ -64,10 +55,7 @@
             "indicatorFormat": "1,2,3,4",
             "multiplier": 21,
             "width": 0.11,
-            "img": [
-                "url1",
-                "url2"
-            ],
+            "img":  "url1",
             "text1": "1111",
             "text2": "2222",
             "text3": "3333",
@@ -80,10 +68,7 @@
             "id": 1,
             "title": "Глянцевая лам",
             "shortTitle": "Глян лам",
-            "img": [
-                "url1",
-                "url2"
-            ],
+            "img":  "url1",
             "text1": "1111",
             "text2": "2222",
             "text3": "3333",

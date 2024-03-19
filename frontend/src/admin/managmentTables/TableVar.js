@@ -12,8 +12,7 @@ export default function TableVar({ data }) {
                 <td style={{ width: '200px' }}>{el.title}</td>
                 <td style={{ width: '80px' }}>{el.shortTitle}</td>
                 <td style={{ width: '60px', borderCollapse: 'collapse' }}>
-                    <button style={{ width: '50%' }} className='tableButton tableButton_greenCheck' />
-                    <button style={{ width: '50%' }} className='tableButton tableButton_greyDowland' />
+                    <button style={{ width: '50%' }} className={el.img ? 'tableButton tableButton_greenCheck' : 'tableButton tableButton_greyDowland'} />
                 </td>
                 <td style={{ width: '120px' }}>{el.text1}</td>
                 <td style={{ width: '120px' }}>{el.text2}</td>

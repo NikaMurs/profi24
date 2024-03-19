@@ -14,8 +14,7 @@ export default function TablePap({ data }) {
                 <td style={{ width: '300px' }}>{el.title}</td>
                 <td style={{ width: '100px' }}>{el.shortTitle}</td>
                 <td style={{ width: '60px', borderCollapse: 'collapse' }}>
-                    <button style={{ width: '50%' }} className='tableButton tableButton_greenCheck' />
-                    <button style={{ width: '50%' }} className='tableButton tableButton_greyDowland' />
+                    <button style={{ width: '50%' }} className={el.img ? 'tableButton tableButton_greenCheck' : 'tableButton tableButton_greyDowland'} />
                 </td>
                 <td style={{ width: '60px' }}>{el.width}</td>
                 <td style={{ width: '122px' }}>{el.text1}</td>
@@ -48,7 +47,7 @@ export default function TablePap({ data }) {
                         <td style={{ width: '198px' }}>Прим.</td>
                     </tr>
                     {data.map((el, ind) => {
-                        return <TableRow el={el} ind={ind}  key={`pap_${el.id}`}/>
+                        return <TableRow el={el} ind={ind} key={`pap_${el.id}`} />
                     })}
                 </tbody>
             </table>

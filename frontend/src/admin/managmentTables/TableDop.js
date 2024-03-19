@@ -38,7 +38,7 @@ export default function TableDop({ data }) {
                         <td style={{ width: '30px' }}>Арт</td>
                         <td style={{ width: '120px' }}>Имя</td>
                         <td style={{ width: '80px' }}>Имя краткое</td>
-                        <td style={{ width: '60px' }}>IMG</td>
+                        <td style={{ width: '60px' }}></td>
                         <td style={{ width: '80px' }}>Цена</td>
                         <td style={{ width: '120px' }}>Текст 1</td>
                         <td style={{ width: '120px' }}>Текст 2</td>
