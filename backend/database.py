@@ -1,10 +1,10 @@
 from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
-from config import TEST_MYSQL_SERVER, TEST_USER, TEST_PASSWORD, TEST_MYSQL_DATABASE
+from config import MYSQL_SERVER, USER, PASSWORD, MYSQL_DATABASE
 
 
-DATABASE_URL = f"mysql+aiomysql://{TEST_USER}:{TEST_PASSWORD}@{TEST_MYSQL_SERVER}/{TEST_MYSQL_DATABASE}"
+DATABASE_URL = f"mysql+aiomysql://{USER}:{PASSWORD}@{MYSQL_SERVER}/{MYSQL_DATABASE}"
 
 
 class Base(DeclarativeBase):
