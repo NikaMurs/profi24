@@ -11,24 +11,18 @@ export default function RegistrationPage() {
                         <input className="registrateFormInput" type="" name="surname" id="surname" placeholder="Фамилия*" required />
                         <input className="registrateFormInput" type="" name="name" id="name" placeholder="Имя*" required/>
                         <input className="registrateFormInput" type="" name="secondname" id="second_name" placeholder="Отчество*" required/>
-                        {/* <input className="registrateFormInput" type="" name="country" id="country" placeholder="Страна*" required/> */}
-                        {/* <input className="registrateFormInput" type="" name="city" id="city" placeholder="Город*" required/> */}
                         <input className="registrateFormInput" type="" name="telephone" id="telephone" placeholder="Моб. телефон*" required/>
                         <input className="registrateFormInput" type="" name="mail" id="mail" placeholder="Эл. почта*" required/>
-                        {/* <input className="registrateFormInput" type="" name="site" id="" placeholder="Сайт" />
-                        <input className="registrateFormInput" type="" name="vk" id="" placeholder="Вк" />
-                        <input className="registrateFormInput" type="" name="profession" id="" placeholder="Род деятельности" />
-                        <input className="registrateFormInput" type="" name="count_book" id="" placeholder="Сколько книг в год?" /> */}
                         <input className="registrateFormInput" type="password" name="password" id="password" placeholder="Пароль*" required/>
                         <input className="registrateFormInput" type="password" name="c_password" id="c_password" placeholder="Подтвердите пароль*" required/>
                         <p className="registrateFormText">*-поля, обязательные для заполнения</p>
                     </form>
-                    <button className="registrateButton" onclick="cod();">
+                    <button className="registrateButton">
                         Зарегестрироваться
                     </button>
                     <div className="registrateFooter">
                         <input type="checkbox" id="pepe" className="registrateFooterInput" />
-                        <label for="pepe"></label>
+                        <label htmlFor="pepe"></label>
                         <span className="registrateFooterText">Продолжая использовать данный сайт и нажимая на кнопку «Стать клиентом», я подтверждаю, что согласен на обработку моих персональных данных на изложенных в Согласии на обработку персональных данных условиях и я ознакомлен с Положением по обработке персональных данных, Соглашением по использованию сервиса, Условиями оплаты и отказа от услуги.</span>
                     </div>
                 </div>

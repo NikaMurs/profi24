@@ -8,6 +8,8 @@ import TableTco from './managmentTables/TableTco'
 import TableVar from './managmentTables/TableVar'
 import TableNco from './managmentTables/TableNco'
 
+import EditableCell from './components/EditableCell'
+
 
 export default function AdminManagement() {
     const [data, setData] = useState(null)
@@ -55,6 +57,10 @@ export default function AdminManagement() {
             });
     }, [])
 
+    function handleAddNewProduct() {
+
+    }
+
     function TableRow({ el, ind }) {
         return (
             <>
@@ -69,16 +75,19 @@ export default function AdminManagement() {
                     <td style={{ width: '30px' }}>
                         <button className={el.isActive ? 'tableButton tableButton_greenButton' : 'tableButton tableButton_redButton'} />
                     </td>
-                    <td style={{ width: '300px' }}>{el.title}</td>
-                    <td style={{ width: '100px' }}>{el.shortTitle}</td>
-                    <td style={{ width: '50px' }}>{el.id}</td>
+
+                    <EditableCell width={'300px'} type={'title'} data={data} setData={setData} el={el} ind={ind} />
+                    <EditableCell width={'100px'} type={'shortTitle'} data={data} setData={setData} el={el} ind={ind} />
+                    <EditableCell width={'50px'} type={'id'} data={data} setData={setData} el={el} ind={ind} />
+
                     <td style={{ width: '60px' }}>
                         <button className={el.img === '' ? 'tableButton tableButton_greyDowland' : 'tableButton tableButton_greenCheck'} />
                     </td>
-                    <td style={{ width: '120px' }}>{el.text1}</td>
-                    <td style={{ width: '120px' }}>{el.text2}</td>
-                    <td style={{ width: '120px' }}>{el.text3}</td>
-                    <td style={{ width: '240px' }}>{el.notes}</td>
+
+                    <EditableCell width={'120px'} type={'text1'} data={data} setData={setData} el={el} ind={ind} />
+                    <EditableCell width={'120px'} type={'text2'} data={data} setData={setData} el={el} ind={ind} />
+                    <EditableCell width={'120px'} type={'text3'} data={data} setData={setData} el={el} ind={ind} />
+                    <EditableCell width={'240px'} type={'notes'} data={data} setData={setData} el={el} ind={ind} />
                 </tr>
             </>
         )
@@ -95,9 +104,9 @@ export default function AdminManagement() {
                             <tr style={{ backgroundColor: '#ECECEC' }}>
                                 <td style={{ width: '30px' }}>
                                     <button
+                                        onClick={handleAddNewProduct}
                                         className="tableButton tableButton_greenPlus"
-                                        style={{ backgroundColor: '#ECECEC' }}>
-                                    </button>
+                                        style={{ backgroundColor: '#ECECEC' }} />
                                 </td>
                                 <td style={{ width: '30px' }}>
                                     <button
