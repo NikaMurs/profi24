@@ -15,7 +15,7 @@ class User(Base):
     __table_args__ = {'extend_existing': True}
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    surname: Mapped[str] = mapped_column(String(length=50), nullable=True)
+    first_name: Mapped[str] = mapped_column(String(length=50), nullable=True)
     name: Mapped[str] = mapped_column(String(length=50), nullable=True)
     second_name: Mapped[str] = mapped_column(String(length=50), nullable=True)
     hashed_password: Mapped[str] = mapped_column(String(length=100), nullable=False)

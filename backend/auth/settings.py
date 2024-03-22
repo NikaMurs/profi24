@@ -34,7 +34,11 @@ async def create_user(db: AsyncSession,
 
     password = get_password_hash(user.hashed_password)
     data = User(
+        first_name=user.first_name,
+        name=user.name,
+        second_name=user.second_name,
         telephone=user.telephone,
+        email=user.email,
         hashed_password=password,
         is_active=True
     )

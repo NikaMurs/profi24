@@ -1,10 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class User(BaseModel):
     """Поля пользователя"""
     id: int
-    surname: str
+    first_name: str
     name: str
     second_name: str
     hashed_password: str
@@ -19,7 +19,11 @@ class User(BaseModel):
 
 class UserCreate(BaseModel):
     """Шаблон для регистрации пользователя"""
+    first_name: str
+    name: str
+    second_name: str
     telephone: str
+    email: EmailStr
     hashed_password: str
 
 
