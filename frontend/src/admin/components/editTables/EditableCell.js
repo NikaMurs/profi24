@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 
-export default function EditableCell({ width, type, data, setData, el, ind }) {
+export default function EditableCell({ width, type, data, setData, el, ind, tableType }) {
+
     const [isEditing, setIsEditing] = useState(
         {
             title: false,
             shortTitle: false,
-            id: false,
             text1: false,
             text2: false,
             notes: false,
@@ -16,55 +16,59 @@ export default function EditableCell({ width, type, data, setData, el, ind }) {
     const [isChanged, setIsChanged] = useState(false);
     const [editedText, setEditedText] = useState('');
 
-    const handleDoubleClick = (e) => {
-        const fieldType = e.target.id.split('_')[1];
+    function handleClick(e) {
+        if (el.isNew) {
+            handleDoubleClick(e)
+        }
+    }
+
+    function handleDoubleClick(e) {
 
         const updatedIsEditing = [isEditing];
-        updatedIsEditing[fieldType] = true;
+        updatedIsEditing[type] = true;
 
         setIsEditing(updatedIsEditing);
-        setEditedText(data[ind][fieldType]);
+        setEditedText(data[ind][type]);
     };
 
-    const handleChange = (e) => {
+    function handleChange(e) {
         setIsChanged(true);
         setEditedText(e.target.value);
     };
 
-    const handleChangeId = (e) => {
-        setIsChanged(true);
-        const regex = /^[0-9]*$/;
-        if (regex.test(e.target.value)) {
-            setEditedText(e.target.value);
-        }
-    };
-
-    const handleBlur = (e) => {
-        const fieldType = e.target.parentNode.id.split('_')[1];
-
+    function handleBlur(e) {
         if (isChanged) {
             const updatedData = [...data];
-            updatedData[ind][fieldType] = editedText;
+            updatedData[ind][type] = editedText;
 
             setData(updatedData)
-            //Отправить постзапрос (айди продукта(e.target.parentNode.id.split('_')[0]) -> fieldType -> новое значение)
+            //Отправить постзапрос (тип таблицы (tableType) -> айди продукта(el.id -> fieldType -> новое значение) (если el.isNew === false)
+
+            if (!el.isNew) {
+                const postData = {
+                    tableType: tableType,
+                    productId: el.id,
+                    [type]: editedText
+                };
+                console.log(postData)
+            }
         }
 
         const updatedIsEditing = [isEditing];
-        updatedIsEditing[fieldType] = false;
+        updatedIsEditing[type] = false;
 
         setIsEditing(updatedIsEditing);
         setIsChanged(false);
     };
 
     return (
-        <td style={{ width }} id={`${el.id}_${type}`} onDoubleClick={handleDoubleClick}>
+        <td style={{ width }} onDoubleClick={handleDoubleClick} onClick={handleClick}>
             {isEditing[type] ? (
                 <input
                     className="adminTableInput"
                     type="text"
                     value={editedText}
-                    onChange={type !== 'id' ? handleChange : handleChangeId}
+                    onChange={handleChange}
                     onBlur={handleBlur}
                     autoFocus
                 />

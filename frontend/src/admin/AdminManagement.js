@@ -8,7 +8,12 @@ import TableTco from './managmentTables/TableTco'
 import TableVar from './managmentTables/TableVar'
 import TableNco from './managmentTables/TableNco'
 
-import EditableCell from './components/EditableCell'
+import EditableCell from './components/editTables/EditableCell'
+import AddNewProductButton from './components/editTables/AddNewProductButton'
+import SelectProductButton from './components/SelectProductButton'
+import ChangeIsActive from './components/editTables/ChangeIsActiveButton'
+import OnAddNewProductButtons from './components/editTables/OnAddNewProductButtons'
+import DeleteProductButton from './components/editTables/DeleteProductButton'
 
 
 export default function AdminManagement() {
@@ -16,12 +21,7 @@ export default function AdminManagement() {
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [productInfo, setProductInfo] = useState(null);
 
-    function handleButtonClick(e) {
-        const buttons = e.currentTarget.closest("tbody").querySelectorAll('.tableButton');
-        buttons.forEach(button => button.classList.remove('tableButton_blueCheck'));
-        e.currentTarget.classList.add('tableButton_blueCheck');
-        setSelectedProduct(e.currentTarget.id);
-    }
+    const [isAddingNewProduct, setIsAddingNewProduct] = useState(false)
 
     useEffect(() => {
         if (selectedProduct !== null) {
@@ -38,6 +38,8 @@ export default function AdminManagement() {
                 .catch(error => {
                     console.error("Ошибка при обработке ответа:", error);
                 });
+        } else {
+            setProductInfo(null)
         }
     }, [selectedProduct])
 
@@ -57,41 +59,38 @@ export default function AdminManagement() {
             });
     }, [])
 
-    function handleAddNewProduct() {
-
-    }
 
     function TableRow({ el, ind }) {
+
         return (
             <>
-                <tr>
+                <tr style={el.isNew ? { border: '3px solid #66CC33' } : {}}>
                     <td style={{ width: '30px' }}>
-                        <button
-                            onClick={handleButtonClick}
-                            className="tableButton"
-                            id={el.id} />
+                        <SelectProductButton el={el} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} />
                     </td>
                     <td style={{ width: '30px' }}>{ind + 1}</td>
                     <td style={{ width: '30px' }}>
-                        <button className={el.isActive ? 'tableButton tableButton_greenButton' : 'tableButton tableButton_redButton'} />
+                        <ChangeIsActive el={el} ind={ind} data={data} setData={setData} tableType={'pro'} />
                     </td>
 
-                    <EditableCell width={'300px'} type={'title'} data={data} setData={setData} el={el} ind={ind} />
-                    <EditableCell width={'100px'} type={'shortTitle'} data={data} setData={setData} el={el} ind={ind} />
-                    <EditableCell width={'50px'} type={'id'} data={data} setData={setData} el={el} ind={ind} />
+                    <EditableCell width={'300px'} type={'title'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
+                    <EditableCell width={'100px'} type={'shortTitle'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
 
+                    <td style={{ width: '30px' }}>{el.id}</td>
                     <td style={{ width: '60px' }}>
                         <button className={el.img === '' ? 'tableButton tableButton_greyDowland' : 'tableButton tableButton_greenCheck'} />
                     </td>
 
-                    <EditableCell width={'120px'} type={'text1'} data={data} setData={setData} el={el} ind={ind} />
-                    <EditableCell width={'120px'} type={'text2'} data={data} setData={setData} el={el} ind={ind} />
-                    <EditableCell width={'120px'} type={'text3'} data={data} setData={setData} el={el} ind={ind} />
-                    <EditableCell width={'240px'} type={'notes'} data={data} setData={setData} el={el} ind={ind} />
+                    <EditableCell width={'120px'} type={'text1'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
+                    <EditableCell width={'120px'} type={'text2'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
+                    <EditableCell width={'120px'} type={'text3'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
+                    <EditableCell width={'240px'} type={'notes'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
                 </tr>
             </>
         )
     }
+
+
 
     return (
         <>
@@ -103,16 +102,10 @@ export default function AdminManagement() {
                         <tbody id="pro_tbody">
                             <tr style={{ backgroundColor: '#ECECEC' }}>
                                 <td style={{ width: '30px' }}>
-                                    <button
-                                        onClick={handleAddNewProduct}
-                                        className="tableButton tableButton_greenPlus"
-                                        style={{ backgroundColor: '#ECECEC' }} />
+                                    <AddNewProductButton isAddingNewProduct={isAddingNewProduct} setIsAddingNewProduct={setIsAddingNewProduct} data={data} setData={setData} />
                                 </td>
                                 <td style={{ width: '30px' }}>
-                                    <button
-                                        className="tableButton tableButton_redTrash"
-                                        style={{ backgroundColor: '#ECECEC' }}>
-                                    </button>
+                                    <DeleteProductButton selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} data={data} setData={setData} tableType={'pro'} />
                                 </td>
                                 <td style={{ width: '30px' }}>Вкл</td>
                                 <td style={{ width: '300px' }}>Имя</td>
@@ -129,9 +122,9 @@ export default function AdminManagement() {
                                     return <TableRow el={el} ind={ind} key={`pro_${el.id}`} />
                                 })
                             }, [data])}
-
                         </tbody>
                     </table>
+                    <OnAddNewProductButtons isAddingNewProduct={isAddingNewProduct} setIsAddingNewProduct={setIsAddingNewProduct} data={data} setData={setData} tableType={'pro'} />
                 </div >
 
 
