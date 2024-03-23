@@ -31,3 +31,26 @@ class Message(BaseModel):
     """Вывод сообщения об ошибке/успехе"""
     message: str
 
+
+class UserInfo(BaseModel):
+    """Запрашивается при старте приложения"""
+    id: int
+    first_name: str
+    name: str
+    second_name: str
+    money: float
+    bonus: int
+    bonusStatus: str
+
+
+class UserFullInfo(BaseModel):
+    """Дополнительная информация о пользователе"""
+    country: str
+    city: str
+    street: str
+    profession: str
+    countBook: int
+    site: str
+    vk: str
+    telegram: str
+    whatsapp: str

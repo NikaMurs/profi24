@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from auth.password import get_password_hash
 from models import User
-from schemas import UserCreate, Message
+from schemas import UserCreate, Message, UserInfo
 from database import get_async_session, async_session_maker
 from config import SECRET
 
@@ -23,6 +23,26 @@ async def get_user(telephone: str):
         data = select(User).filter(User.telephone == telephone)
         result = await session.execute(data)
         return result.scalar()
+
+
+async def get_user_info_start(db: AsyncSession,
+                              telephone: str):
+    existing_user = await db.execute(select(User).where(User.telephone == telephone))
+    existing_user = existing_user.scalars().first()
+
+    if existing_user:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User with this telephone already exists")
+
+    data = User(
+        id=user.id,
+        first_name=user.first_name,
+        name=user.name,
+        second_name=user.second_name,
+        money=user.money,
+        bonus=user.bonus,
+        bonusStatus=user.bonusStatus
+    )
+    return data
 
 
 async def create_user(db: AsyncSession,

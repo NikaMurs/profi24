@@ -1,10 +1,10 @@
-from fastapi import status, Depends, Response, HTTPException, Cookie, Header
+from fastapi import status, Depends, Response, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from auth.password import verify_password
-from schemas import UserCreate, Message
+from schemas import UserCreate, Message, UserInfo
 from database import get_async_session, async_session_maker
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 from auth.settings import manager, get_user, create_user,forgot_password
 from fastapi import APIRouter
 
@@ -13,7 +13,6 @@ auth_router = APIRouter()
 
 
 @auth_router.post("/login",
-          tags=["auth"],
           response_model=Dict[str, Any],
           status_code=status.HTTP_200_OK)
 async def login(response: Response,
@@ -57,7 +56,6 @@ async def login(response: Response,
 
 
 @auth_router.post("/registration",
-          tags=["auth"],
           response_model=Message,
           status_code=status.HTTP_201_CREATED)
 async def registration(user: UserCreate,
@@ -91,7 +89,6 @@ async def registration(user: UserCreate,
 
 
 @auth_router.post("/logout",
-          tags=["auth"],
           response_model=Message,
           status_code=status.HTTP_200_OK)
 def logout(response: Response,
@@ -114,7 +111,6 @@ def logout(response: Response,
 
 
 @auth_router.patch("/forget-password",
-                   tags=["auth"],
                    response_model=Message,
                    status_code=status.HTTP_200_OK)
 async def reset_password(telephone: str,
@@ -142,19 +138,7 @@ async def reset_password(telephone: str,
     return {"message": "done"}
 
 
-@auth_router.get("/profile")
-def protected_route(user=Depends(manager)):
-    """
-    (Только для авторизированных пользователей)
 
-    Тестовый endpoint для проверки JWT, Cookie и авторизации/регистрации
-
-    Возвращает пользователя из базы С ХЕШЕМ ЕГО ПАРОЛЯ
-
-    В бою использовать его не будем
-    """
-
-    return {"user": user}
 
 
 
