@@ -16,7 +16,8 @@ auth_router = APIRouter()
           response_model=Dict[str, Any],
           status_code=status.HTTP_200_OK)
 async def login(response: Response,
-                data: OAuth2PasswordRequestForm = Depends()):
+                data: OAuth2PasswordRequestForm = Depends(),
+                db: AsyncSession = Depends(get_async_session)):
     """
     EndPoint для австоризации
 
@@ -92,7 +93,8 @@ async def registration(user: UserCreate,
           response_model=Message,
           status_code=status.HTTP_200_OK)
 def logout(response: Response,
-           user=Depends(manager)):
+           user=Depends(manager),
+           db: AsyncSession = Depends(get_async_session)):
     """
     EndPoint для выхода
 

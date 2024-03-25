@@ -13,7 +13,8 @@ user_router = APIRouter()
 @user_router.get("/",
                  response_model=Dict[str, Any],
                  status_code=status.HTTP_200_OK)
-def get_user_info(user=Depends(manager)):
+def get_user_info(user=Depends(manager),
+                  db: AsyncSession = Depends(get_async_session)):
     """
     (Только для авторизированных пользователей)
 
@@ -37,7 +38,8 @@ def get_user_info(user=Depends(manager)):
 @user_router.get("/lk/edit/",
                  response_model=Dict[str, Any],
                  status_code=status.HTTP_200_OK)
-def get_user_full_info(user=Depends(manager)):
+def get_user_full_info(user=Depends(manager),
+                       db: AsyncSession = Depends(get_async_session)):
     """
     (Только для авторизированных пользователей)
 
