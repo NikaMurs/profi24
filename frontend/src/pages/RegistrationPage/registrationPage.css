@@ -81,6 +81,7 @@
 }
 
 .registrateButton {
+    cursor: pointer;
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 400;
@@ -120,6 +121,7 @@
 }
 
 .registrateFooterInput+label {
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     user-select: none;
