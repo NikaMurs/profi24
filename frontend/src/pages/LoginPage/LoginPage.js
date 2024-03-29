@@ -3,6 +3,7 @@ import getCookie from '../../functions/getCookie'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import formatPhoneNumber from '../../functions/formatPhoneNumber';
+import jsonToUrlEncoded from '../../functions/jsonToUrlEncoded';
 
 export default function LoginPage() {
     const [login, setLogin] = useState('');
@@ -45,13 +46,12 @@ export default function LoginPage() {
         if (postData.username < 11) { alert('Вы не заполнили поле: Телефон'); return };
         if (postData.password === '') { alert('Вы не заполнили поле: Пароль'); return };
 
-        fetch(`${process.env.REACT_APP_URL}/lpgin`, {
+        fetch(`${process.env.REACT_APP_URL}/login`, {
             method: 'POST',
-            mode: 'no-cors',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: JSON.stringify(postData)
+            body: jsonToUrlEncoded(postData)
         })
             .then(response => {
                 if (!response.ok) {

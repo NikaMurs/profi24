@@ -76,7 +76,6 @@ export default function RegistrationPage() {
 
         fetch(`${process.env.REACT_APP_URL}/registration`, {
             method: 'POST',
-            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -90,7 +89,7 @@ export default function RegistrationPage() {
             })
             .then(data => {
                 console.log('Response:', data);
-                navigate('/lk')
+                // navigate('/lk')
             })
             .catch(error => {
                 console.error('There was an error!', error);
