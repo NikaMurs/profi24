@@ -11,9 +11,7 @@ from config import SECRET
 
 manager = LoginManager(SECRET,
                        "/login",
-                       use_cookie=True,
                        cookie_name='custom-cookie-name',
-                       use_header=False,
                        default_expiry=timedelta(hours=72))
 
 
