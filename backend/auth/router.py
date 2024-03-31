@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from fastapi import status, Depends, Response, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -52,7 +54,9 @@ async def login(response: Response,
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     elif verify_password(password, user.hashed_password):
         access_token = manager.create_access_token(data={"sub": telephone})
-        manager.set_cookie(response, access_token)
+        response.set_cookie(key='custom-cookie-name', value=access_token, httponly=True, samesite=None)
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        # manager.set_cookie(response, access_token)
         return {"access_token": access_token}
 
 
