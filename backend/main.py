@@ -1,10 +1,27 @@
 from fastapi import FastAPI
 from auth.router import auth_router
 from api.router import user_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="Заказ печати",
     description="*EndPoint с замочком - только для авторизировнных пользователей*"
+)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost",
+        "http://localhost:8080",
+        "http://127.0.0.1",
+        "http://127.0.0.1:8080",
+        "http://5.35.84.51",
+        "http://5.35.84.51:8080"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(auth_router, tags=["auth"])
