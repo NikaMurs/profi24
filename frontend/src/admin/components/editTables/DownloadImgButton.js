@@ -32,7 +32,7 @@ export default function DownloadImgButton({ el, ind, imgType, data, setData, tab
 
     return (
         <>
-            <button className={el[imgType] === '' ? 'tableButton tableButton_greyDowland' : 'tableButton tableButton_greenCheck'} onClick={handleDownloadImg} />
+            <button className={((el[imgType] === '') || el[imgType] === undefined) ? 'tableButton tableButton_greyDowland' : 'tableButton tableButton_greenCheck'} onClick={handleDownloadImg} />
         </>
     );
 }
