@@ -20,7 +20,7 @@ export default function DownloadImgButton({ el, ind, imgType, data, setData, tab
         const postData = {
             tableType: tableType,
             productId: el.id,
-            formData: formData,
+            img: formData,
         };
 
         console.log(postData) // Отправить пост запрос (тип таблицы (tableType) -> айди продукта(el.id) -> url
