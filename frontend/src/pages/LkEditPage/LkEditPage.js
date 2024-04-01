@@ -47,28 +47,28 @@ export default function LkEditPage() {
     function handleOnSave(e) {
         console.log(data)
 
-        fetch(`${process.env.REACT_APP_URL}/lk/edit/?country=qwe&city=qwe&street=qwerrererer&profession=qwe&countBook=3&site=qwe&vk=qwe&telegram=qwe&whatsapp=qwe`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${getCookie('authorization')}`
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Ошибка соединения');
-                }
-                return response.json();
-            })
-            .then(data => {
-                navigate('/lk')
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-                alert('Произошла ошибка')
-            });
-        e.preventDefault()
+        // fetch(`${process.env.REACT_APP_URL}/lk/edit`, {
+        //     method: 'PATCH',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         Authorization: `Bearer ${getCookie('authorization')}`
+        //     },
+        //     body: JSON.stringify(data)
+        // })
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             throw new Error('Ошибка соединения');
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         navigate('/lk')
+        //     })
+        //     .catch(error => {
+        //         console.error('There was an error!', error);
+        //         alert('Произошла ошибка')
+        //     });
+        // e.preventDefault()
     }
 
     return (
