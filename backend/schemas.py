@@ -47,7 +47,7 @@ class UserInfo(BaseModel):
 
 class UserFullInfo(BaseModel):
     """Дополнительная информация о пользователе"""
-    country: str
+    country: Optional[str] = None
     city: Optional[str] = None
     street: Optional[str] = None
     profession: Optional[str] = None
