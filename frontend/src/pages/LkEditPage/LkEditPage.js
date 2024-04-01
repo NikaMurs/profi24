@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
+
 import './lkEditPage.css';
 import { useEffect } from 'react';
+import getCookie from '../../functions/getCookie';
+import jsonToUrlEncoded from '../../functions/jsonToUrlEncoded';
 
 export default function LkEditPage() {
+    const navigate = useNavigate();
     const [data, setData] = useState()
 
     useEffect(() => {
-        fetch("/localFetch/userDopInfo.json")
+        fetch(`${process.env.REACT_APP_URL}/lk/edit`, {
+            headers: {
+                Authorization: `Bearer ${getCookie('authorization')}`
+            }
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error("Ошибка запроса");
@@ -33,6 +42,33 @@ export default function LkEditPage() {
         if (regex.test(input)) {
             onChange(e);
         }
+    }
+
+    function handleOnSave(e) {
+        console.log(data)
+
+        fetch(`${process.env.REACT_APP_URL}/lk/edit/?country=qwe&city=qwe&street=qwerrererer&profession=qwe&countBook=3&site=qwe&vk=qwe&telegram=qwe&whatsapp=qwe`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${getCookie('authorization')}`
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка соединения');
+                }
+                return response.json();
+            })
+            .then(data => {
+                navigate('/lk')
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+                alert('Произошла ошибка')
+            });
+        e.preventDefault()
     }
 
     return (
@@ -80,7 +116,7 @@ export default function LkEditPage() {
                     <label className="inputLabel" htmlFor="whatsapp">WhatsApp</label>
                     <input className="lkEditFormInput" type="text" name="whatsapp" id="whatsapp" value={data?.whatsapp} onChange={onChange} />
                 </div>
-                <button className="lkEditSave">Сохранить</button>
+                <button onClick={handleOnSave} className="lkEditSave">Сохранить</button>
             </div>
         </form>
     );

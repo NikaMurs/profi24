@@ -66,12 +66,12 @@ export default function RegistrationPage() {
         if (postData.first_name === '') { alert('Вы не заполнили поле: Фамилия'); return };
         if (postData.name === '') { alert('Вы не заполнили поле: Имя'); return };
         if (postData.second_name === '') { alert('Вы не заполнили поле: Отчество'); return };
-        if (postData.telephone < 11) { alert('Вы не заполнили поле: Телефон'); return };
+        if (postData.telephone === '') { alert('Вы не заполнили поле: Телефон'); return };
+        if (postData.telephone.length < 11) { alert('Ошибка в номере телефона'); return };
         if (postData.email === '') { alert('Вы не заполнили поле: email'); return };
         if (postData.email === false) { alert('Ошибка в email'); return };
         if (postData.hashed_password === '') { alert('Вы не заполнили поле: Пароль'); return };
         if (postData.hashed_password === false) { alert('Пароли не совпадают'); return };
-
 
 
         fetch(`${process.env.REACT_APP_URL}/registration`, {
@@ -88,8 +88,7 @@ export default function RegistrationPage() {
                 return response.json();
             })
             .then(data => {
-                console.log('Response:', data);
-                // navigate('/lk')
+                navigate('/lk')
             })
             .catch(error => {
                 console.error('There was an error!', error);

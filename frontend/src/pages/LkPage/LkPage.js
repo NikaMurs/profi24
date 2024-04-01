@@ -20,19 +20,21 @@ export default function LkPage() {
 
     function getBonusStatusText(status) {
         switch (status) {
-            case 'bronze':
+            case 'Base':
+                return 'Стандартный'
+            case 'Bronze':
                 return 'Бронзовый'
-            case 'silver':
+            case 'Silver':
                 return 'Серебряный'
-            case 'gold':
+            case 'Gold':
                 return 'Золотой'
             default:
-                return 'Бронзовый'
+                return 'Стандартный'
         }
     }
 
     function handleClickLogout() {
-        deleteCookie('isUserLoged');
+        deleteCookie('authorization');
         dispatch(userActions.unsetUser())
         navigate('/')
     }
@@ -86,9 +88,9 @@ export default function LkPage() {
                             </div>
                             <div className="lkTopUser">
                                 <h2>{`${user.name} ${user.surname}`}</h2>
-                                <div className="lkTopUserMedal"></div>
+                                <div className={`lkTopUserMedal lkTopUserMedalIcon_${user.bonusStatus}`}></div>
                                 <div className="lkTopUserText">
-                                    <p>Бонусный рейтинг: <span className="lkTopUserStatus">{getBonusStatusText(user.bonusStatus)}</span></p>
+                                    <p>Бонусный рейтинг: <span className={`lkTopUserStatus_${user.bonusStatus}`}>{getBonusStatusText(user.bonusStatus)}</span></p>
                                     <p>Бонусный счет: {formatPrice(user.bonus)} р.</p>
                                     <p>При пополнении баланса, за каждые внесённые 25&#160;000 рублей Вам будет начислятся 1% бонусов</p>
                                 </div>

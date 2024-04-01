@@ -32,11 +32,14 @@ moment.locale('ru');
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user)
 
   useEffect(() => {
-    if (getCookie('isUserLoged') && user.isLogin === false) {
-      fetch("/localFetch/userShortInfo.json")
+    if (getCookie('authorization')) {
+      fetch(`${process.env.REACT_APP_URL}/`, {
+        headers: {
+          Authorization: `Bearer ${getCookie('authorization')}`
+        }
+      })
         .then(response => {
           if (!response.ok) {
             throw new Error("Ошибка запроса");

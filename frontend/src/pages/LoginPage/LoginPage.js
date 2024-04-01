@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import formatPhoneNumber from '../../functions/formatPhoneNumber';
 import jsonToUrlEncoded from '../../functions/jsonToUrlEncoded';
+import setCookie from '../../functions/setCookie';
 
 export default function LoginPage() {
     const [login, setLogin] = useState('');
@@ -13,10 +14,8 @@ export default function LoginPage() {
 
 
     useEffect(() => {
-        if (getCookie('isUserLoged')) {
-            if (getCookie('isUserLoged') === 'true') {
-                navigate('/lk')
-            }
+        if (getCookie('authorization')) {
+            navigate('/lk')
         }
     }, [])
 
@@ -43,7 +42,7 @@ export default function LoginPage() {
             password: password
         };
 
-        if (postData.username < 11) { alert('Вы не заполнили поле: Телефон'); return };
+        if (postData.username.length < 11) { alert('Вы не заполнили поле: Телефон'); return };
         if (postData.password === '') { alert('Вы не заполнили поле: Пароль'); return };
 
         fetch(`${process.env.REACT_APP_URL}/login`, {
@@ -60,9 +59,8 @@ export default function LoginPage() {
                 return response.json();
             })
             .then(data => {
-                console.log('Response:', data);
-                //     document.cookie = "isUserLoged=true; path=/;"
-                //     navigate(0)
+                setCookie('authorization', data.access_token, 3)
+                navigate(0)
             })
             .catch(error => {
                 console.error('There was an error!', error);

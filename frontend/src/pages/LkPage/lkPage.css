@@ -93,7 +93,7 @@
     color: rgba(49, 69, 87, 0.8);
 }
 
-.lkTopUserText{
+.lkTopUserText {
     width: calc(100% - 400px);
     margin-left: 25px;
 }
@@ -108,7 +108,7 @@
     margin: 5px;
 }
 
-.lkButtonEditUserInfo{
+.lkButtonEditUserInfo {
     background: #314557;
     border: 1px solid #314557;
     border-radius: 35px;
@@ -133,14 +133,41 @@
 .lkTopUserMedal {
     width: 80px;
     height: 90px;
-    background-image: url(../../../public/svg/MedalBronze.svg);
     background-repeat: no-repeat;
     background-position: center;
     margin-top: 8px;
 }
 
-.lkTopUserStatus {
-    color: #864A00;
+.lkTopUserMedalIcon_Base {
+    background-image: url(../../../public/svg/MedalBase.svg);
+}
+
+.lkTopUserMedalIcon_Bronze {
+    background-image: url(../../../public/svg/MedalBronze.svg);
+}
+
+.lkTopUserMedalIcon_Silver {
+    background-image: url(../../../public/svg/MedalSilver.svg);
+}
+
+.lkTopUserMedalIcon_Gold {
+    background-image: url(../../../public/svg/MedalGold.svg);
+}
+
+.lkTopUserStatus_Base {
+    color: #b1b1b1;
+}
+
+.lkTopUserStatus_Bronze {
+    color: #9d5600;
+}
+
+.lkTopUserStatus_Silver {
+    color: #a29f9e;
+}
+
+.lkTopUserStatus_Gold {
+    color: #cba500;
 }
 
 .lkTopAccount {
