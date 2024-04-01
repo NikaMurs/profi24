@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, EmailStr
 
 
@@ -46,11 +48,11 @@ class UserInfo(BaseModel):
 class UserFullInfo(BaseModel):
     """Дополнительная информация о пользователе"""
     country: str
-    city: str
-    street: str
-    profession: str
-    countBook: int
-    site: str
-    vk: str
-    telegram: str
-    whatsapp: str
+    city: Optional[str] = None
+    street: Optional[str] = None
+    profession: Optional[str] = None
+    countBook: Optional[int] = None
+    site: Optional[str] = None
+    vk: Optional[str] = None
+    telegram: Optional[str] = None
+    whatsapp: Optional[str] = None

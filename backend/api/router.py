@@ -1,4 +1,5 @@
 from fastapi import APIRouter, status, Depends
+from fastapi.encoders import jsonable_encoder
 from schemas import UserFullInfo
 from models import User
 from auth.settings import manager, get_user_info_start
@@ -65,31 +66,15 @@ def get_user_full_info(user=Depends(manager),
 @user_router.patch("/lk/edit/",
                  response_model=UserFullInfo,
                  status_code=status.HTTP_200_OK)
-async def edit_user_full_info(country: str,
-                              city: str,
-                              street: str,
-                              profession: str,
-                              countBook: int,
-                              site: str,
-                              vk: str,
-                              telegram: str,
-                              whatsapp: str,
+async def edit_user_full_info(full_info: UserFullInfo,
                               user=Depends(manager),
                               db: AsyncSession = Depends(get_async_session)):
 
     data = await db.execute(select(User).where(User.telephone == user.telephone))
-    data = data.scalars().first()
+    user_data = data.scalars().first()
 
-    data.country = country
-    data.city = city
-    data.street = street
-    data.profession = profession
-    data.countBook = countBook
-    data.site = site
-    data.vk = vk
-    data.telegram = telegram
-    data.whatsapp = whatsapp
+    for field, value in full_info.dict(exclude_unset=True).items():
+        setattr(user_data, field, value)
 
     await db.commit()
-
-    return data
+    return user_data
