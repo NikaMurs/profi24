@@ -5,14 +5,6 @@ export default function AddNewProductButton({ isAddingNewProduct, setIsAddingNew
         const newProduct = {
             isNew: true,
             isActive: false,
-            title: "",
-            shortTitle: "",
-            id: data && data.length ? data[data.length - 1].id + 1 : 1,
-            img: "",
-            text1: "",
-            text2: "",
-            text3: "",
-            notes: ""
         };
 
 

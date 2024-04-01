@@ -14,9 +14,12 @@ import SelectProductButton from './components/SelectProductButton'
 import ChangeIsActive from './components/editTables/ChangeIsActiveButton'
 import OnAddNewProductButtons from './components/editTables/OnAddNewProductButtons'
 import DeleteProductButton from './components/editTables/DeleteProductButton'
+import DownloadImgButton from './components/editTables/DownloadImgButton'
 
 
 export default function AdminManagement() {
+    const tableType = 'pro';
+
     const [data, setData] = useState(null)
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [productInfo, setProductInfo] = useState(null);
@@ -70,21 +73,21 @@ export default function AdminManagement() {
                     </td>
                     <td style={{ width: '30px' }}>{ind + 1}</td>
                     <td style={{ width: '30px' }}>
-                        <ChangeIsActive el={el} ind={ind} data={data} setData={setData} tableType={'pro'} />
+                        <ChangeIsActive el={el} ind={ind} data={data} setData={setData} tableType={tableType} />
                     </td>
 
-                    <EditableCell width={'300px'} type={'title'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
-                    <EditableCell width={'100px'} type={'shortTitle'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
+                    <EditableCell width={'300px'} type={'title'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                    <EditableCell width={'100px'} type={'shortTitle'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
 
                     <td style={{ width: '30px' }}>{el.id}</td>
                     <td style={{ width: '60px' }}>
-                        <button className={el.img === '' ? 'tableButton tableButton_greyDowland' : 'tableButton tableButton_greenCheck'} />
+                        <DownloadImgButton el={el} imgType='img' ind={ind} data={data} setData={setData} tableType={tableType} />
                     </td>
 
-                    <EditableCell width={'120px'} type={'text1'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
-                    <EditableCell width={'120px'} type={'text2'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
-                    <EditableCell width={'120px'} type={'text3'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
-                    <EditableCell width={'240px'} type={'notes'} data={data} setData={setData} el={el} ind={ind} tableType={'pro'} />
+                    <EditableCell width={'120px'} type={'text1'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                    <EditableCell width={'120px'} type={'text2'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                    <EditableCell width={'120px'} type={'text3'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                    <EditableCell width={'240px'} type={'notes'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
                 </tr>
             </>
         )
@@ -105,7 +108,7 @@ export default function AdminManagement() {
                                     <AddNewProductButton isAddingNewProduct={isAddingNewProduct} setIsAddingNewProduct={setIsAddingNewProduct} data={data} setData={setData} />
                                 </td>
                                 <td style={{ width: '30px' }}>
-                                    <DeleteProductButton selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} data={data} setData={setData} tableType={'pro'} />
+                                    <DeleteProductButton selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} data={data} setData={setData} tableType={tableType} />
                                 </td>
                                 <td style={{ width: '30px' }}>Вкл</td>
                                 <td style={{ width: '300px' }}>Имя</td>
@@ -124,21 +127,19 @@ export default function AdminManagement() {
                             }, [data])}
                         </tbody>
                     </table>
-                    <OnAddNewProductButtons isAddingNewProduct={isAddingNewProduct} setIsAddingNewProduct={setIsAddingNewProduct} data={data} setData={setData} tableType={'pro'} />
+                    <OnAddNewProductButtons isAddingNewProduct={isAddingNewProduct} setIsAddingNewProduct={setIsAddingNewProduct} data={data} setData={setData} tableType={tableType} />
                 </div >
 
 
                 {productInfo === null ? <></> :
                     <>
                         <h2 className="mainTitle">{productInfo.title}</h2>
-
-                        <TableFor data={productInfo.for} />
-                        <TablePap data={productInfo.pap} />
-                        <TableBas data={productInfo.bas} />
-                        <TableTco data={productInfo.tco} />
-                        <TableVar data={productInfo.var} />
-                        {/* <TableDop data={productInfo.dop}/> */}
-                        <TableNco data={productInfo.nco} />
+                        <TableFor productInfo={productInfo} />
+                        <TablePap productInfo={productInfo} />
+                        <TableBas productInfo={productInfo} />
+                        <TableTco productInfo={productInfo} />
+                        <TableVar productInfo={productInfo} />
+                        <TableNco productInfo={productInfo} />
                     </>}
             </div>
         </>

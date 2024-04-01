@@ -1,27 +1,50 @@
+import { useState } from 'react'
 import '../style.css'
+import SelectProductButton from '../components/SelectProductButton'
+import ChangeIsActive from '../components/editTables/ChangeIsActiveButton'
+import EditableCell from '../components/editTables/EditableCell'
+import AddNewProductButton from '../components/editTables/AddNewProductButton'
+import OnAddNewProductButtons from '../components/editTables/OnAddNewProductButtons'
+import DeleteProductButton from '../components/editTables/DeleteProductButton'
+import DownloadImgButton from '../components/editTables/DownloadImgButton'
 
-export default function TableFor({ data }) {
+export default function TableFor({ productInfo }) {
+    const tableType = 'for';
+    const [data, setData] = useState(productInfo[tableType]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [isAddingNewProduct, setIsAddingNewProduct] = useState(false);
+
     function TableRow({ el, ind }) {
         return (
-            <tr>
-                <td style={{ width: '30px' }}><button className="tableButton" /></td>
+            <tr style={el.isNew ? { border: '3px solid #66CC33' } : {}}>
+                <td style={{ width: '30px' }}>
+                    <SelectProductButton el={el} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} />
+                </td>
                 <td style={{ width: '30px' }}>{ind + 1}</td>
-                <td style={{ width: '30px' }}><button className={el.isActive ? 'tableButton tableButton_greenButton' : 'tableButton tableButton_redButton'} /></td>
+
+                <td style={{ width: '30px' }}>
+                    <ChangeIsActive el={el} ind={ind} data={data} setData={setData} tableType={tableType} />
+                </td>
                 <td style={{ width: '60px' }}>{el.id}</td>
-                <td style={{ width: '60px' }}>{el.title}</td>
-                <td style={{ width: '60px', borderCollapse: 'collapse' }}>
-                    <button style={{ width: '50%' }} className={el.img ? 'tableButton tableButton_greenCheck' : 'tableButton tableButton_greyDowland'}/>
+
+                <EditableCell width={'60px'} type={'title'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+
+                <td style={{ width: '60px' }}>
+                    <DownloadImgButton el={el} imgType='img' ind={ind} data={data} setData={setData} tableType={tableType} />
                 </td>
-                <td style={{ width: '60px' }}>{el.price}</td>
-                <td style={{ width: '62px' }}>{el.basePrice}</td>
-                <td style={{ width: '31px' }}>
-                    <button className='tableButton tableButton_greenCheck' />
+
+                <EditableCell width={'60px'} type={'price'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'62px'} type={'basePrice'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+
+                <td style={{ width: '30px' }}>
+                    <DownloadImgButton el={el} imgType='guideLines' ind={ind} data={data} setData={setData} tableType={tableType} />
                 </td>
-                <td style={{ width: '121px' }}>{el.text1}</td>
-                <td style={{ width: '120px' }}>{el.text2}</td>
-                <td style={{ width: '120px' }}>{el.text3}</td>
-                <td style={{ width: '100px' }}>{el.size}</td>
-                <td style={{ width: '317px' }}>{el.notes}</td>
+
+                <EditableCell width={'120px'} type={'text1'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'120px'} type={'text2'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'120px'} type={'text3'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'100px'} type={'size'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'317px'} type={'notes'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
             </tr>
         )
     }
@@ -32,9 +55,11 @@ export default function TableFor({ data }) {
             <table id="table_forr">
                 <tbody id="forr_tbody">
                     <tr style={{ backgroundColor: '#ECECEC' }}>
-                        <td style={{ width: '30px' }}><button className="tableButton tableButton_greenPlus" style={{ backgroundColor: '#ECECEC' }}></button>
+                        <td style={{ width: '30px' }}>
+                            <AddNewProductButton isAddingNewProduct={isAddingNewProduct} setIsAddingNewProduct={setIsAddingNewProduct} data={data} setData={setData} />
                         </td>
-                        <td style={{ width: '30px' }}><button className="tableButton tableButton_redTrash" style={{ backgroundColor: '#ECECEC' }}></button>
+                        <td style={{ width: '30px' }}>
+                            <DeleteProductButton selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} data={data} setData={setData} tableType={tableType} />
                         </td>
                         <td style={{ width: '30px' }}>Вкл</td>
                         <td style={{ width: '60px' }}>Арт</td>
@@ -56,6 +81,7 @@ export default function TableFor({ data }) {
                     })}
                 </tbody>
             </table>
+            <OnAddNewProductButtons isAddingNewProduct={isAddingNewProduct} setIsAddingNewProduct={setIsAddingNewProduct} data={data} setData={setData} tableType={tableType} />
         </div>
     )
 }

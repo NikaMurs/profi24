@@ -32,6 +32,10 @@ export default function EditableCell({ width, type, data, setData, el, ind, tabl
     };
 
     function handleChange(e) {
+        if (((type === 'price') || (type === 'basePrice') || (type === 'width') || (type === 'weight') || (type === 'maxCount')|| (type === 'multiplier')) && isNaN(Number(e.target.value))) {
+            return;
+        }
+
         setIsChanged(true);
         setEditedText(e.target.value);
     };

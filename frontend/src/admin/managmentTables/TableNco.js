@@ -1,19 +1,35 @@
+import { useState } from 'react';
 import '../style.css'
+import SelectProductButton from '../components/SelectProductButton';
+import ChangeIsActive from '../components/editTables/ChangeIsActiveButton';
+import EditableCell from '../components/editTables/EditableCell';
+import AddNewProductButton from '../components/editTables/AddNewProductButton';
+import DeleteProductButton from '../components/editTables/DeleteProductButton';
+import OnAddNewProductButtons from '../components/editTables/OnAddNewProductButtons';
 
-export default function TableNco({ data }) {
+export default function TableNco({ productInfo }) {
+    const tableType = 'nco';
+    const [data, setData] = useState(productInfo[tableType]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [isAddingNewProduct, setIsAddingNewProduct] = useState(false);
 
     function TableRow({ el, ind }) {
         return (
-            <tr>
-                <td style={{ width: '30px' }}><button className="tableButton tableButton_blueCheck" /></td>
+            <tr style={el.isNew ? { border: '3px solid #66CC33' } : {}}>
+                <td style={{ width: '30px' }}>
+                    <SelectProductButton el={el} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} />
+                </td>
                 <td style={{ width: '30px' }}>{ind + 1}</td>
-                <td style={{ width: '30px' }}><button className={el.isActive ? 'tableButton tableButton_greenButton' : 'tableButton tableButton_redButton'} /></td>
+                <td style={{ width: '30px' }}>
+                    <ChangeIsActive el={el} ind={ind} data={data} setData={setData} tableType={tableType} />
+                </td>
                 <td style={{ width: '30px' }}>{el.id}</td>
-                <td style={{ width: '80px' }}>{el.format}</td>
-                <td style={{ width: '60px' }}>{el.width}</td>
-                <td style={{ width: '110px' }}>{el.size}</td>
-                <td style={{ width: '70px' }}>{el.weight}</td>
-                <td style={{ width: '710px' }}>{el.url}</td>
+
+                <EditableCell width={'80px'} type={'format'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'60px'} type={'width'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'110px'} type={'size'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'70px'} type={'weight'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'710px'} type={'url'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
             </tr>
         )
     }
@@ -24,9 +40,11 @@ export default function TableNco({ data }) {
             <table id="table_nco">
                 <tbody id="nco_tbody">
                     <tr style={{ backgroundColor: '#ECECEC' }}>
-                        <td style={{ width: '30px' }}><button className="tableButton tableButton_greenPlus" style={{ backgroundColor: '#ECECEC' }}></button>
+                        <td style={{ width: '30px' }}>
+                            <AddNewProductButton isAddingNewProduct={isAddingNewProduct} setIsAddingNewProduct={setIsAddingNewProduct} data={data} setData={setData} />
                         </td>
-                        <td style={{ width: '30px' }}><button className="tableButton tableButton_redTrash" style={{ backgroundColor: '#ECECEC' }} ></button>
+                        <td style={{ width: '30px' }}>
+                            <DeleteProductButton selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} data={data} setData={setData} tableType={tableType} />
                         </td>
                         <td style={{ width: '30px' }}>Вкл</td>
                         <td style={{ width: '30px' }}>Арт</td>
@@ -41,6 +59,7 @@ export default function TableNco({ data }) {
                     })}
                 </tbody>
             </table>
+            <OnAddNewProductButtons isAddingNewProduct={isAddingNewProduct} setIsAddingNewProduct={setIsAddingNewProduct} data={data} setData={setData} tableType={tableType} />
         </div>
     )
 }
