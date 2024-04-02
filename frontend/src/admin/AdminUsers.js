@@ -31,10 +31,10 @@ export default function AdminOrders() {
                 <td style={{ width: '80px' }}>6</td>
                 <td style={{ width: '80px' }}>7</td>
                 <td style={{ width: '80px' }}>8</td>
-                <td style={{ width: '80px', fontSize: '10px' }}>9</td>
+                <td style={{ width: '85px', fontSize: '10px' }}>9</td>
                 <td style={{ width: '80px' }}>10</td>
                 <td style={{ width: '88px' }}>11</td>
-                <td style={{ width: '115px' }}>12</td>
+                <td style={{ width: '110px' }}>12</td>
                 <td style={{ width: '70px' }}>13</td>
             </tr>
         )
@@ -73,10 +73,10 @@ export default function AdminOrders() {
                                 <td style={{ width: '80px' }}>Возврат</td>
                                 <td style={{ width: '80px' }}>Бонусный Рейтинг</td>
                                 <td style={{ width: '80px' }}>Рейтинг общения</td>
-                                <td style={{ width: '80px', fontSize: '10px' }}>Рейтинг придирчивости</td>
+                                <td style={{ width: '85px', fontSize: '10px' }}>Рейтинг придирчивости</td>
                                 <td style={{ width: '80px' }}>История заказов</td>
                                 <td style={{ width: '88px' }}>История обращений</td>
-                                <td style={{ width: '115px' }}>Коммент (блокнот)</td>
+                                <td style={{ width: '110px' }}>Коммент (блокнот)</td>
                                 <td style={{ width: '70px' }}>Кол-во косяков</td>
                             </tr>
                             <TableRow />
