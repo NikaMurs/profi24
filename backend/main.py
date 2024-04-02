@@ -14,10 +14,13 @@ app.add_middleware(
     allow_origins=[
         "http://localhost",
         "http://localhost:8080",
+        "http://localhost:3000",
+        "http://localhost:3001",
         "http://127.0.0.1",
         "http://127.0.0.1:8080",
         "http://5.35.84.51",
-        "http://5.35.84.51:8080"
+        "http://5.35.84.51:8080",
+        "http://profi24test.profi24.beget.tech"
     ],
     allow_credentials=True,
     allow_methods=["*"],
