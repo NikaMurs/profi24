@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './calculatorPage.css'
 import formatPrice from '../../functions/formatPrice';
+import Modal from '../../components/Modal/Modal';
 
 export default function CalculatorPage() {
     const [data, setData] = useState(null)
@@ -9,6 +10,8 @@ export default function CalculatorPage() {
     const [settingsTitleArr, setSettingsTitleArr] = useState([])
     const [numberOfSpreads, setNumberOfSpreads] = useState(1);
     const [numberOfBooks, setNumberOfBooks] = useState(1);
+    const [showModal, setShowModal] = useState(false);
+
 
     useEffect(() => {
         fetch("/localFetch/productInfo.json")
@@ -87,20 +90,34 @@ export default function CalculatorPage() {
     }
 
     function getBlockSize() {
-        let size = '0x0'
+        let size = '0x0';
+        let urlJpeg;
+        let urlPsd;
+        let urlIndd;
         if (data !== null && selectedValues?.for !== undefined) {
             data.for.forEach((el, ind) => {
                 if (el.id === selectedValues.for.id) {
-                    size = data.for[ind].size
+                    size = data.for[ind].size;
+                    urlJpeg = data.for[ind].guideLinesJpeg;
+                    urlPsd = data.for[ind].guideLinesPsd;
+                    urlIndd = data.for[ind].guideLinesIndd;
                 }
             })
         }
-        return size
+        return {
+            size: size,
+            urlJpeg: urlJpeg,
+            urlPsd: urlPsd,
+            urlIndd: urlIndd,
+        }
     }
 
     function getCoverSize() {
         let size = '0x0'
-        let url = '#'
+        let urlJpeg;
+        let urlPsd;
+        let urlIndd;
+
         if (data !== null && selectedValues?.for !== undefined && selectedValues?.pap !== undefined && selectedValues?.bas !== undefined) {
             let width = 0;
             data.for.forEach((el, ind) => {
@@ -112,10 +129,14 @@ export default function CalculatorPage() {
                 }
             })
             width = width * numberOfSpreads;
+
             for (let i = 0; i < data.nco.length; i++) {
                 const el = data.nco[i];
                 if (el.forTitle === selectedValues.for.title) {
                     size = el.size;
+                    urlJpeg = el.guideLinesJpeg;
+                    urlPsd = el.guideLinesPsd;
+                    urlIndd = el.guideLinesIndd;
                     break;
                 }
             }
@@ -124,6 +145,9 @@ export default function CalculatorPage() {
                     if (width > el.width) {
                         if (data.nco[ind + 1]) {
                             size = data.nco[ind + 1].size
+                            urlJpeg = data.nco[ind + 1].guideLinesJpeg;
+                            urlPsd = data.nco[ind + 1].guideLinesPsd;
+                            urlIndd = data.nco[ind + 1].guideLinesIndd;
                         } else {
                             size = 'XXXxXXX'
                         }
@@ -131,12 +155,11 @@ export default function CalculatorPage() {
                 }
             })
         }
-        if (size !== '0x0') {
-            url = `https://yandex.ru/search/?text=${size}`
-        }
         return {
             size: size,
-            url: url,
+            urlJpeg: urlJpeg,
+            urlPsd: urlPsd,
+            urlIndd: urlIndd,
         }
     }
 
@@ -187,6 +210,32 @@ export default function CalculatorPage() {
         setNumberOfBooks(parseInt(event.target.value));
     };
 
+
+    function onDownloadGuideLinesCover() {
+        const data = getCoverSize();
+
+        setShowModal({
+            title: 'обложки',
+            urlJpeg: data.urlJpeg,
+            urlPsd: data.urlPsd,
+            urlIndd: data.urlIndd
+        });
+    }
+
+    function onDownloadGuideLinesBook() {
+        const data = getBlockSize();
+        setShowModal({
+            title: 'книги',
+            urlJpeg: data.urlJpeg,
+            urlPsd: data.urlPsd,
+            urlIndd: data.urlIndd
+        });
+    }
+
+    function closeModal() {
+        setShowModal(false);
+    };
+
     return (
         <main>
             <div className="calculatorHeader">
@@ -223,16 +272,18 @@ export default function CalculatorPage() {
                 <div className="calculatorHeaderRight">
                     <div className="calculatorHeaderRightText">
                         <p>Параметры заказа:</p>
-                        <p id="size_r_px">{`Размер разворота: ${getBlockSize()}`}</p>
+                        <p id="size_r_px">{`Размер разворота: ${getBlockSize().size}`}</p>
                         <p id="size_r_mm"></p>
                         <p id="size_o_px">{`Размеры обложки: ${getCoverSize().size}`}</p>
                         <p id="size_o_mm"></p>
                     </div>
                     <div className="calculatorHeaderRightDowland">
                         <p>Скачать направляющие</p>
-                        <a id="rul_cover" href={`${getCoverSize().url}`}>Для обложки</a>
-                        <a id="rul_book" href={selectedValues?.for === undefined ? '#' : `https://yandex.ru/search/?text=${selectedValues.for.title}`}>Для книги</a>
+                        <a id="rul_cover" onClick={onDownloadGuideLinesCover} href='#'>Для обложки</a>
+                        <a id="rul_book" onClick={onDownloadGuideLinesBook} href='#'>Для книги</a>
                     </div>
+                    {showModal && <Modal closeModal={closeModal} showModal={showModal} />}
+
                     <div className="calculatorHeaderRightButtons">
                         <button className="calculatorHeaderRightButton back" onClick={() => { prevButton() }}>Назад</button>
                         <button className="calculatorHeaderRightButton next" onClick={() => { nextButton() }}>Далее</button>
@@ -267,7 +318,7 @@ export default function CalculatorPage() {
                                                 <div className="innerCardItemBlockTitleWrapper">
                                                     <p className="innerCardItemBlockTitle">{el.title}</p>
                                                 </div>
-                                                <div className="innerCardItemBlockSquare" style={{backgroundImage: `url('${el.img}`}}></div>
+                                                <div className="innerCardItemBlockSquare" style={{ backgroundImage: `url('${el.img}` }}></div>
                                             </div>
                                         )
                                     })}

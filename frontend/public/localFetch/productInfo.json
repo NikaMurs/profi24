@@ -35,6 +35,9 @@
                 "price": 75,
                 "basePrice": 10,
                 "size": "4800x2400",
+                "guideLinesJpeg": "20x20jpg",
+                "guideLinesPsd": "20x20psd",
+                "guideLinesIndd": "20x20indd",
                 "img": "https://masterpiecer-images.s3.yandex.net/e3f4c8d2a63711eea247fe19746b188b:upscaled"
             },
             {
@@ -43,6 +46,9 @@
                 "price": 100,
                 "basePrice": 12,
                 "size": "3500x2800",
+                "guideLinesJpeg": "",
+                "guideLinesPsd": "",
+                "guideLinesIndd": "",
                 "img": "https://masterpiecer-images.s3.yandex.net/e3f4c8d2a63711eea247fe19746b188b:upscaled"
             },
             {
@@ -50,6 +56,9 @@
                 "title": "30x30",
                 "price": 150,
                 "basePrice": 16,
+                "guideLinesJpeg": "",
+                "guideLinesPsd": "",
+                "guideLinesIndd": "",
                 "size": "3500x7000"
             },
             {
@@ -125,19 +134,28 @@
                 "id": 1,
                 "forTitle": "20x20",
                 "width": 6,
-                "size": "5551х2953"
+                "size": "5551х2953",
+                "guideLinesJpeg": "5551х2953Jpeg",
+                "guideLinesPsd": "5551х2953Psd",
+                "guideLinesIndd": "5551х2953Indd"
             },
             {
                 "id": 2,
                 "forTitle": "20x20",
                 "width": 8,
-                "size": "5510х2953"
+                "size": "5510х2953",
+                "guideLinesJpeg": "5510х2953Jpeg",
+                "guideLinesPsd": "5510х2953Psd",
+                "guideLinesIndd": "5510х2953Indd"
             },
             {
                 "id": 3,
                 "forTitle": "20x20",
                 "width": 10,
-                "size": "5520х2953"
+                "size": "5520х2953",
+                "guideLinesJpeg": "5520х2953Jpeg",
+                "guideLinesPsd": "5520х2953Psd",
+                "guideLinesIndd": "5520х2953Indd"
             }
         ],
         "cnt": 30

@@ -8,7 +8,9 @@
             "img":  "url1",
             "price": 75,
             "basePrice": 10,
-            "guideLines": "url3",
+            "guideLinesJpeg": "",
+            "guideLinesPsd": "",
+            "guideLinesIndd": "",
             "text1": "1111",
             "text2": "2222",
             "text3": "3333",
@@ -83,7 +85,9 @@
             "width": 6,
             "size": "5551x2953",
             "weight": 10,
-            "url": "url1"
+            "guideLinesJpeg": "url1",
+            "guideLinesPsd": "url2",
+            "guideLinesIndd": "url3"
         }
     ]
 }

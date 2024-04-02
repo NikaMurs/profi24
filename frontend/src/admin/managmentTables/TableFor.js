@@ -37,12 +37,18 @@ export default function TableFor({ productInfo }) {
                 <EditableCell width={'62px'} type={'basePrice'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
 
                 <td style={{ width: '30px' }}>
-                    <DownloadImgButton el={el} imgType='guideLines' ind={ind} data={data} setData={setData} tableType={tableType} />
+                    <DownloadImgButton el={el} imgType='guideLinesJpeg' ind={ind} data={data} setData={setData} tableType={tableType} />
+                </td>
+                <td style={{ width: '30px' }}>
+                    <DownloadImgButton el={el} imgType='guideLinesPsd' ind={ind} data={data} setData={setData} tableType={tableType} />
+                </td>
+                <td style={{ width: '30px' }}>
+                    <DownloadImgButton el={el} imgType='guideLinesIndd' ind={ind} data={data} setData={setData} tableType={tableType} />
                 </td>
 
-                <EditableCell width={'120px'} type={'text1'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
-                <EditableCell width={'120px'} type={'text2'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
-                <EditableCell width={'120px'} type={'text3'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'100px'} type={'text1'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'100px'} type={'text2'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'100px'} type={'text3'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
                 <EditableCell width={'100px'} type={'size'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
                 <EditableCell width={'317px'} type={'notes'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
             </tr>
@@ -67,12 +73,15 @@ export default function TableFor({ productInfo }) {
                         <td style={{ width: '60px' }}>IMG</td>
                         <td style={{ width: '60px' }}>Цена бумаги</td>
                         <td style={{ width: '62px' }}>Базовая цена</td>
-                        <td style={{ width: '31px' }}>Нап</td>
-                        <td style={{ width: '121px' }}>Текст 1<br />
+                        <td style={{ width: '30px', fontSize: '10px' }}>Нап Jpeg</td>
+                        <td style={{ width: '30px', fontSize: '10px' }}>Нап Psd</td>
+                        <td style={{ width: '30px', fontSize: '10px' }}>Нап Indd</td>
+
+                        <td style={{ width: '100px' }}>Текст 1<br />
                             (Над картинкой)</td>
-                        <td style={{ width: '120px' }}>Текст 2
+                        <td style={{ width: '100px' }}>Текст 2
                             (Значение)</td>
-                        <td style={{ width: '120px' }}>Текст 3 (Параметры)</td>
+                        <td style={{ width: '100px' }}>Текст 3 (Параметры)</td>
                         <td style={{ width: '100px' }}>Целевой размер</td>
                         <td style={{ width: '317px' }}>Прим.</td>
                     </tr>

@@ -6,6 +6,7 @@ import EditableCell from '../components/editTables/EditableCell';
 import AddNewProductButton from '../components/editTables/AddNewProductButton';
 import DeleteProductButton from '../components/editTables/DeleteProductButton';
 import OnAddNewProductButtons from '../components/editTables/OnAddNewProductButtons';
+import DownloadImgButton from '../components/editTables/DownloadImgButton';
 
 export default function TableNco({ productInfo }) {
     const tableType = 'nco';
@@ -29,7 +30,15 @@ export default function TableNco({ productInfo }) {
                 <EditableCell width={'60px'} type={'width'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
                 <EditableCell width={'110px'} type={'size'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
                 <EditableCell width={'70px'} type={'weight'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
-                <EditableCell width={'710px'} type={'url'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <td style={{ width: '30px' }}>
+                    <DownloadImgButton el={el} imgType='guideLinesJpeg' ind={ind} data={data} setData={setData} tableType={tableType} />
+                </td>
+                <td style={{ width: '30px' }}>
+                    <DownloadImgButton el={el} imgType='guideLinesPsd' ind={ind} data={data} setData={setData} tableType={tableType} />
+                </td>
+                <td style={{ width: '30px' }}>
+                    <DownloadImgButton el={el} imgType='guideLinesIndd' ind={ind} data={data} setData={setData} tableType={tableType} />
+                </td>
             </tr>
         )
     }
@@ -52,7 +61,9 @@ export default function TableNco({ productInfo }) {
                         <td style={{ width: '60px' }}>Толщ. блока</td>
                         <td style={{ width: '110px' }}>Целевой раз-р</td>
                         <td style={{ width: '70px' }}>Вес</td>
-                        <td style={{ width: '710px' }}>Направляющие</td>
+                        <td style={{ width: '230px' }}>Направляющие Jpeg</td>
+                        <td style={{ width: '230px' }}>Направляющие Psd</td>
+                        <td style={{ width: '230px' }}>Направляющие Indd</td>
                     </tr>
                     {data.map((el, ind) => {
                         return <TableRow el={el} ind={ind} key={`nco_${el.id}`} />
