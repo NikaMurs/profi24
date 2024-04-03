@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../style.css'
 import SelectProductButton from '../components/SelectProductButton';
 import ChangeIsActive from '../components/editTables/ChangeIsActiveButton';
@@ -10,9 +10,13 @@ import DownloadImgButton from '../components/editTables/DownloadImgButton';
 
 export default function TableVar({ productInfo }) {
     const tableType = 'var';
-    const [data, setData] = useState(productInfo[tableType]);
+    const [data, setData] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isAddingNewProduct, setIsAddingNewProduct] = useState(false);
+
+    useEffect(()=>{
+        setData(productInfo[tableType])
+    }, [productInfo])
 
     function TableRow({ el, ind }) {
         return (
