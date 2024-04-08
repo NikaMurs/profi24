@@ -1,7 +1,10 @@
 from typing import AsyncGenerator
+
+from sqlalchemy import select, event, exc
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 from config import MYSQL_SERVER, USER, PASSWORD, MYSQL_DATABASE
+from models import User
 
 
 DATABASE_URL = f"mysql+aiomysql://{USER}:{PASSWORD}@{MYSQL_SERVER}/{MYSQL_DATABASE}"
@@ -12,7 +15,7 @@ class Base(DeclarativeBase):
 
 
 engine = create_async_engine(DATABASE_URL)
-async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
+async_session_maker = async_sessionmaker(engine, expire_on_commit=False, )
 
 
 async def create_db_and_tables():
@@ -21,6 +24,24 @@ async def create_db_and_tables():
 
 
 async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
-    async with async_session_maker() as session:
-        yield session
+    session = None
+    try:
+        session = async_session_maker()
+        async with session as session:
+            yield session
+    finally:
+        if session is not None:
+            await session.close()
 
+
+async def test_connection(session: AsyncSession):
+    """
+    Первый запрос в базу
+
+    Возобновляет коннект с базой
+
+    """
+    try:
+        await session.execute(select(1))
+    except RuntimeError as e:
+        print("Error:", e)

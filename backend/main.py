@@ -5,7 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="Заказ печати",
-    description="*EndPoint с замочком - только для авторизировнных пользователей*"
+    description="*EndPoint с замочком - только для авторизировнных пользователей*",
+    debug=True
 )
 
 

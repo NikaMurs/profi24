@@ -6,7 +6,7 @@ from auth.settings import manager, get_user_info_start
 from typing import Dict, Any
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from database import get_async_session
+from database import get_async_session, test_connection
 
 user_router = APIRouter()
 
@@ -78,3 +78,10 @@ async def edit_user_full_info(full_info: UserFullInfo,
 
     await db.commit()
     return user_data
+
+
+@user_router.get("/test",
+                 status_code=status.HTTP_200_OK)
+async def test(db: AsyncSession = Depends(get_async_session)):
+    await test_connection(db)
+    return {"Connection": "Connection success"}
