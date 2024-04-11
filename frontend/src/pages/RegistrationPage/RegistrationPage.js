@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import './registrationPage.css'
 import formatPhoneNumber from '../../functions/formatPhoneNumber';
+import fetchTest from '../../functions/fetchTest';
 
 export default function RegistrationPage() {
     const navigate = useNavigate();
@@ -73,7 +74,7 @@ export default function RegistrationPage() {
         if (postData.hashed_password === '') { alert('Вы не заполнили поле: Пароль'); return };
         if (postData.hashed_password === false) { alert('Пароли не совпадают'); return };
 
-
+        fetchTest();
         fetch(`${process.env.REACT_APP_URL}/registration`, {
             method: 'POST',
             headers: {

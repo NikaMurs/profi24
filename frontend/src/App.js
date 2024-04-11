@@ -9,11 +9,11 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 
 import MainLayout from './components/MainLayout/MainLayout';
-import AdminOrders from './admin/AdminOrders';
-import AdminUsers from './admin/AdminUsers'
-import AdminManagement from './admin/AdminManagement';
-import AdminInvoice from './admin/AdminInvoice';
-import AdminLogin from './admin/AdminLogin';
+import AdminOrders from './admin/pages/AdminOrders';
+import AdminUsers from './admin/pages/AdminUsers'
+import AdminManagement from './admin/pages/AdminManagement';
+import AdminInvoice from './admin/pages/AdminInvoice';
+import AdminLogin from './admin/pages/AdminLogin';
 import AdminIsLoged from './admin/components/AdminIsLoged';
 import CalculatorPage from './pages/CalculatorPage/CalculatorPage';
 import UserIsLoged from './functions/UserIsLoged';
@@ -25,6 +25,7 @@ import { useEffect } from 'react';
 import { userActions } from './redux/userReducer';
 import { useDispatch } from 'react-redux';
 import LkEditPage from './pages/LkEditPage/LkEditPage';
+import fetchTest from './functions/fetchTest';
 
 
 moment.locale('ru');
@@ -35,6 +36,8 @@ function App() {
 
   useEffect(() => {
     if (getCookie('authorization')) {
+
+      fetchTest();
       fetch(`${process.env.REACT_APP_URL}/`, {
         headers: {
           Authorization: `Bearer ${getCookie('authorization')}`

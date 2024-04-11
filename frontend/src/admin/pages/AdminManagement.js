@@ -1,20 +1,21 @@
 import { useEffect, useMemo, useState } from 'react'
-import './style.css'
-import Header from './components/Header'
-import TableFor from './managmentTables/TableFor'
-import TablePap from './managmentTables/TablePap'
-import TableBas from './managmentTables/TableBas'
-import TableTco from './managmentTables/TableTco'
-import TableVar from './managmentTables/TableVar'
-import TableNco from './managmentTables/TableNco'
+import '../style.css'
+import Header from '../components/Header'
+import TableFor from '../managmentTables/TableFor'
+import TablePap from '../managmentTables/TablePap'
+import TableBas from '../managmentTables/TableBas'
+import TableTco from '../managmentTables/TableTco'
+import TableVar from '../managmentTables/TableVar'
+import TableNco from '../managmentTables/TableNco'
 
-import EditableCell from './components/editTables/EditableCell'
-import AddNewProductButton from './components/editTables/AddNewProductButton'
-import SelectProductButton from './components/SelectProductButton'
-import ChangeIsActive from './components/editTables/ChangeIsActiveButton'
-import OnAddNewProductButtons from './components/editTables/OnAddNewProductButtons'
-import DeleteProductButton from './components/editTables/DeleteProductButton'
-import DownloadImgButton from './components/editTables/DownloadImgButton'
+import EditableCell from '../components/editTables/EditableCell'
+import AddNewProductButton from '../components/editTables/AddNewProductButton'
+import SelectProductButton from '../components/SelectProductButton'
+import ChangeIsActive from '../components/editTables/ChangeIsActiveButton'
+import OnAddNewProductButtons from '../components/editTables/OnAddNewProductButtons'
+import DeleteProductButton from '../components/editTables/DeleteProductButton'
+import DownloadImgButton from '../components/editTables/DownloadImgButton'
+import fetchTest from '../../functions/fetchTest'
 
 
 export default function AdminManagement() {
@@ -28,6 +29,7 @@ export default function AdminManagement() {
 
     useEffect(() => {
         if (selectedProduct !== null) {
+            fetchTest()
             fetch(`/localFetch/adminProductInfo${selectedProduct}.json`)
                 .then(response => {
                     if (!response.ok) {

@@ -100,6 +100,18 @@ th {
     cursor: pointer;
 }
 
+.tableButton_orderHistory {
+    background-image: url('../../public/svg/orderHistory.svg');
+}
+
+.tableButton_supportHistory {
+    background-image: url('../../public/svg/supportHistory.svg');
+}
+
+.tableButton_notebook {
+    background-image: url('../../public/svg/notebook.svg');
+}
+
 .tableButton_greenCheck {
     background-image: url('../../public/svg/greenCheck.svg');
 }
@@ -254,7 +266,8 @@ th {
 }
 
 .addNewProductButton {
-    background-color: #66CC33; /* Зеленый цвет */
+    background-color: #66CC33;
+    /* Зеленый цвет */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -270,5 +283,69 @@ th {
 }
 
 .addNewProductButton:hover {
-    background-color: rgb(52, 121, 56); /* Темно-зеленый при наведении */
+    background-color: rgb(52, 121, 56);
+}
+
+
+.modalAdmin {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalAdmin-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    height: 60%;
+    border-radius: 5px;
+}
+
+.modalAdmin-content .closeAdmin {
+    color: #aaa;
+    float: right;
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.modalAdmin-content .closeAdmin:hover,
+.modalAdmin-content .closeAdmin:focus {
+    color: #f23127;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modalAdmin-content textarea {
+    width: 100%;
+    height: 78%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    box-sizing: border-box;
+    resize: none;
+    border-radius: 5px;
+}
+
+.modalAdmin-content button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.modalAdmin-content button:hover {
+    background-color: #45a049;
 }

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import formatPhoneNumber from '../../functions/formatPhoneNumber';
 import jsonToUrlEncoded from '../../functions/jsonToUrlEncoded';
 import setCookie from '../../functions/setCookie';
+import fetchTest from '../../functions/fetchTest';
 
 export default function LoginPage() {
     const [login, setLogin] = useState('');
@@ -45,6 +46,7 @@ export default function LoginPage() {
         if (postData.username.length < 11) { alert('Вы не заполнили поле: Телефон'); return };
         if (postData.password === '') { alert('Вы не заполнили поле: Пароль'); return };
 
+        fetchTest();
         fetch(`${process.env.REACT_APP_URL}/login`, {
             method: 'POST',
             headers: {

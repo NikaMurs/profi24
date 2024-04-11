@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import './style.css'
-import getCookie from '../functions/getCookie';
+import '../style.css'
+import getCookie from '../../functions/getCookie';
 
 export default function AdminLogin() {
     const navigate = useNavigate();

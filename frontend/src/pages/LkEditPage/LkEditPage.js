@@ -5,12 +5,14 @@ import './lkEditPage.css';
 import { useEffect } from 'react';
 import getCookie from '../../functions/getCookie';
 import jsonToUrlEncoded from '../../functions/jsonToUrlEncoded';
+import fetchTest from '../../functions/fetchTest';
 
 export default function LkEditPage() {
     const navigate = useNavigate();
     const [data, setData] = useState()
 
     useEffect(() => {
+        fetchTest();
         fetch(`${process.env.REACT_APP_URL}/lk/edit`, {
             headers: {
                 Authorization: `Bearer ${getCookie('authorization')}`
@@ -45,6 +47,7 @@ export default function LkEditPage() {
     }
 
     function handleOnSave(e) {
+        fetchTest();
         fetch(`${process.env.REACT_APP_URL}/lk/edit`, {
             method: 'PATCH',
             headers: {
