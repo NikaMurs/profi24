@@ -56,30 +56,31 @@ export default function AdminOrders() {
             setModalUserName(name);
         }
 
+        function onClickInfo(id, name){
+            setIsModalOpen(true);
+            setModalMode('Info');
+            setModalUserId(id);
+            setModalUserName(name)
+        }
+
         return (
             <tr>
-                <td style={{ width: '30px' }}>
-                    <button className="tableButton tableButton_greenCheck" style={{ backgroundColor: '#ECECEC' }}></button>
-                </td>
                 <td style={{ width: '60px' }}>{user.id}</td>
                 <td style={{ width: '200px' }}>{user.fio}</td>
                 <td style={{ width: '100px' }}>{user.phone}</td>
                 <td style={{ width: '190px' }}>{user.mail}</td>
-                <td style={{ width: '30px' }}>
-                    <button className="tableButton tableButton_tg" style={{ backgroundColor: '#ECECEC' }}>tg</button>
-                </td>
-                <td style={{ width: '30px' }}>
-                    <button className="tableButton tableButton_wa" style={{ backgroundColor: '#ECECEC' }}>wa</button>
+                <td style={{ width: '60px' }}>
+                    <button className="tableButton tableButton_info" onClick={() => { onClickInfo(user.id, user.fio) }} />
                 </td>
                 <td style={{ width: '53px' }}>{user.country}</td>
                 <td style={{ width: '150px' }}>{user.city}</td>
                 <td style={{ width: '80px' }}>{user.balance}</td>
                 <td style={{ width: '80px' }}>{user.deposited}</td>
                 <td style={{ width: '80px' }}>{user.debited}</td>
+                <td style={{ width: '80px' }}>{user.refund}</td>
                 <td style={{ width: '80px' }}>{user.balanceBonus}</td>
                 <td style={{ width: '80px' }}>{user.depositedBonus}</td>
                 <td style={{ width: '80px' }}>{user.debitedBonus}</td>
-                <td style={{ width: '80px' }}>{user.refund}</td>
                 <td style={{ width: '80px' }}>{user.bonusStatus}</td>
                 <td style={{ width: '80px' }}>{user.communicationRating}</td>
                 <td style={{ width: '85px' }}>{user.pickinessRating}</td>
@@ -106,28 +107,20 @@ export default function AdminOrders() {
                     <table>
                         <tbody>
                             <tr style={{ backgroundColor: '#ECECEC' }}>
-                                <td style={{ width: '30px' }}>
-                                    <button className="tableButton tableButton_greenCheck" style={{ backgroundColor: '#ECECEC' }}></button>
-                                </td>
                                 <td style={{ width: '60px' }}>ID</td>
                                 <td style={{ width: '200px' }}>Фамилия Имя Отчество</td>
                                 <td style={{ width: '100px' }}>Телефон</td>
                                 <td style={{ width: '190px' }}>Мэйл</td>
-                                <td style={{ width: '30px' }}>
-                                    <button className="tableButton tableButton_tg" style={{ backgroundColor: '#ECECEC' }}></button>
-                                </td>
-                                <td style={{ width: '30px' }}>
-                                    <button className="tableButton tableButton_wa" style={{ backgroundColor: '#ECECEC' }}></button>
-                                </td>
+                                <td style={{ width: '60px' }}>Инфо</td>
                                 <td style={{ width: '53px' }}>Страна</td>
                                 <td style={{ width: '150px' }}>Город</td>
                                 <td style={{ width: '80px' }}>Баланс Деньги</td>
                                 <td style={{ width: '80px' }}>Внесено</td>
                                 <td style={{ width: '80px' }}>Списано</td>
+                                <td style={{ width: '80px' }}>Возврат</td>
                                 <td style={{ width: '80px' }}>Баланс Бонусы</td>
                                 <td style={{ width: '80px' }}>Зачислено</td>
                                 <td style={{ width: '80px' }}>Списано</td>
-                                <td style={{ width: '80px' }}>Возврат</td>
                                 <td style={{ width: '80px' }}>Бонусный Рейтинг</td>
                                 <td style={{ width: '80px' }}>Рейтинг общения</td>
                                 <td style={{ width: '85px', fontSize: '10px' }}>Рейтинг придирчивости</td>
