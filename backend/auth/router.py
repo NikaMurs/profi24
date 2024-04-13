@@ -59,6 +59,8 @@ async def login(response: Response,
         # response.set_cookie(key='custom-cookie-name', value=access_token, expires=access_token_expires, httponly=True, samesite=None)
         manager.set_cookie(response, access_token)
         return {"access_token": access_token}
+    else:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect password")
 
 
 @auth_router.post("/registration",

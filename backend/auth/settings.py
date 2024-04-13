@@ -1,5 +1,5 @@
 from datetime import timedelta
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Depends
 from fastapi_login import LoginManager
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -17,10 +17,24 @@ manager = LoginManager(SECRET,
 
 @manager.user_loader()
 async def get_user(telephone: str):
+    """
+    Функция для получения пользователя
+    """
     async with async_session_maker() as session:
         data = select(User).filter(User.telephone == telephone)
         result = await session.execute(data)
         return result.scalar()
+
+
+def get_admin_user(user=Depends(manager)):
+    """
+    Функция для получения пользователя-администратора.
+
+    Проверяет, является ли пользователь администратором. Если да, возвращает пользователя, иначе генерирует ошибку HTTP 403 Forbidden.
+    """
+    if not user.is_superuser:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Only admins can access this endpoint")
+    return user
 
 
 async def get_user_info_start(db: AsyncSession,

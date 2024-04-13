@@ -1,13 +1,13 @@
 from typing import AsyncGenerator
 
-from sqlalchemy import select, event, exc
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
-from config import MYSQL_SERVER, USER, PASSWORD, MYSQL_DATABASE
-from models import User
+from config import TEST_MYSQL_SERVER, TEST_USER, TEST_PASSWORD, TEST_MYSQL_DATABASE
+from models import *
 
 
-DATABASE_URL = f"mysql+aiomysql://{USER}:{PASSWORD}@{MYSQL_SERVER}/{MYSQL_DATABASE}"
+DATABASE_URL = f"mysql+aiomysql://{TEST_USER}:{TEST_PASSWORD}@{TEST_MYSQL_SERVER}/{TEST_MYSQL_DATABASE}"
 
 
 class Base(DeclarativeBase):
@@ -15,7 +15,7 @@ class Base(DeclarativeBase):
 
 
 engine = create_async_engine(DATABASE_URL)
-async_session_maker = async_sessionmaker(engine, expire_on_commit=False, )
+async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 
 
 async def create_db_and_tables():

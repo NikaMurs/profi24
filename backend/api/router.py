@@ -1,9 +1,8 @@
 from fastapi import APIRouter, status, Depends
-from fastapi.encoders import jsonable_encoder
-from schemas import UserFullInfo
 from models import User
 from auth.settings import manager, get_user_info_start
-from typing import Dict, Any
+from schemas import UserFullInfo
+from typing import Dict, Any, Optional
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_async_session, test_connection
