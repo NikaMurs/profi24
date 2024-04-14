@@ -56,36 +56,106 @@ class Pro(Base):
     text3: Mapped[str] = mapped_column(Text, nullable=True)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
 
-# class For(Base):
-#     """Формат"""
-#     __tablename__ = 'for'
-#     __table_args__ = {'extend_existing': True}
-#
-#
-# class Pap(Base):
-#     """Бумага"""
-#     __tablename__ = 'pap'
-#     __table_args__ = {'extend_existing': True}
-#
-#
-# class Bas(Base):
-#     """Основа стариц"""
-#     __tablename__ = 'bas'
-#     __table_args__ = {'extend_existing': True}
-#
-#
-# class Tco(Base):
-#     """Тип обложки"""
-#     __tablename__ = 'tco'
-#     __table_args__ = {'extend_existing': True}
-#
-#
-# class Var01(Base):
-#     """Варианты обложки"""
-#     __tablename__ = 'var01'
-#     __table_args__ = {'extend_existing': True}
-#
-#
+
+# TODO Добавить связь с таблицей product по id
+class For(Base):
+    """Формат"""
+    __tablename__ = 'for'
+    __table_args__ = {'extend_existing': True}
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    isActive: Mapped[bool] = mapped_column(Boolean, nullable=False, default=0)
+    name: Mapped[str] = mapped_column(String(100), nullable=False, default="")
+    img: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    paper_price: Mapped[int] = mapped_column(Integer, default=0)
+    base_price: Mapped[int] = mapped_column(Integer, default=0)
+    jpeg: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    psd: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    lndd: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    text1: Mapped[str] = mapped_column(Text, nullable=True)
+    text2: Mapped[str] = mapped_column(Text, nullable=True)
+    text3: Mapped[str] = mapped_column(Text, nullable=True)
+    target_size: Mapped[str] = mapped_column(String(100), nullable=False, default="")
+    notes: Mapped[str] = mapped_column(Text, nullable=True)
+
+
+# TODO Добавить связь с таблицей product по id
+class Pap(Base):
+    """Бумага"""
+    __tablename__ = 'pap'
+    __table_args__ = {'extend_existing': True}
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    isActive: Mapped[bool] = mapped_column(Boolean, nullable=False, default=0)
+    name: Mapped[str] = mapped_column(String(100), nullable=False, default="")
+    shortName: Mapped[str] = mapped_column(String(50), nullable=False, default="")
+    img: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    thickness: Mapped[float] = mapped_column(Float, default=0)
+    text1: Mapped[str] = mapped_column(Text, nullable=True)
+    text2: Mapped[str] = mapped_column(Text, nullable=True)
+    text3: Mapped[str] = mapped_column(Text, nullable=True)
+    target_size: Mapped[str] = mapped_column(String(100), nullable=False, default="")
+    notes: Mapped[str] = mapped_column(Text, nullable=True)
+
+
+# TODO Добавить связь с таблицей product по id
+class Bas(Base):
+    """Основа стариц"""
+    __tablename__ = 'bas'
+    __table_args__ = {'extend_existing': True}
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    isActive: Mapped[bool] = mapped_column(Boolean, nullable=False, default=0)
+    name: Mapped[str] = mapped_column(String(100), nullable=False, default="")
+    img: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    thickness: Mapped[float] = mapped_column(Float, default=0)
+    weight: Mapped[float] = mapped_column(Float, default=0)
+    price: Mapped[int] = mapped_column(Integer, default=0)
+    max_count: Mapped[int] = mapped_column(Integer, default=0)
+    text1: Mapped[str] = mapped_column(Text, nullable=True)
+    text2: Mapped[str] = mapped_column(Text, nullable=True)
+    text3: Mapped[str] = mapped_column(Text, nullable=True)
+    notes: Mapped[str] = mapped_column(Text, nullable=True)
+
+
+# TODO Добавить связь с таблицей product по id
+class Tco(Base):
+    """Тип обложки"""
+    __tablename__ = 'tco'
+    __table_args__ = {'extend_existing': True}
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    isActive: Mapped[bool] = mapped_column(Boolean, nullable=False, default=0)
+    name: Mapped[str] = mapped_column(String(100), nullable=False, default="")
+    shortName: Mapped[str] = mapped_column(String(50), nullable=False, default="")
+    indicator: Mapped[str] = mapped_column(String(60), nullable=False, default="")
+    factor: Mapped[int] = mapped_column(Integer, default=0)
+    thickness: Mapped[float] = mapped_column(Float, default=0)
+    img: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    text1: Mapped[str] = mapped_column(Text, nullable=True)
+    text2: Mapped[str] = mapped_column(Text, nullable=True)
+    text3: Mapped[str] = mapped_column(Text, nullable=True)
+    notes: Mapped[str] = mapped_column(Text, nullable=True)
+
+
+# TODO Добавить связь с таблицей product по id
+class Var01(Base):
+    """Варианты обложки"""
+    __tablename__ = 'var01'
+    __table_args__ = {'extend_existing': True}
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    isActive: Mapped[bool] = mapped_column(Boolean, nullable=False, default=0)
+    name: Mapped[str] = mapped_column(String(100), nullable=False, default="")
+    shortName: Mapped[str] = mapped_column(String(50), nullable=False, default="")
+    img: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    text1: Mapped[str] = mapped_column(Text, nullable=True)
+    text2: Mapped[str] = mapped_column(Text, nullable=True)
+    text3: Mapped[str] = mapped_column(Text, nullable=True)
+    notes: Mapped[str] = mapped_column(Text, nullable=True)
+
+
+# # TODO Добавить связь с таблицей product по id
 # class Nco(Base):
 #     """Направляющие для обложки"""
 #     __tablename__ = 'nco'
