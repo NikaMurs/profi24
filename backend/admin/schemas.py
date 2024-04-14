@@ -29,7 +29,6 @@ class EditProduct(BaseModel):
     isActive: Optional[bool] = False
     title: Optional[str] = None
     shortTitle: Optional[str] = None
-    img: Optional[str] = None
     text1: Optional[str] = None
     text2: Optional[str] = None
     text3: Optional[str] = None
