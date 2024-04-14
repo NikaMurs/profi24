@@ -16,6 +16,7 @@ import OnAddNewProductButtons from '../components/editTables/OnAddNewProductButt
 import DeleteProductButton from '../components/editTables/DeleteProductButton'
 import DownloadImgButton from '../components/editTables/DownloadImgButton'
 import fetchTest from '../../functions/fetchTest'
+import getCookie from '../../functions/getCookie'
 
 
 export default function AdminManagement() {
@@ -26,6 +27,30 @@ export default function AdminManagement() {
     const [productInfo, setProductInfo] = useState(null);
 
     const [isAddingNewProduct, setIsAddingNewProduct] = useState(false)
+
+    useEffect(() => {
+        if (getCookie('authorization')) {
+
+            fetchTest();
+            fetch(`${process.env.REACT_APP_URL}/admin/management`, {
+                headers: {
+                    Authorization: `Bearer ${getCookie('authorization')}`
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Ошибка запроса");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setData(data.products);
+                })
+                .catch(error => {
+                    console.error("Ошибка при обработке ответа:", error);
+                });
+        }
+    }, [])
 
     useEffect(() => {
         if (selectedProduct !== null) {
@@ -47,23 +72,6 @@ export default function AdminManagement() {
             setProductInfo(null)
         }
     }, [selectedProduct])
-
-    useEffect(() => {
-        fetch("/localFetch/adminProductList.json")
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Ошибка запроса");
-                }
-                return response.json();
-            })
-            .then(data => {
-                setData(data.products);
-            })
-            .catch(error => {
-                console.error("Ошибка при обработке ответа:", error);
-            });
-    }, [])
-
 
     function TableRow({ el, ind }) {
 

@@ -13,8 +13,6 @@ import AdminOrders from './admin/pages/AdminOrders';
 import AdminUsers from './admin/pages/AdminUsers'
 import AdminManagement from './admin/pages/AdminManagement';
 import AdminInvoice from './admin/pages/AdminInvoice';
-import AdminLogin from './admin/pages/AdminLogin';
-import AdminIsLoged from './admin/components/AdminIsLoged';
 import CalculatorPage from './pages/CalculatorPage/CalculatorPage';
 import UserIsLoged from './functions/UserIsLoged';
 import moment from 'moment';
@@ -73,12 +71,11 @@ function App() {
       <Route path='/registration' element={<RegistrationPage />} />
       <Route path='/calculator/:productId' element={<MainLayout><CalculatorPage /></MainLayout>} />
 
-      <Route path='/admin' element={<AdminIsLoged><Navigate to='/admin/orders' /></AdminIsLoged>} />
-      <Route path='/admin/orders' element={<AdminIsLoged><AdminOrders /></AdminIsLoged>} />
-      <Route path='/admin/users' element={<AdminIsLoged><AdminUsers /></AdminIsLoged>} />
-      <Route path='/admin/management' element={<AdminIsLoged><AdminManagement /></AdminIsLoged>} />
-      <Route path='/admin/invoice' element={<AdminIsLoged><AdminInvoice /></AdminIsLoged>} />
-      <Route path='/admin/login' element={<AdminLogin />} />
+      <Route path='/admin' element={<Navigate to='/admin/orders' />} />
+      <Route path='/admin/orders' element={<AdminOrders />} />
+      <Route path='/admin/users' element={<AdminUsers />} />
+      <Route path='/admin/management' element={<AdminManagement />} />
+      <Route path='/admin/invoice' element={<AdminInvoice />} />
 
     </Routes>
   );
