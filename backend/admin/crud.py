@@ -1,7 +1,10 @@
+import datetime
+import os
+import shutil
+from fastapi import UploadFile, File
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import Pro
-from admin.schemas import Product
 
 
 async def get_product_list(db: AsyncSession):
@@ -30,12 +33,36 @@ async def get_product_list(db: AsyncSession):
     return product_dicts
 
 
+async def save_photo_in_db(db: AsyncSession,
+                           product_id: int,
+                           file: UploadFile = File(...)):
+
+    filename, ext = os.path.splitext(file.filename)
+    time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    new_filename = f"{filename}_{str(time)}{ext}"
+    path = f'media/{new_filename}'
+
+    with open(path, 'wb+') as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    product = await db.execute(select(Pro).filter(Pro.id == product_id))
+    product_data = product.scalars().first()
+
+    if product_data:
+        product_data.img = path
+        await db.commit()
+        await db.close()
+        return product_data
+    else:
+        return None
+
+
 async def create_products(db: AsyncSession,
-                          product: Product):
+                          product):
+
     data = Pro(
         title=product.title,
         shortTitle=product.shortTitle,
-        img=product.img,
         text1=product.text1,
         text2=product.text2,
         text3=product.text3,

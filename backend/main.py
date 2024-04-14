@@ -3,6 +3,7 @@ from auth.router import auth_router
 from api.router import user_router
 from admin.router import admin_router
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(
     title="Заказ печати",
@@ -32,3 +33,5 @@ app.add_middleware(
 app.include_router(auth_router, tags=["auth"])
 app.include_router(user_router, tags=["user"])
 app.include_router(admin_router, tags=["admin"], prefix="/admin")
+
+app.mount("/media", StaticFiles(directory='media'), name='media')

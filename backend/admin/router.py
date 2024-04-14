@@ -1,13 +1,19 @@
+import shutil
+
 from models import Pro
-from fastapi import APIRouter, status, Depends, HTTPException
+from fastapi import APIRouter, status, Depends, HTTPException, UploadFile, File
 from auth.settings import manager, get_user_info_start, get_admin_user
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_async_session, test_connection
-from admin.crud import get_product_list, create_products, get_one_product_from_id, delete_product_from_id
-from admin.schemas import Product, EditProduct
+from admin.crud import (get_product_list,
+                        create_products,
+                        get_one_product_from_id,
+                        delete_product_from_id,
+                        save_photo_in_db)
+from admin.schemas import Product, EditProduct, ProductView
 
 admin_router = APIRouter()
 
@@ -39,29 +45,42 @@ async def get_product_list_info(user=Depends(get_admin_user),
     return {"products": products}
 
 
+@admin_router.post('/upload_photo/',
+                    status_code=status.HTTP_200_OK)
+async def save_file_for_product(product_id: int,
+                                my_upload_file: UploadFile = File(...),
+                                user=Depends(get_admin_user),
+                                db: AsyncSession = Depends(get_async_session)):
+
+    data = await save_photo_in_db(db=db, product_id=product_id, file=my_upload_file)
+
+    return data
+
+
 @admin_router.post("/management/",
-                   response_model=Product,
+                   response_model=ProductView,
                    status_code=status.HTTP_201_CREATED)
 async def create_product(product: Product,
                          user=Depends(get_admin_user),
                          db: AsyncSession = Depends(get_async_session)):
-    """
-    <b>(Только для админа)</b>
+    # """
+    # <b>(Только для админа)</b>
+    #
+    # Создание нового продукта:
+    #
+    # - **isActive**: подставиться автоматически в <b>false</b>
+    # - **title**: string 100
+    # - **shortTitle**: string 50
+    # - **id**: подставиться автоматически в <b>int значение (начиная с 1)</b>
+    # - **img**: string 600 (путь до фото)
+    # - **text1**: text
+    # - **text2**: text
+    # - **text3**: text
+    # - **notes**: text
+    # """
 
-    Создание нового продукта:
-
-    - **isActive**: подставиться автоматически в <b>false</b>
-    - **title**: string 100
-    - **shortTitle**: string 50
-    - **id**: подставиться автоматически в <b>int значение (начиная с 1)</b>
-    - **img**: string 600
-    - **text1**: text
-    - **text2**: text
-    - **text3**: text
-    - **notes**: text
-    """
-
-    data = await create_products(db=db, product=product)
+    data = await create_products(db=db,
+                                 product=product)
     return data
 
 
