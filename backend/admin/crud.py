@@ -42,7 +42,7 @@ async def save_photo_in_db(db: AsyncSession,
     new_filename = f"{filename}_{str(time)}{ext}"
     path = f'/media/product/{new_filename}'
     # windows_absolute_path = os.path.abspath(path)
-    host_path = os.path.abspath(path)
+    host_path = os.path.abspath('http://5.35.84.51/' + path)
 
     with open(host_path, 'wb+') as buffer:
         shutil.copyfileobj(file.file, buffer)
