@@ -40,16 +40,18 @@ async def save_photo_in_db(db: AsyncSession,
     filename, ext = os.path.splitext(file.filename)
     time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     new_filename = f"{filename}_{str(time)}{ext}"
-    path = f'media/{new_filename}'
+    path = f'/media/product/{new_filename}'
+    # windows_absolute_path = os.path.abspath(path)
+    host_path = os.path.abspath(path)
 
-    with open(path, 'wb+') as buffer:
+    with open(host_path, 'wb+') as buffer:
         shutil.copyfileobj(file.file, buffer)
 
     product = await db.execute(select(Pro).filter(Pro.id == product_id))
     product_data = product.scalars().first()
 
     if product_data:
-        product_data.img = path
+        product_data.img = host_path
         await db.commit()
         await db.close()
         return product_data
