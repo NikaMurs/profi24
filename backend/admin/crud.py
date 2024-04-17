@@ -40,7 +40,7 @@ async def save_photo_in_db(db: AsyncSession,
     filename, ext = os.path.splitext(file.filename)
     time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     new_filename = f"{filename}_{str(time)}{ext}"
-    path = f'media/{new_filename}'
+    path = f'/home/project/media/product/{new_filename}'
 
     with open(path, 'wb+') as buffer:
         shutil.copyfileobj(file.file, buffer)
@@ -49,7 +49,7 @@ async def save_photo_in_db(db: AsyncSession,
     product_data = product.scalars().first()
 
     if product_data:
-        product_data.img = path
+        product_data.img = 'http://5.35.84.51:8080/' + path
         await db.commit()
         await db.close()
         return product_data
