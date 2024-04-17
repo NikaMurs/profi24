@@ -49,7 +49,7 @@ async def save_photo_in_db(db: AsyncSession,
     product_data = product.scalars().first()
 
     if product_data:
-        product_data.img = 'http://5.35.84.51:8080' + path
+        product_data.img = 'http://5.35.84.51:8080/' + path
         await db.commit()
         await db.close()
         return product_data
