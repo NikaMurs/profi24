@@ -1,10 +1,12 @@
 import datetime
 import os
 import shutil
+from typing import List, Dict
+
 from fastapi import UploadFile, File
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
-from models import Pro
+from models import Pro, Var01, Format, Pap, Bas, Tco, Nco
 
 
 async def get_product_list(db: AsyncSession):
@@ -96,3 +98,188 @@ async def delete_product_from_id(db: AsyncSession,
         return {"massage": "Product deleted successfully"}
     else:
         return None
+
+
+async def get_var_table(db: AsyncSession,
+                           product_id: int) -> List[Dict]:
+    query = (
+        select(Var01.isActive,
+               Var01.id,
+               Var01.name,
+               Var01.shortName,
+               Var01.img,
+               Var01.text1,
+               Var01.text2,
+               Var01.text3,
+               Var01.notes)
+        .join(Pro)
+        .where(Pro.id == product_id)
+    )
+
+    result = await db.execute(query)
+    data = result.fetchall()
+
+    column_names = result.keys()
+
+    formatted_data = []
+    for row in data:
+        formatted_row = dict(zip(column_names, row))
+        formatted_data.append(formatted_row)
+
+    return formatted_data
+
+
+async def get_format_table(db: AsyncSession,
+                           product_id: int) -> List[Dict]:
+    query = (
+        select(Format.isActive,
+               Format.id,
+               Format.name,
+               Format.img,
+               Format.paper_price,
+               Format.base_price,
+               Format.jpeg,
+               Format.psd,
+               Format.psd,
+               Format.text1,
+               Format.text2,
+               Format.text3,
+               Format.target_size,
+               Format.notes)
+        .join(Pro)
+        .where(Pro.id == product_id)
+    )
+
+    result = await db.execute(query)
+    data = result.fetchall()
+
+    column_names = result.keys()
+
+    formatted_data = []
+    for row in data:
+        formatted_row = dict(zip(column_names, row))
+        formatted_data.append(formatted_row)
+
+    return formatted_data
+
+
+async def get_paper_table(db: AsyncSession,
+                          product_id: int) -> List[Dict]:
+    query = (
+        select(Pap.isActive,
+               Pap.id,
+               Pap.name,
+               Pap.shortName,
+               Pap.img,
+               Pap.thickness,
+               Pap.text1,
+               Pap.text2,
+               Pap.text3,
+               Pap.notes)
+        .join(Pro)
+        .where(Pro.id == product_id)
+    )
+
+    result = await db.execute(query)
+    data = result.fetchall()
+
+    column_names = result.keys()
+
+    formatted_data = []
+    for row in data:
+        formatted_row = dict(zip(column_names, row))
+        formatted_data.append(formatted_row)
+
+    return formatted_data
+
+
+async def get_bas_table(db: AsyncSession,
+                        product_id: int) -> List[Dict]:
+    query = (
+        select(Bas.isActive,
+               Bas.id,
+               Bas.name,
+               Bas.img,
+               Bas.thickness,
+               Bas.weight,
+               Bas.price,
+               Bas.max_count,
+               Bas.text1,
+               Bas.text2,
+               Bas.text3,
+               Bas.notes)
+        .join(Pro)
+        .where(Pro.id == product_id)
+    )
+
+    result = await db.execute(query)
+    data = result.fetchall()
+
+    column_names = result.keys()
+
+    formatted_data = []
+    for row in data:
+        formatted_row = dict(zip(column_names, row))
+        formatted_data.append(formatted_row)
+
+    return formatted_data
+
+
+async def get_tco_table(db: AsyncSession,
+                        product_id: int) -> List[Dict]:
+    query = (
+        select(Tco.isActive,
+               Tco.id,
+               Tco.name,
+               Tco.shortName,
+               Tco.indicator,
+               Tco.factor,
+               Tco.img,
+               Tco.text1,
+               Tco.text2,
+               Tco.text3,
+               Tco.notes)
+        .join(Pro)
+        .where(Pro.id == product_id)
+    )
+
+    result = await db.execute(query)
+    data = result.fetchall()
+
+    column_names = result.keys()
+
+    formatted_data = []
+    for row in data:
+        formatted_row = dict(zip(column_names, row))
+        formatted_data.append(formatted_row)
+
+    return formatted_data
+
+
+# Todo добавить isActive
+async def get_nco_table(db: AsyncSession,
+                        product_id: int) -> List[Dict]:
+    query = (
+        select(Nco.id,
+               Nco.format,
+               Nco.thickness_block,
+               Nco.target_size,
+               Nco.weight,
+               Nco.guides_jpeg,
+               Nco.guides_psd,
+               Nco.guides_lndd)
+        .join(Pro)
+        .where(Pro.id == product_id)
+    )
+
+    result = await db.execute(query)
+    data = result.fetchall()
+
+    column_names = result.keys()
+
+    formatted_data = []
+    for row in data:
+        formatted_row = dict(zip(column_names, row))
+        formatted_data.append(formatted_row)
+
+    return formatted_data

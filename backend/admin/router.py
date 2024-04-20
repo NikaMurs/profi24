@@ -12,13 +12,19 @@ from admin.crud import (get_product_list,
                         create_products,
                         get_one_product_from_id,
                         delete_product_from_id,
-                        save_photo_in_db)
+                        save_photo_in_db,
+                        get_var_table,
+                        get_format_table,
+                        get_paper_table,
+                        get_bas_table,
+                        get_tco_table,
+                        get_nco_table)
 from admin.schemas import Product, EditProduct, ProductView
 
 admin_router = APIRouter()
 
 
-@admin_router.get("/management/",
+@admin_router.get("/management/adminProductList/",
                   response_model=Dict[str, List[Dict[str, Any]]],
                   status_code=status.HTTP_200_OK)
 async def get_product_list_info(user=Depends(get_admin_user),
@@ -121,4 +127,20 @@ async def delete_product(product_id: int,
     if data is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail='Product not found')
+    return data
+
+
+@admin_router.get("/management/adminProductInfo/",
+                  response_model=List[Dict],
+                  status_code=status.HTTP_200_OK)
+async def productInfo(id: int,
+                      user=Depends(get_admin_user),
+                      db: AsyncSession = Depends(get_async_session)):
+
+    # data = await get_var_table(db=db, product_id=id)
+    # data = await get_format_table(db=db, product_id=id)
+    # data = await get_paper_table(db=db, product_id=id)
+    # data = await get_bas_table(db=db, product_id=id)
+    # data = await get_tco_table(db=db, product_id=id)
+    data = await get_nco_table(db=db, product_id=id)
     return data

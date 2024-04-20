@@ -1,12 +1,12 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import (Integer,
                         String,
                         MetaData,
                         Boolean,
                         Float,
                         Enum,
-                        Text)
+                        Text, ForeignKey)
 
 metadata = MetaData()
 
@@ -55,12 +55,17 @@ class Pro(Base):
     text2: Mapped[str] = mapped_column(Text, nullable=True)
     text3: Mapped[str] = mapped_column(Text, nullable=True)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
+    format_id = relationship("Format", uselist=False, backref="parent")
+    pap_id = relationship("Pap", uselist=False, backref="parent")
+    bas_id = relationship("Bas", uselist=False, backref="parent")
+    tco_id = relationship("Tco", uselist=False, backref="parent")
+    var01_id = relationship("Var01", uselist=False, backref="parent")
+    nco_id = relationship("Nco", uselist=False, backref="parent")
 
 
-# TODO Добавить связь с таблицей product по id
-class For(Base):
+class Format(Base):
     """Формат"""
-    __tablename__ = 'for'
+    __tablename__ = 'format'
     __table_args__ = {'extend_existing': True}
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
@@ -77,9 +82,9 @@ class For(Base):
     text3: Mapped[str] = mapped_column(Text, nullable=True)
     target_size: Mapped[str] = mapped_column(String(100), nullable=False, default="")
     notes: Mapped[str] = mapped_column(Text, nullable=True)
+    pro_id: Mapped[int] = mapped_column(Integer, ForeignKey('pro.id'))
 
 
-# TODO Добавить связь с таблицей product по id
 class Pap(Base):
     """Бумага"""
     __tablename__ = 'pap'
@@ -94,11 +99,10 @@ class Pap(Base):
     text1: Mapped[str] = mapped_column(Text, nullable=True)
     text2: Mapped[str] = mapped_column(Text, nullable=True)
     text3: Mapped[str] = mapped_column(Text, nullable=True)
-    target_size: Mapped[str] = mapped_column(String(100), nullable=False, default="")
     notes: Mapped[str] = mapped_column(Text, nullable=True)
+    pro_id: Mapped[int] = mapped_column(Integer, ForeignKey('pro.id'))
 
 
-# TODO Добавить связь с таблицей product по id
 class Bas(Base):
     """Основа стариц"""
     __tablename__ = 'bas'
@@ -116,9 +120,9 @@ class Bas(Base):
     text2: Mapped[str] = mapped_column(Text, nullable=True)
     text3: Mapped[str] = mapped_column(Text, nullable=True)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
+    pro_id: Mapped[int] = mapped_column(Integer, ForeignKey('pro.id'))
 
 
-# TODO Добавить связь с таблицей product по id
 class Tco(Base):
     """Тип обложки"""
     __tablename__ = 'tco'
@@ -136,9 +140,9 @@ class Tco(Base):
     text2: Mapped[str] = mapped_column(Text, nullable=True)
     text3: Mapped[str] = mapped_column(Text, nullable=True)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
+    pro_id: Mapped[int] = mapped_column(Integer, ForeignKey('pro.id'))
 
 
-# TODO Добавить связь с таблицей product по id
 class Var01(Base):
     """Варианты обложки"""
     __tablename__ = 'var01'
@@ -153,10 +157,21 @@ class Var01(Base):
     text2: Mapped[str] = mapped_column(Text, nullable=True)
     text3: Mapped[str] = mapped_column(Text, nullable=True)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
+    pro_id: Mapped[int] = mapped_column(Integer, ForeignKey('pro.id'))
 
 
-# # TODO Добавить связь с таблицей product по id
-# class Nco(Base):
-#     """Направляющие для обложки"""
-#     __tablename__ = 'nco'
-#     __table_args__ = {'extend_existing': True}
+# TODO добавить isActive
+class Nco(Base):
+    """Направляющие для обложки"""
+    __tablename__ = 'nco'
+    __table_args__ = {'extend_existing': True}
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    format: Mapped[str] = mapped_column(String(100), nullable=True, default="")
+    thickness_block: Mapped[int] = mapped_column(Integer, default=0)
+    target_size: Mapped[str] = mapped_column(String(100), nullable=True, default="")
+    weight: Mapped[float] = mapped_column(Float, default=0)
+    guides_jpeg: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    guides_psd: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    guides_lndd: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    pro_id: Mapped[int] = mapped_column(Integer, ForeignKey('pro.id'))
