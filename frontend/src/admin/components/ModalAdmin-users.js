@@ -80,15 +80,15 @@ const ModalAdmin = ({ isOpen, onClose, modalMode, modalUserId, modalUserName }) 
                         </>
                         :
                         <>
-                            <div class="modalAdmin-info"><span>Страна:</span> {data.country}</div>
-                            <div class="modalAdmin-info"><span>Город:</span> {data.city}</div>
-                            <div class="modalAdmin-info"><span>Улица:</span> {data.street}</div>
-                            <div class="modalAdmin-info"><span>Профессия:</span> {data.profession}</div>
-                            <div class="modalAdmin-info"><span>Количество книг:</span> {data.countBook}</div>
-                            <div class="modalAdmin-info"><span>Сайт:</span> {data.site}</div>
-                            <div class="modalAdmin-info"><span>Вк:</span> {data.vk}</div>
-                            <div class="modalAdmin-info"><span>Телеграм:</span> {data.telegram}</div>
-                            <div class="modalAdmin-info"><span>WhatsApp:</span> {data.whatsapp}</div>
+                            <div className="modalAdmin-info"><span>Страна:</span> {data.country}</div>
+                            <div className="modalAdmin-info"><span>Город:</span> {data.city}</div>
+                            <div className="modalAdmin-info"><span>Улица:</span> {data.street}</div>
+                            <div className="modalAdmin-info"><span>Профессия:</span> {data.profession}</div>
+                            <div className="modalAdmin-info"><span>Количество книг:</span> {data.countBook}</div>
+                            <div className="modalAdmin-info"><span>Сайт:</span> {data.site}</div>
+                            <div className="modalAdmin-info"><span>Вк:</span> {data.vk}</div>
+                            <div className="modalAdmin-info"><span>Телеграм:</span> {data.telegram}</div>
+                            <div className="modalAdmin-info"><span>WhatsApp:</span> {data.whatsapp}</div>
                         </>}
                 </div>
             </div>

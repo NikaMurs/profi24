@@ -2,7 +2,7 @@ import '../style.css'
 import Header from '../components/Header'
 import { useEffect, useState } from 'react';
 import fetchTest from '../../functions/fetchTest';
-import ModalAdmin from '../components/ModalAdmin';
+import ModalAdmin from '../components/ModalAdmin-users';
 import OrdersTable from '../components/OrdersTable';
 
 

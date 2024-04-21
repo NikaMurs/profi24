@@ -286,9 +286,8 @@ th {
 }
 
 .addNewProductButton:hover {
-    background-color: rgb(52, 121, 56);
+    background-color: #51a327;
 }
-
 
 .modalAdmin {
     position: fixed;
@@ -308,8 +307,8 @@ th {
     background-color: #fefefe;
     padding: 20px;
     border: 1px solid #888;
-    width: 60%;
-    height: 60%;
+    width: 80%;
+    height: 80%;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -339,7 +338,7 @@ th {
 }
 
 .modalAdmin-content textarea {
-    flex-grow: 1; 
+    flex-grow: 1;
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -350,7 +349,7 @@ th {
 }
 
 .modalAdmin-content button {
-    background-color: #4CAF50;
+    background-color: #66CC33;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -358,6 +357,11 @@ th {
     width: 100%;
     border-radius: 5px;
     font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.modalAdmin-content button:hover {
+    background-color: #51a327;
 }
 
 .modalAdmin-info {
@@ -369,4 +373,61 @@ th {
 .modalAdmin-info span {
     font-size: 24px;
     font-weight: bold;
+}
+
+.modalAdmin input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: 200px;
+}
+
+.modalAdmin-buttons{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modalAdmin-buttons button{
+    width: 45%;
+}
+
+.modalAdmin-buttons .redButton{
+    background-color: #e40d0d;
+}
+
+.modalAdmin-buttons .redButton:hover{
+    background-color: #ae0b0b;
+}
+
+
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: 200px;
+}
+
+.search-bar button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #66CC33;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: #51a327;
 }
