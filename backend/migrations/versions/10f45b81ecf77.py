@@ -17,7 +17,7 @@ depends_on = None
 
 def upgrade():
     # Используйте op.rename_table для переименования таблицы
-    op.rename_table('for', 'format')
+    op.rename_table('format', 'format')
     op.execute('ALTER TABLE pro CHANGE COLUMN for_id format_id INT')
     op.alter_column('pro', 'for_id', new_column_name='format_id')
 

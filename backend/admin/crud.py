@@ -3,8 +3,8 @@ import os
 import shutil
 from typing import List, Dict
 
-from fastapi import UploadFile, File
-from sqlalchemy import select, func
+from fastapi import UploadFile, File, HTTPException
+from sqlalchemy import select, func, text, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import Pro, Var01, Format, Pap, Bas, Tco, Nco
 
@@ -60,22 +60,85 @@ async def save_photo_in_db(db: AsyncSession,
 
 
 async def create_products(db: AsyncSession,
-                          product):
+                          info: Dict) -> int:
 
-    data = Pro(
-        title=product.title,
-        shortTitle=product.shortTitle,
-        text1=product.text1,
-        text2=product.text2,
-        text3=product.text3,
-        notes=product.notes
-    )
+    table_type = info["tableType"]
+    new_product_info = info["newProduct"]
+    new_product = None
 
-    db.add(data)
-    await db.commit()
-    await db.refresh(data)
-    await db.close()
-    return data
+    if table_type == "pro":
+        new_product = Pro(**new_product_info)
+    elif table_type == "for":
+        new_product = Format(**new_product_info)
+    elif table_type == "pap":
+        new_product = Pap(**new_product_info)
+    elif table_type == "bas":
+        new_product = Bas(**new_product_info)
+    elif table_type == "tco":
+        new_product = Tco(**new_product_info)
+    elif table_type == "var":
+        new_product = Var01(**new_product_info)
+    elif table_type == "nco":
+        new_product = Nco(**new_product_info)
+
+    if new_product:
+
+        db.add(new_product)
+        await db.commit()
+        await db.refresh(new_product)
+        await db.close()
+        # if table_type in ["for", "pap", "bas", "tco", "var", "nco"]:
+        #     await db.flush()
+        #     pro_id = new_product_info.get("pro_id")
+        #     pro_result = await get_one_product_from_id(db=db, product_id=pro_id)
+        #     new_product_id = new_product.id
+        #     if pro_result:
+        #         if table_type == "for":
+        #             update_query = text("UPDATE pro SET format_id = :format_id WHERE id = :pro_id")
+        #             params = {"format_id": new_product_id, "pro_id": pro_id}
+        #             await db.execute(update_query, params)
+        #         elif table_type == "pap":
+        #             update_query = text("UPDATE pro SET pap_id = :pap_id WHERE id = :pro_id")
+        #             params = {"pap_id": new_product_id, "pro_id": pro_id}
+        #             await db.execute(update_query, params)
+        #         elif table_type == "bas":
+        #             update_query = text("UPDATE pro SET bas_id = :bas_id WHERE id = :pro_id")
+        #             params = {"bas_id": new_product_id, "pro_id": pro_id}
+        #             await db.execute(update_query, params)
+        #         elif table_type == "tco":
+        #             update_query = text("UPDATE pro SET tco_id = :tco_id WHERE id = :pro_id")
+        #             params = {"tco_id": new_product_id, "pro_id": pro_id}
+        #             await db.execute(update_query, params)
+        #         elif table_type == "var":
+        #             update_query = text("UPDATE pro SET var01_id = :var01_id WHERE id = :pro_id")
+        #             params = {"var01_id": new_product_id, "pro_id": pro_id}
+        #             await db.execute(update_query, params)
+        #         elif table_type == "nco":
+        #             update_query = text("UPDATE pro SET nco_id = :nco_id WHERE id = :pro_id")
+        #             params = {"nco_id": new_product_id, "pro_id": pro_id}
+        #             await db.execute(update_query, params)
+        #         else:
+        #             raise HTTPException(status_code=500, detail={"fail": "fail to get product table"})
+        #
+        #         await db.commit()
+        #         await db.refresh(pro_result)
+        #         await db.close()
+        #
+        #         return new_product.id
+        #     else:
+        #         await db.close()
+        #         raise HTTPException(status_code=500, detail={"fail": "fail to get product table"})
+        # else:
+        #     db.add(new_product)
+        #     await db.commit()
+        #     await db.refresh(new_product)
+        #     await db.close()
+
+        return new_product.id
+    else:
+        raise ValueError("Invalid table type: {}".format(table_type))
+
+
 
 
 async def get_one_product_from_id(db: AsyncSession,
@@ -100,13 +163,20 @@ async def delete_product_from_id(db: AsyncSession,
         return None
 
 
+async def get_title_product(db: AsyncSession,
+                            product_id: int) -> str:
+    data = await db.execute(select(Pro.title).where(Pro.id == product_id))
+    data = data.scalars().first()
+    return data
+
+
 async def get_var_table(db: AsyncSession,
                            product_id: int) -> List[Dict]:
     query = (
         select(Var01.isActive,
                Var01.id,
-               Var01.name,
-               Var01.shortName,
+               Var01.title,
+               Var01.shortTitle,
                Var01.img,
                Var01.text1,
                Var01.text2,
@@ -134,17 +204,17 @@ async def get_format_table(db: AsyncSession,
     query = (
         select(Format.isActive,
                Format.id,
-               Format.name,
+               Format.title,
                Format.img,
-               Format.paper_price,
-               Format.base_price,
-               Format.jpeg,
-               Format.psd,
-               Format.psd,
+               Format.price,
+               Format.basePrice,
+               Format.guideLinesJpeg,
+               Format.guideLinespsd,
+               Format.guideLineslndd,
                Format.text1,
                Format.text2,
                Format.text3,
-               Format.target_size,
+               Format.size,
                Format.notes)
         .join(Pro)
         .where(Pro.id == product_id)
@@ -168,10 +238,10 @@ async def get_paper_table(db: AsyncSession,
     query = (
         select(Pap.isActive,
                Pap.id,
-               Pap.name,
-               Pap.shortName,
+               Pap.title,
+               Pap.shortTitle,
                Pap.img,
-               Pap.thickness,
+               Pap.width,
                Pap.text1,
                Pap.text2,
                Pap.text3,
@@ -198,12 +268,12 @@ async def get_bas_table(db: AsyncSession,
     query = (
         select(Bas.isActive,
                Bas.id,
-               Bas.name,
+               Bas.title,
                Bas.img,
-               Bas.thickness,
+               Bas.width,
                Bas.weight,
                Bas.price,
-               Bas.max_count,
+               Bas.maxCount,
                Bas.text1,
                Bas.text2,
                Bas.text3,
@@ -230,10 +300,11 @@ async def get_tco_table(db: AsyncSession,
     query = (
         select(Tco.isActive,
                Tco.id,
-               Tco.name,
-               Tco.shortName,
-               Tco.indicator,
-               Tco.factor,
+               Tco.title,
+               Tco.shortTitle,
+               Tco.indicatorFormat,
+               Tco.multiplier,
+               Tco.width,
                Tco.img,
                Tco.text1,
                Tco.text2,
@@ -262,8 +333,8 @@ async def get_nco_table(db: AsyncSession,
     query = (
         select(Nco.id,
                Nco.format,
-               Nco.thickness_block,
-               Nco.target_size,
+               Nco.width,
+               Nco.size,
                Nco.weight,
                Nco.guides_jpeg,
                Nco.guides_psd,
