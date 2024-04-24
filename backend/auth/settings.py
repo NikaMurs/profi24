@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from auth.password import get_password_hash
 from models import User
 from schemas import UserCreate, Message, UserInfo
-from database import get_async_session, async_session_maker
+from database import get_async_session, async_session_maker, test_connection
 from config import SECRET
 
 manager = LoginManager(SECRET,
@@ -21,12 +21,13 @@ async def get_user(telephone: str):
     Функция для получения пользователя
     """
     async with async_session_maker() as session:
-        data = select(User).filter(User.telephone == telephone)
-        result = await session.execute(data)
-        return result.scalar()
+        await test_connection(session=session)
+        data = await session.execute(select(User).filter(User.telephone == telephone))
+        result = data.scalars().first()
+        return result
 
 
-def get_admin_user(user=Depends(manager)):
+async def get_admin_user(user=Depends(manager)):
     """
     Функция для получения пользователя-администратора.
 

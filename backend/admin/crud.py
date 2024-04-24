@@ -139,6 +139,72 @@ async def create_products(db: AsyncSession,
         raise ValueError("Invalid table type: {}".format(table_type))
 
 
+async def update_product(db: AsyncSession, info: Dict):
+    table_type = info["tableType"]
+    product_id = info["pro_id"]
+    updated_fields = info["updatedFields"]
+    model_class, product = None, None
+
+    if table_type == "pro":
+        model_class = Pro
+    elif table_type == "for":
+        model_class = Format
+    elif table_type == "pap":
+        model_class = Pap
+    elif table_type == "bas":
+        model_class = Bas
+    elif table_type == "tco":
+        model_class = Tco
+    elif table_type == "var":
+        model_class = Var01
+    elif table_type == "nco":
+        model_class = Nco
+
+    if model_class:
+        product = await db.get(model_class, product_id)
+
+    if product:
+        for key, value in updated_fields.items():
+            setattr(product, key, value)
+
+        await db.commit()
+    else:
+        raise ValueError(f"Product with id {product_id} not found")
+
+
+def get_table(table_type):
+    model_class = None
+
+    if table_type == "pro":
+        model_class = Pro
+    elif table_type == "for":
+        model_class = Format
+    elif table_type == "pap":
+        model_class = Pap
+    elif table_type == "bas":
+        model_class = Bas
+    elif table_type == "tco":
+        model_class = Tco
+    elif table_type == "var":
+        model_class = Var01
+    elif table_type == "nco":
+        model_class = Nco
+    return model_class
+
+
+async def delete_product(db: AsyncSession, info: Dict):
+    table_type = info["tableType"]
+    product_id = info["id"]
+
+    model_class = get_table(table_type)
+
+    product = await db.get(model_class, product_id)
+
+    if product:
+        await db.delete(product)
+        await db.commit()
+    else:
+        raise ValueError(f"Product with id {product_id} not found")
 
 
 async def get_one_product_from_id(db: AsyncSession,

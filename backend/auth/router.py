@@ -50,14 +50,14 @@ async def login(response: Response,
     telephone = data.username
     password = data.password
 
-    user = await get_user(telephone)
+    user = await get_user(telephone=telephone)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     elif verify_password(password, user.hashed_password):
         access_token = manager.create_access_token(data={"sub": telephone})
         # access_token_expires = datetime.datetime.now(datetime.timezone.utc) + timedelta(hours=72)
         # response.set_cookie(key='custom-cookie-name', value=access_token, expires=access_token_expires, httponly=True, samesite=None)
-        manager.set_cookie(response, access_token)
+        # manager.set_cookie(response, access_token)
         return {"access_token": access_token}
     else:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect password")
