@@ -1,12 +1,12 @@
 import datetime
 import os
 import shutil
-from typing import List, Dict
+from typing import List, Dict, Any
 
 from fastapi import UploadFile, File, HTTPException
 from sqlalchemy import select, func, text, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from models import Pro, Var01, Format, Pap, Bas, Tco, Nco
+from models import Pro, Var01, Format, Pap, Bas, Tco, Nco, User
 
 
 async def get_product_list(db: AsyncSession):
@@ -361,3 +361,65 @@ async def get_nco_table(db: AsyncSession,
         formatted_data.append(formatted_row)
 
     return formatted_data
+
+
+async def get_users_list(db: AsyncSession) -> Dict[str, List[Dict[str, Any]]]:
+    query = (
+        select(User.id,
+               User.first_name,
+               User.name,
+               User.second_name,
+               User.telephone,
+               User.email,
+               User.country,
+               User.city,
+               User.street,
+               User.profession,
+               User.countBook,
+               User.site,
+               User.vk,
+               User.telegram,
+               User.whatsapp,
+               User.money,
+               User.bonus,
+               User.bonusStatus)
+    )
+
+    result = await db.execute(query)
+    data = result.all()
+
+    keys = result.keys()
+    users_list = []
+
+    for row in data:
+        user_dict = dict(zip(keys, row))
+        fio = ' '.join(filter(None, [user_dict['first_name'], user_dict['name'], user_dict['second_name']]))
+        user_dict['fio'] = fio
+        user_dict.pop('first_name')
+        user_dict.pop('name')
+        user_dict.pop('second_name')
+
+        user_data = {
+            "id": user_dict["id"],
+            "fio": user_dict["fio"],
+            "phone": user_dict["telephone"],
+            "mail": user_dict["email"],
+            "telegram": user_dict["telegram"] or "",
+            "whatsapp": user_dict["whatsapp"] or "",
+            "country": user_dict["country"] or "",
+            "city": user_dict["city"] or "",
+            "balance": user_dict["money"],
+            "deposited": 0.00,
+            "debited": 0.00,
+            "balanceBonus": user_dict["bonus"],
+            "depositedBonus": 0,
+            "debitedBonus": 0,
+            "refund": 0.00,
+            "bonusStatus": user_dict["bonusStatus"] or "Base",
+            "communicationRating": "",
+            "pickinessRating": "",
+            "mistakesCount": 0
+        }
+        users_list.append(user_data)
+
+    return {"users": users_list}

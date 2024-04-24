@@ -21,7 +21,8 @@ from admin.crud import (get_product_list,
                         get_nco_table,
                         get_title_product,
                         update_product,
-                        delete_product)
+                        delete_product,
+                        get_users_list)
 from admin.schemas import Product, EditProduct, ProductView
 
 admin_router = APIRouter()
@@ -66,32 +67,6 @@ async def save_file_for_product(product_id: int,
     return data
 
 
-# @admin_router.post("/management/",
-#                    response_model=ProductView,
-#                    status_code=status.HTTP_201_CREATED)
-# async def create_product(product: Product,
-#                          user=Depends(get_admin_user),
-#                          db: AsyncSession = Depends(get_async_session)):
-#     # """
-#     # <b>(Только для админа)</b>
-#     #
-#     # Создание нового продукта:
-#     #
-#     # - **isActive**: подставиться автоматически в <b>false</b>
-#     # - **title**: string 100
-#     # - **shortTitle**: string 50
-#     # - **id**: подставиться автоматически в <b>int значение (начиная с 1)</b>
-#     # - **img**: string 600 (путь до фото)
-#     # - **text1**: text
-#     # - **text2**: text
-#     # - **text3**: text
-#     # - **notes**: text
-#     # """
-#
-#     data = await create_products(db=db,
-#                                  product=product)
-#     return data
-
 @admin_router.post("/management/",
                    response_model=Dict,
                    status_code=status.HTTP_201_CREATED)
@@ -122,46 +97,6 @@ async def delete_product_route(info: Dict,
     return {"message": "Product deleted successfully"}
 
 
-# @admin_router.patch("/management/",
-#                     response_model=EditProduct,
-#                     status_code=status.HTTP_200_OK)
-# async def edit_product(product_id: int,
-#                        info: EditProduct,
-#                        user=Depends(get_admin_user),
-#                        db: AsyncSession = Depends(get_async_session)):
-#     """
-#     <b>(Только для админа)</b>
-#
-#     Редактирование полей продукта по его <b>id</b>:
-#     - **id**: <b>нельзя редактировать</b>
-#     - **Остальные поля**: указаны в Example Value
-#     """
-#     product = await get_one_product_from_id(db=db, product_id=product_id)
-#
-#     if product is None:
-#         raise HTTPException(status_code=404, detail="Product not found")
-#
-#     for field, value in info.dict(exclude_unset=True).items():
-#         setattr(product, field, value)
-#
-#     await db.commit()
-#     return product
-
-
-# @admin_router.delete("/management/",
-#                     response_model=Dict,
-#                     status_code=status.HTTP_200_OK)
-# async def delete_product(product_id: int,
-#                          user=Depends(get_admin_user),
-#                          db: AsyncSession = Depends(get_async_session)):
-#
-#     data = await delete_product_from_id(db=db, product_id=product_id)
-#     if data is None:
-#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-#                             detail='Product not found')
-#     return data
-
-
 @admin_router.get("/management/adminProductInfo/",
                   response_model=Dict,
                   status_code=status.HTTP_200_OK)
@@ -186,3 +121,11 @@ async def productInfo(id: int,
         "var": var_data,
         "nco": nco_data
     }
+
+@admin_router.get("/management/users/",
+                  response_model=Dict,
+                  status_code=status.HTTP_200_OK)
+async def get_full_users_list(user=Depends(get_admin_user),
+                              db: AsyncSession = Depends(get_async_session)):
+    data = await get_users_list(db=db)
+    return data
