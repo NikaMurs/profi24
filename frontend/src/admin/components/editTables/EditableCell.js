@@ -1,4 +1,6 @@
 import { useState } from "react";
+import getCookie from "../../../functions/getCookie";
+import fetchTest from "../../../functions/fetchTest";
 
 
 export default function EditableCell({ width, type, data, setData, el, ind, tableType }) {
@@ -32,7 +34,7 @@ export default function EditableCell({ width, type, data, setData, el, ind, tabl
     };
 
     function handleChange(e) {
-        if (((type === 'price') || (type === 'basePrice') || (type === 'width') || (type === 'weight') || (type === 'maxCount')|| (type === 'multiplier')) && isNaN(Number(e.target.value))) {
+        if (((type === 'price') || (type === 'basePrice') || (type === 'width') || (type === 'weight') || (type === 'maxCount') || (type === 'multiplier')) && isNaN(Number(e.target.value))) {
             return;
         }
 
@@ -45,16 +47,38 @@ export default function EditableCell({ width, type, data, setData, el, ind, tabl
             const updatedData = [...data];
             updatedData[ind][type] = editedText;
 
-            setData(updatedData)
-            //Отправить постзапрос (тип таблицы (tableType) -> айди продукта(el.id -> fieldType -> новое значение) (если el.isNew === false)
-
             if (!el.isNew) {
                 const postData = {
                     tableType: tableType,
-                    productId: el.id,
-                    [type]: editedText
+                    pro_id: el.id,
+                    updatedFields: {
+                        [type]: editedText
+                    }
                 };
-                console.log(postData)
+
+                if (getCookie('authorization')) {
+                    fetchTest();
+                    fetch(`${process.env.REACT_APP_URL}/admin/management`, {
+                        method: 'PATCH',
+                        headers: {
+                            Authorization: `Bearer ${getCookie('authorization')}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(postData)
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Ошибка запроса");
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+
+                        })
+                        .catch(error => {
+                            console.error("Ошибка при обработке ответа:", error);
+                        });
+                }
             }
         }
 

@@ -1,5 +1,9 @@
+import fetchTest from "../../../functions/fetchTest";
+import getCookie from "../../../functions/getCookie";
+import { useSelector } from 'react-redux'
 
 export default function OnAddNewProductButtons({ isAddingNewProduct, setIsAddingNewProduct, data, setData, tableType }) {
+    const user = useSelector((state) => state.user)
 
     function handlerSaveNewProduct() {
         setIsAddingNewProduct(false)
@@ -7,18 +11,54 @@ export default function OnAddNewProductButtons({ isAddingNewProduct, setIsAdding
         delete updatedData[updatedData.length - 1].isNew;
         setData(updatedData)
 
-        const postData = {
-            tableType: tableType,
-            newProduct: updatedData[updatedData.length - 1]
-        };
-        console.log(postData) //Отправить пост запрос (тип таблицы (tableType) -> всю инфу о последнем элементе data)
+        let postData;
+        switch (tableType) {
+            case ('pro'):
+                postData = {
+                    tableType: tableType,
+                    newProduct: updatedData[updatedData.length - 1]
+                };
+                break;
+            default:
+                updatedData[updatedData.length - 1].pro_id = user.selectedPro;
+                postData = {
+                    tableType: tableType,
+                    newProduct: updatedData[updatedData.length - 1]
+                };
+        }
+
+
+        if (getCookie('authorization')) {
+            fetchTest();
+            fetch(`${process.env.REACT_APP_URL}/admin/management`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${getCookie('authorization')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Ошибка запроса");
+                    }
+                    return response.json();
+                })
+                .then(dataa => {
+                    const updatedData = [...data];
+                    (updatedData[updatedData.length - 1].id = dataa.id);
+                    setData(updatedData);
+                })
+                .catch(error => {
+                    console.error("Ошибка при обработке ответа:", error);
+                });
+        }
     }
 
     function handlerCancelNewProduct() {
         const updatedData = [...data];
         updatedData.pop();
         setData(updatedData)
-
         setIsAddingNewProduct(false)
     }
 

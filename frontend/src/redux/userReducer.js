@@ -16,16 +16,20 @@ const { reducer, actions } = createSlice({
     initialState: initialState,
     reducers: {
         setUser: (state, action) => {
-           state.isLogin = true;
-           state.id = action.payload.id;
-           state.surname = action.payload.first_name;
-           state.name = action.payload.name;
-           state.secondName = action.payload.secondName;
-           state.money = action.payload.money;
-           state.bonus = action.payload.bonus;
-           state.bonusStatus = action.payload.bonusStatus;
+            state.isLogin = true;
+            state.id = action.payload.id;
+            state.surname = action.payload.first_name;
+            state.name = action.payload.name;
+            state.secondName = action.payload.secondName;
+            state.money = action.payload.money;
+            state.bonus = action.payload.bonus;
+            state.bonusStatus = action.payload.bonusStatus;
         },
-        
+
+        setAdminSelectedPro: (state, action) => {
+            state.selectedPro = action.payload;
+        },
+
         unsetUser: (state, action) => {
             Object.assign(state, initialState);
         }
