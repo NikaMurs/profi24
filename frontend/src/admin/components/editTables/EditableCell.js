@@ -1,6 +1,7 @@
 import { useState } from "react";
 import getCookie from "../../../functions/getCookie";
 import fetchTest from "../../../functions/fetchTest";
+import getTableEndpoint from "../../functions/getTableEndpoint";
 
 
 export default function EditableCell({ width, type, data, setData, el, ind, tableType }) {
@@ -34,7 +35,7 @@ export default function EditableCell({ width, type, data, setData, el, ind, tabl
     };
 
     function handleChange(e) {
-        if (((type === 'price') || (type === 'basePrice') || (type === 'width') || (type === 'weight') || (type === 'maxCount') || (type === 'multiplier')) && isNaN(Number(e.target.value))) {
+        if (((type === 'price') || (type === 'basePrice') || (type === 'width') || (type === 'weight') || (type === 'maxCount') || (type === 'multiplier') || (type === 'mistakesCount')) && isNaN(Number(e.target.value))) {
             return;
         }
 
@@ -50,7 +51,7 @@ export default function EditableCell({ width, type, data, setData, el, ind, tabl
             if (!el.isNew) {
                 const postData = {
                     tableType: tableType,
-                    id: el.id,
+                    pro_id: el.id, //ПОМЕНЯТЬ ЭТУ ХУЙНЮ!
                     updatedFields: {
                         [type]: editedText
                     }
@@ -58,7 +59,7 @@ export default function EditableCell({ width, type, data, setData, el, ind, tabl
 
                 if (getCookie('authorization')) {
                     fetchTest();
-                    fetch(`${process.env.REACT_APP_URL}/admin/management`, {
+                    fetch(`${process.env.REACT_APP_URL}/admin/${getTableEndpoint(tableType)}`, {
                         method: 'PATCH',
                         headers: {
                             Authorization: `Bearer ${getCookie('authorization')}`,

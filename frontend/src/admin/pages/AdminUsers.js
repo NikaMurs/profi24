@@ -5,9 +5,11 @@ import fetchTest from '../../functions/fetchTest';
 import ModalAdmin from '../components/ModalAdmin-users';
 import OrdersTable from '../components/OrdersTable';
 import getCookie from '../../functions/getCookie';
+import EditableCell from '../components/editTables/EditableCell';
 
 
 export default function AdminOrders() {
+    const tableType = 'users';
     const [users, setUsers] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalMode, setModalMode] = useState(false);
@@ -19,7 +21,7 @@ export default function AdminOrders() {
 
     useEffect(() => {
         fetchTest()
-        fetch(`${process.env.REACT_APP_URL}/admin/users`, {
+        fetch(`${process.env.REACT_APP_URL}/admin/management/users`, { //ПОМЕНЯТЬ ЭТУ ХУЙНЮ!
             headers: {
                 Authorization: `Bearer ${getCookie('authorization')}`
             }
@@ -38,7 +40,7 @@ export default function AdminOrders() {
             });
     }, [])
 
-    function TableRow({ user }) {
+    function TableRow({ user, ind }) {
 
         function onClickOrderHistory(id, name) {
             console.log('get')
@@ -87,8 +89,10 @@ export default function AdminOrders() {
                 <td style={{ width: '80px' }}>{user.depositedBonus}</td>
                 <td style={{ width: '80px' }}>{user.debitedBonus}</td>
                 <td style={{ width: '80px' }}>{user.bonusStatus}</td>
-                <td style={{ width: '80px' }}>{user.communicationRating}</td>
-                <td style={{ width: '85px' }}>{user.pickinessRating}</td>
+                <EditableCell width={'80px'} type={'communicationRating'} data={users} setData={setUsers} el={user} ind={ind} tableType={tableType} />
+
+                <EditableCell width={'85px'} type={'pickinessRating'} data={users} setData={setUsers} el={user} ind={ind} tableType={tableType} />
+
                 <td style={{ width: '80px' }}>
                     <button className="tableButton tableButton_orderHistory" onClick={() => { onClickOrderHistory(user.id, user.fio) }} />
                 </td>
@@ -98,7 +102,7 @@ export default function AdminOrders() {
                 <td style={{ width: '110px' }}>
                     <button className="tableButton tableButton_notebook" onClick={() => { onClickNotebook(user.id, user.fio) }} />
                 </td>
-                <td style={{ width: '70px' }}>{user.mistakesCount}</td>
+                <EditableCell width={'70px'} type={'mistakesCount'} data={users} setData={setUsers} el={user} ind={ind} tableType={tableType} />
             </tr>
         )
     }
@@ -135,8 +139,8 @@ export default function AdminOrders() {
                                 <td style={{ width: '70px' }}>Кол-во косяков</td>
                             </tr>
 
-                            {users.map((user) => {
-                                return <TableRow key={user.id} user={user} />
+                            {users.map((user, ind) => {
+                                return <TableRow key={user.id} user={user} ind={ind} />
                             })}
                         </tbody>
                     </table>

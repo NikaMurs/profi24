@@ -50,10 +50,14 @@ const ModalAdmin = ({ isOpen, onClose, modalMode, modalUserId, modalUserName }) 
 
     const handleSave = () => {
         const lowerCaseMode = makeFirstLetterLowerCase(modalMode);
-        console.log('put')
-        console.log(`/admin/users/?id=${modalUserId}&type=${lowerCaseMode}`)
+        console.log('patch')
+        console.log(`/admin/users/`)
         const postData = {
-            [lowerCaseMode]: data
+            tableType: "users",
+            id: modalUserId,
+            updatedFields: {
+                [lowerCaseMode]: data
+            }
         }
         console.log(postData);
     };
