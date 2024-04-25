@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import fetchTest from '../../functions/fetchTest';
 import ModalAdmin from '../components/ModalAdmin-users';
 import OrdersTable from '../components/OrdersTable';
+import getCookie from '../../functions/getCookie';
 
 
 export default function AdminOrders() {
@@ -18,7 +19,11 @@ export default function AdminOrders() {
 
     useEffect(() => {
         fetchTest()
-        fetch(`/localFetch/adminUsers.json`)
+        fetch(`${process.env.REACT_APP_URL}/admin/users`, {
+            headers: {
+                Authorization: `Bearer ${getCookie('authorization')}`
+            }
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error("Ошибка запроса");
@@ -56,7 +61,7 @@ export default function AdminOrders() {
             setModalUserName(name);
         }
 
-        function onClickInfo(id, name){
+        function onClickInfo(id, name) {
             setIsModalOpen(true);
             setModalMode('Info');
             setModalUserId(id);
