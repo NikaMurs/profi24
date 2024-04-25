@@ -36,25 +36,35 @@ async def get_product_list(db: AsyncSession):
 
 
 async def save_photo_in_db(db: AsyncSession,
-                           product_id: int,
+                           tableType: str,
+                           id: int,
+                           tableName: str,
                            file: UploadFile = File(...)):
 
+    # Настройка файла
     filename, ext = os.path.splitext(file.filename)
     time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     new_filename = f"{filename}_{str(time)}{ext}"
-    path = f'media/{new_filename}'
+    path = f'media/{tableType}/{new_filename}'
 
+    # Открытие файла
     with open(path, 'wb+') as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    product = await db.execute(select(Pro).filter(Pro.id == product_id))
+    # Получение из базы
+    model_class = get_table(tableType)
+
+    product = await db.execute(select(model_class).filter(model_class.id == id))
     product_data = product.scalars().first()
 
     if product_data:
-        product_data.img = 'http://5.35.84.51:8080/' + path
-        await db.commit()
-        await db.close()
-        return product_data
+        if hasattr(product_data, tableName):
+            setattr(product_data, tableName, 'http://5.35.84.51:8080/' + path)
+            await db.commit()
+            await db.close()
+            return {'url': 'http://5.35.84.51:8080/' + path}
+        else:
+            raise ValueError(f"Invalid field name: {tableName}")
     else:
         return None
 
@@ -334,7 +344,6 @@ async def get_tco_table(db: AsyncSession,
     return formatted_data
 
 
-# Todo добавить isActive
 async def get_nco_table(db: AsyncSession,
                         product_id: int) -> List[Dict]:
     query = (
@@ -382,7 +391,10 @@ async def get_users_list(db: AsyncSession) -> Dict[str, List[Dict[str, Any]]]:
                User.whatsapp,
                User.money,
                User.bonus,
-               User.bonusStatus)
+               User.bonusStatus,
+               User.communicationRating,
+               User.pickinessRating,
+               User.mistakesCount)
     )
 
     result = await db.execute(query)
@@ -416,10 +428,26 @@ async def get_users_list(db: AsyncSession) -> Dict[str, List[Dict[str, Any]]]:
             "debitedBonus": 0,
             "refund": 0.00,
             "bonusStatus": user_dict["bonusStatus"] or "Base",
-            "communicationRating": "",
-            "pickinessRating": "",
-            "mistakesCount": 0
+            "communicationRating": user_dict["communicationRating"],
+            "pickinessRating": user_dict["pickinessRating"],
+            "mistakesCount": user_dict["mistakesCount"]
         }
         users_list.append(user_data)
 
     return {"users": users_list}
+
+
+async def update_users(db: AsyncSession, info: Dict):
+    id = info["id"]
+    updatedFields = info["updatedFields"]
+
+    user = await db.execute(select(User).filter(User.id == id))
+    user = user.scalars().first()
+
+    if user:
+        for key, value in updatedFields.items():
+            setattr(user, key, value)
+
+        await db.commit()
+    else:
+        raise ValueError(f"User with id {id} not found")

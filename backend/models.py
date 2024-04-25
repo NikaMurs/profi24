@@ -39,6 +39,11 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=True)
     is_superuser: Mapped[bool] = mapped_column(Boolean, nullable=True)
     is_verified: Mapped[bool] = mapped_column(Boolean, nullable=True)
+    supportHistory: Mapped[Text] = mapped_column(Text, nullable=True)
+    notebook: Mapped[Text] = mapped_column(Text, nullable=True)
+    communicationRating: Mapped[Text] = mapped_column(Text, nullable=True)
+    pickinessRating: Mapped[Text] = mapped_column(Text, nullable=True)
+    mistakesCount: Mapped[int] = mapped_column(Integer, default=0)
 
 
 class Pro(Base):

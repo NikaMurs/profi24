@@ -22,7 +22,8 @@ from admin.crud import (get_product_list,
                         get_title_product,
                         update_product,
                         delete_product,
-                        get_users_list)
+                        get_users_list,
+                        update_users)
 from admin.schemas import Product, EditProduct, ProductView
 
 admin_router = APIRouter()
@@ -55,14 +56,16 @@ async def get_product_list_info(user=Depends(get_admin_user),
     return {"products": products}
 
 
-@admin_router.post('/upload_photo/',
+@admin_router.patch('/management/upload_photo/',
                     status_code=status.HTTP_200_OK)
-async def save_file_for_product(product_id: int,
-                                my_upload_file: UploadFile = File(...),
+async def save_file_for_product(tableType: str,
+                                id: int,
+                                tableName: str,
+                                img: UploadFile = File(...),
                                 user=Depends(get_admin_user),
                                 db: AsyncSession = Depends(get_async_session)):
 
-    data = await save_photo_in_db(db=db, product_id=product_id, file=my_upload_file)
+    data = await save_photo_in_db(db=db, tableType=tableType, id=id, tableName=tableName, file=img)
 
     return data
 
@@ -122,10 +125,21 @@ async def productInfo(id: int,
         "nco": nco_data
     }
 
-@admin_router.get("/management/users/",
+
+@admin_router.get("/users/",
                   response_model=Dict,
                   status_code=status.HTTP_200_OK)
 async def get_full_users_list(user=Depends(get_admin_user),
                               db: AsyncSession = Depends(get_async_session)):
     data = await get_users_list(db=db)
     return data
+
+
+@admin_router.patch("/users/",
+                    response_model=Dict,
+                    status_code=status.HTTP_200_OK)
+async def update_users_route(info: Dict,
+                             user=Depends(get_admin_user),
+                             db: AsyncSession = Depends(get_async_session)):
+    data = await update_users(db, info)
+    return {"message": "User updated successfully"}
