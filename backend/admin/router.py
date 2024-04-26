@@ -23,7 +23,8 @@ from admin.crud import (get_product_list,
                         update_product,
                         delete_product,
                         get_users_list,
-                        update_users)
+                        update_users,
+                        get_info_users)
 from admin.schemas import Product, EditProduct, ProductView
 
 admin_router = APIRouter()
@@ -143,3 +144,15 @@ async def update_users_route(info: Dict,
                              db: AsyncSession = Depends(get_async_session)):
     data = await update_users(db, info)
     return {"message": "User updated successfully"}
+
+
+@admin_router.get("/users/info/",
+                  response_model=Dict | List,
+                  status_code=status.HTTP_200_OK)
+async def get_info_report_users(id: int,
+                                type: str,
+                                user=Depends(get_admin_user),
+                                db: AsyncSession = Depends(get_async_session)):
+    data = await get_info_users(db=db, id=id, type_info=type)
+
+    return data

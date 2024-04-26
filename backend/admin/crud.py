@@ -125,7 +125,7 @@ def get_table(table_type):
 
 async def update_product(db: AsyncSession, info: Dict):
     table_type = info["tableType"]
-    product_id = info["pro_id"]
+    product_id = info["id"]
     updated_fields = info["updatedFields"]
     product = None
 
@@ -225,9 +225,9 @@ async def get_format_table(db: AsyncSession,
                Format.img,
                Format.price,
                Format.basePrice,
-               Format.guideLinesJpeg,
-               Format.guideLinespsd,
-               Format.guideLineslndd,
+               Format.guides_jpeg,
+               Format.guides_psd,
+               Format.guides_indd,
                Format.text1,
                Format.text2,
                Format.text3,
@@ -348,6 +348,7 @@ async def get_nco_table(db: AsyncSession,
                         product_id: int) -> List[Dict]:
     query = (
         select(Nco.id,
+               Nco.isActive,
                Nco.format,
                Nco.width,
                Nco.size,
@@ -451,3 +452,33 @@ async def update_users(db: AsyncSession, info: Dict):
         await db.commit()
     else:
         raise ValueError(f"User with id {id} not found")
+
+
+async def get_info_users(db: AsyncSession,
+                         id: int,
+                         type_info: str) -> Dict | List:
+
+    user = await db.execute(select(User).filter(User.id == id))
+    user = user.scalars().first()
+    if user:
+        if type_info == "info":
+            user_full_info = {
+                "country": user.country,
+                "city": user.city,
+                "street": user.street,
+                "profession": user.profession,
+                "countBook": user.countBook,
+                "site": user.site,
+                "vk": user.vk,
+                "telegram": user.telegram,
+                "whatsapp": user.whatsapp
+            }
+            return user_full_info
+        elif type_info == "orderHistory":
+            return []
+        elif type_info == "supportHistory":
+            return {"supportHistory": user.supportHistory}
+        elif type_info == "notebook":
+            return {"notebook": user.notebook}
+    else:
+        raise HTTPException(404, detail="User not found")
