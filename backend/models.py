@@ -179,5 +179,5 @@ class Nco(Base):
     weight: Mapped[float] = mapped_column(Float, default=0)
     guides_jpeg: Mapped[str] = mapped_column(String(600), nullable=False, default="")
     guides_psd: Mapped[str] = mapped_column(String(600), nullable=False, default="")
-    guides_lndd: Mapped[str] = mapped_column(String(600), nullable=False, default="")
+    guides_indd: Mapped[str] = mapped_column(String(600), nullable=False, default="")
     pro_id: Mapped[int] = mapped_column(Integer, ForeignKey('pro.id'))
