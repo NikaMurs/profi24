@@ -198,7 +198,7 @@ async def get_nco_table(db: AsyncSession,
                Nco.weight,
                Nco.guides_jpeg,
                Nco.guides_psd,
-               Nco.guides_lndd)
+               Nco.guides_indd)
         .join(Pro)
         .where(Pro.id == id).where(Nco.isActive == 1)
     )
