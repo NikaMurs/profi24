@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import getCookie from '../../functions/getCookie';
+import fetchTest from '../../functions/fetchTest';
 
 const ModalAdmin = ({ isOpen, onClose, modalMode, modalUserId, modalUserName }) => {
     const [data, setData] = useState('');
@@ -50,16 +52,37 @@ const ModalAdmin = ({ isOpen, onClose, modalMode, modalUserId, modalUserName }) 
 
     const handleSave = () => {
         const lowerCaseMode = makeFirstLetterLowerCase(modalMode);
-        console.log('patch')
-        console.log(`/admin/users/`)
+
         const postData = {
-            tableType: "users",
             id: modalUserId,
             updatedFields: {
-                [lowerCaseMode]: data
+                [lowerCaseMode]: data,
             }
+        };
+
+        if (getCookie('authorization')) {
+            fetchTest();
+            fetch(`${process.env.REACT_APP_URL}/admin/users`, {
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Bearer ${getCookie('authorization')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Ошибка запроса");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                })
+                .catch(error => {
+                    console.error("Ошибка при обработке ответа:", error);
+                });
         }
-        console.log(postData);
     };
 
     const handleClose = () => {
