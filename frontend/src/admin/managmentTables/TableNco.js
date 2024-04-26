@@ -35,16 +35,13 @@ export default function TableNco({ productInfo }) {
                 <EditableCell width={'110px'} type={'size'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
                 <EditableCell width={'70px'} type={'weight'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
                 <td style={{ width: '30px' }}>
-                    {/* ПОМЕНЯТЬ ЭТУ ХУЙНЮ! */}
                     <DownloadImgButton el={el} imgType='guides_jpeg' ind={ind} data={data} setData={setData} tableType={tableType} />
                 </td>
                 <td style={{ width: '30px' }}>
-                    {/* ПОМЕНЯТЬ ЭТУ ХУЙНЮ! */}
                     <DownloadImgButton el={el} imgType='guides_psd' ind={ind} data={data} setData={setData} tableType={tableType} />
                 </td>
                 <td style={{ width: '30px' }}>
-                    {/* ПОМЕНЯТЬ ЭТУ ХУЙНЮ! */}
-                    <DownloadImgButton el={el} imgType='guides_lndd' ind={ind} data={data} setData={setData} tableType={tableType} />
+                    <DownloadImgButton el={el} imgType='guides_indd' ind={ind} data={data} setData={setData} tableType={tableType} />
                 </td>
             </tr>
         )

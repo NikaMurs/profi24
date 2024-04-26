@@ -51,7 +51,7 @@ export default function EditableCell({ width, type, data, setData, el, ind, tabl
             if (!el.isNew) {
                 const postData = {
                     tableType: tableType,
-                    pro_id: el.id, //ПОМЕНЯТЬ ЭТУ ХУЙНЮ!
+                    id: el.id,
                     updatedFields: {
                         [type]: editedText
                     }

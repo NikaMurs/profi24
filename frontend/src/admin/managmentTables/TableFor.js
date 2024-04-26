@@ -41,14 +41,13 @@ export default function TableFor({ productInfo }) {
                 <EditableCell width={'62px'} type={'basePrice'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
 
                 <td style={{ width: '30px' }}>
-                    <DownloadImgButton el={el} imgType='guideLinesJpeg' ind={ind} data={data} setData={setData} tableType={tableType} />
+                    <DownloadImgButton el={el} imgType='guides_jpeg' ind={ind} data={data} setData={setData} tableType={tableType} />
                 </td>
                 <td style={{ width: '30px' }}>
-                    <DownloadImgButton el={el} imgType='guideLinespsd' ind={ind} data={data} setData={setData} tableType={tableType} />
+                    <DownloadImgButton el={el} imgType='guides_psd' ind={ind} data={data} setData={setData} tableType={tableType} />
                 </td>
                 <td style={{ width: '30px' }}>
-                    {/* ПОМЕНЯТЬ ЭТУ ХУЙНЮ! */}
-                    <DownloadImgButton el={el} imgType='guideLineslndd' ind={ind} data={data} setData={setData} tableType={tableType} />
+                    <DownloadImgButton el={el} imgType='guides_indd' ind={ind} data={data} setData={setData} tableType={tableType} />
                 </td>
 
                 <EditableCell width={'100px'} type={'text1'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />

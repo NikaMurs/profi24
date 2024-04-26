@@ -61,6 +61,18 @@ export default function CalculatorPage() {
         if (selectedPosition === 'cnt') {
             getMaxCount()
         }
+        if (selectedPosition !== 'tco') {
+            data?.tco.forEach((el) => {
+                const arr = el.indicatorFormat.split(',').map(function (item) {
+                    return parseInt(item.trim(), 10);
+                });
+                if (arr.includes(selectedValues.for?.id)) {
+                    el.hide = false;
+                } else {
+                    el.hide = true;
+                }
+            })
+        }
     }, [selectedPosition])
 
     function getPrice() {
@@ -119,11 +131,10 @@ export default function CalculatorPage() {
         if (data !== null && selectedValues?.for !== undefined) {
             data.for.forEach((el, ind) => {
                 if (el.id === selectedValues.for.id) {
-                    // ПОМЕНЯТЬ ЭТУ ХУЙНЮ!
                     size = data.for[ind].size;
-                    urlJpeg = data.for[ind].guideLinesJpeg;
-                    urlPsd = data.for[ind].guideLinespsd;
-                    urlIndd = data.for[ind].guideLineslndd;
+                    urlJpeg = data.for[ind].guides_jpeg;
+                    urlPsd = data.for[ind].guides_psd;
+                    urlIndd = data.for[ind].guides_indd;
                 }
             })
         }
@@ -162,7 +173,7 @@ export default function CalculatorPage() {
                     size = el.size;
                     urlJpeg = el.guides_jpeg;
                     urlPsd = el.guides_psd;
-                    urlIndd = el.guides_lndd;
+                    urlIndd = el.guides_indd;
                     break;
                 }
             }
@@ -334,7 +345,7 @@ export default function CalculatorPage() {
             </div>
 
             <div className="innerCard">
-                <div className="innerCardItem  hide">
+                <div className="innerCardItem hide">
                     {selectedPosition !== 'cnt' ? (
                         <>
                             <div className="innerCardItemTitle">
@@ -347,14 +358,16 @@ export default function CalculatorPage() {
                             <div className="innerCardItemContent">
                                 {data === null ? <></> :
                                     data[selectedPosition].map((el) => {
-                                        return (
-                                            <div className="innerCardItemBlock" key={`${selectedPosition}_${el.id}`} onClick={() => { onClickCardItemBlock(el.id, el.title) }}>
-                                                <div className="innerCardItemBlockTitleWrapper">
-                                                    <p className="innerCardItemBlockTitle">{el.title}</p>
+                                        if (!el.hide) {
+                                            return (
+                                                <div className="innerCardItemBlock" key={`${selectedPosition}_${el.id}`} onClick={() => { onClickCardItemBlock(el.id, el.title) }}>
+                                                    <div className="innerCardItemBlockTitleWrapper">
+                                                        <p className="innerCardItemBlockTitle">{el.title}</p>
+                                                    </div>
+                                                    <div className="innerCardItemBlockSquare" style={{ backgroundImage: `url('${el.img}` }}></div>
                                                 </div>
-                                                <div className="innerCardItemBlockSquare" style={{ backgroundImage: `url('${el.img}` }}></div>
-                                            </div>
-                                        )
+                                            )
+                                        }
                                     })}
                             </div>
                         </>

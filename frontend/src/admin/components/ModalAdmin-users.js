@@ -30,23 +30,27 @@ const ModalAdmin = ({ isOpen, onClose, modalMode, modalUserId, modalUserName }) 
         if (isOpen) {
             const lowerCaseMode = makeFirstLetterLowerCase(modalMode);
 
-            console.log('get')
-            console.log(`/admin/users/?id=${modalUserId}&type=${lowerCaseMode}`)
-
-            fetch(`/localFetch/adminUser${modalMode}${modalUserId}.json`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Ошибка запроса");
-                    }
-                    return response.json();
+            if (getCookie('authorization')) {
+                fetchTest();
+                fetch(`${process.env.REACT_APP_URL}/admin/users/info/?id=${modalUserId}&type=${lowerCaseMode}`, {
+                    headers: {
+                        Authorization: `Bearer ${getCookie('authorization')}`,
+                        'Content-Type': 'application/json'
+                    },
                 })
-                .then(data => {
-                    console.log(data)
-                    setData(data[lowerCaseMode]);
-                })
-                .catch(error => {
-                    console.error("Ошибка при обработке ответа:", error);
-                });
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Ошибка запроса");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        setData(data[lowerCaseMode])
+                    })
+                    .catch(error => {
+                        console.error("Ошибка при обработке ответа:", error);
+                    });
+            }
         }
     }, [isOpen])
 
