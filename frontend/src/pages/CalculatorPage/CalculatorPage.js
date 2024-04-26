@@ -2,8 +2,12 @@ import { useEffect, useState } from 'react'
 import './calculatorPage.css'
 import formatPrice from '../../functions/formatPrice';
 import Modal from '../../components/Modal/Modal';
+import fetchTest from '../../functions/fetchTest';
+import { useParams } from 'react-router-dom';
 
 export default function CalculatorPage() {
+    const { productId } = useParams();
+
     const [data, setData] = useState(null)
     const [selectedPosition, setSelectedPosition] = useState('for');
     const [selectedValues, setSelectedValues] = useState(null)
@@ -11,21 +15,23 @@ export default function CalculatorPage() {
     const [numberOfSpreads, setNumberOfSpreads] = useState(1);
     const [numberOfBooks, setNumberOfBooks] = useState(1);
     const [showModal, setShowModal] = useState(false);
+    const [maxCount, setMaxCount] = useState(1);
 
 
     useEffect(() => {
-        fetch("/localFetch/productInfo.json")
+        fetchTest();
+        fetch(`${process.env.REACT_APP_URL}/productInfo/?id=${productId}`)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error("Ошибка запроса");
+                    console.log("Ошибка запроса /test");
                 }
                 return response.json();
             })
             .then(data => {
-                setData(data.product);
+                setData(data.product)
             })
             .catch(error => {
-                console.error("Ошибка при обработке ответа:", error);
+                console.log("Ошибка при обработке ответа: /test", error);
             });
     }, [])
 
@@ -33,7 +39,7 @@ export default function CalculatorPage() {
         if (data) {
             const settingsTitleArr = [];
             let selectedValue = {
-                pro: 1, //id продукта
+                pro: productId
             }
             data.calculatorSettings.forEach((el) => {
                 if (el.id === 'cnt') {
@@ -51,6 +57,12 @@ export default function CalculatorPage() {
         }
     }, [data])
 
+    useEffect(() => {
+        if (selectedPosition === 'cnt') {
+            getMaxCount()
+        }
+    }, [selectedPosition])
+
     function getPrice() {
         let forPrice;
         let forBasePrice;
@@ -62,25 +74,35 @@ export default function CalculatorPage() {
         let costBlock;
 
         let costOneBook = 0;
-        let costTotal = 0
+        let costTotal = 0;
+
         if (data !== null && selectedValues?.for !== undefined && selectedValues?.bas !== undefined && selectedValues?.tco !== undefined) {
+
             data.for.forEach((el, ind) => {
                 if (el.id === selectedValues.for.id) {
                     forPrice = data.for[ind].price
                     forBasePrice = data.for[ind].basePrice
                 }
+            })
+
+            data.bas.forEach((el, ind) => {
                 if (el.id === selectedValues.bas.id) {
                     basPrice = data.bas[ind].price
                 }
+            })
+
+            data.tco.forEach((el, ind) => {
                 if (el.id === selectedValues.tco.id) {
                     multiplier = data.tco[ind].multiplier
                 }
             })
+
             costBlock = (forPrice + basPrice) * numberOfSpreads;
             costСover = forBasePrice * multiplier;
 
             costOneBook = formatPrice(costBlock + costСover);
             costTotal = formatPrice((costBlock + costСover) * numberOfBooks);
+
         }
 
         return {
@@ -97,10 +119,11 @@ export default function CalculatorPage() {
         if (data !== null && selectedValues?.for !== undefined) {
             data.for.forEach((el, ind) => {
                 if (el.id === selectedValues.for.id) {
+                    // ПОМЕНЯТЬ ЭТУ ХУЙНЮ!
                     size = data.for[ind].size;
                     urlJpeg = data.for[ind].guideLinesJpeg;
-                    urlPsd = data.for[ind].guideLinesPsd;
-                    urlIndd = data.for[ind].guideLinesIndd;
+                    urlPsd = data.for[ind].guideLinespsd;
+                    urlIndd = data.for[ind].guideLineslndd;
                 }
             })
         }
@@ -120,10 +143,12 @@ export default function CalculatorPage() {
 
         if (data !== null && selectedValues?.for !== undefined && selectedValues?.pap !== undefined && selectedValues?.bas !== undefined) {
             let width = 0;
-            data.for.forEach((el, ind) => {
+            data.pap.forEach((el, ind) => {
                 if (el.id === selectedValues.pap.id) {
                     width = width + data.pap[ind].width
                 }
+            })
+            data.bas.forEach((el, ind) => {
                 if (el.id === selectedValues.bas.id) {
                     width = width + data.bas[ind].width
                 }
@@ -132,22 +157,23 @@ export default function CalculatorPage() {
 
             for (let i = 0; i < data.nco.length; i++) {
                 const el = data.nco[i];
-                if (el.forTitle === selectedValues.for.title) {
+
+                if (el.format === selectedValues.for.title) {
                     size = el.size;
-                    urlJpeg = el.guideLinesJpeg;
-                    urlPsd = el.guideLinesPsd;
-                    urlIndd = el.guideLinesIndd;
+                    urlJpeg = el.guides_jpeg;
+                    urlPsd = el.guides_psd;
+                    urlIndd = el.guides_lndd;
                     break;
                 }
             }
             data.nco.forEach((el, ind) => {
-                if (el.forTitle === selectedValues.for.title) {
+                if (el.format === selectedValues.for.title) {
                     if (width > el.width) {
                         if (data.nco[ind + 1]) {
                             size = data.nco[ind + 1].size
-                            urlJpeg = data.nco[ind + 1].guideLinesJpeg;
-                            urlPsd = data.nco[ind + 1].guideLinesPsd;
-                            urlIndd = data.nco[ind + 1].guideLinesIndd;
+                            urlJpeg = data.nco[ind + 1].guides_jpeg;
+                            urlPsd = data.nco[ind + 1].guides_jpeg;
+                            urlIndd = data.nco[ind + 1].guides_jpeg;
                         } else {
                             size = 'XXXxXXX'
                         }
@@ -235,6 +261,14 @@ export default function CalculatorPage() {
     function closeModal() {
         setShowModal(false);
     };
+
+    function getMaxCount() {
+        data.bas.forEach((el, ind) => {
+            if (el.id === selectedValues.bas.id) {
+                setMaxCount(data.bas[ind].maxCount)
+            }
+        })
+    }
 
     return (
         <main>
@@ -330,7 +364,7 @@ export default function CalculatorPage() {
                                 <p className="innerCardItemRangeText">Количество разворотов</p>
                                 <div className="rangeWrapper">
                                     <label className="rangeLabelAmount" id="rangeLabelAmount0">{numberOfSpreads}</label>
-                                    <input className="rangeAmount" id="rangeAmount0" type="range" min="1" max={data.cnt} step="1" value={numberOfSpreads} onChange={handleSpreadChange} />
+                                    <input className="rangeAmount" id="rangeAmount0" type="range" min="1" max={maxCount} step="1" value={numberOfSpreads} onChange={handleSpreadChange} />
                                 </div>
                             </div>
                             <div className="innerCardItemRange">

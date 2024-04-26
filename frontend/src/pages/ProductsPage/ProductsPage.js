@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import './productsPage.css'
 import { useEffect, useState } from 'react'
+import fetchTest from '../../functions/fetchTest'
 
 export default function ProductsPage() {
     // Калькулятор делает запрос ??? (get, product-id)
@@ -12,18 +13,19 @@ export default function ProductsPage() {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        fetch("./localFetch/productsList.json")
+        fetchTest();
+        fetch(`${process.env.REACT_APP_URL}/productsList`)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error("Ошибка запроса");
+                    console.log("Ошибка запроса /test");
                 }
                 return response.json();
             })
             .then(data => {
-                setData(data.products);
+                setData(data.products)
             })
             .catch(error => {
-                console.error("Ошибка при обработке ответа:", error);
+                console.log("Ошибка при обработке ответа: /test", error);
             });
     }, [])
 

@@ -1,3 +1,6 @@
+import fetchTest from "../../../functions/fetchTest";
+import getCookie from "../../../functions/getCookie";
+import getTableEndpoint from "../../functions/getTableEndpoint";
 
 export default function ChangeIsActive({ el, ind, data, setData, tableType }) {
 
@@ -10,10 +13,36 @@ export default function ChangeIsActive({ el, ind, data, setData, tableType }) {
         if (!el.isNew) {
             const postData = {
                 tableType: tableType,
-                productId: el.id,
-                isActive: updatedData[ind].isActive
+                pro_id: el.id, //ПОМЕНЯТЬ ЭТУ ХУЙНЮ!
+                updatedFields: {
+                    isActive: updatedData[ind].isActive
+                }
             };
-            console.log(postData) //Отправить пост запрос (тип таблицы (tableType) -> айди продукта(el.id) -> isActive -> новое значение) (если el.isNew === false)
+
+            if (getCookie('authorization')) {
+                fetchTest();
+                fetch(`${process.env.REACT_APP_URL}/admin/${getTableEndpoint(tableType)}`, {
+                    method: 'PATCH',
+                    headers: {
+                        Authorization: `Bearer ${getCookie('authorization')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(postData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Ошибка запроса");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+
+                    })
+                    .catch(error => {
+                        console.error("Ошибка при обработке ответа:", error);
+                    });
+            }
+
         }
     }
 

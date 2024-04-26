@@ -3,11 +3,11 @@ import './modal.css'
 export default function Modal({ closeModal, showModal }) {
     function handleClose() {
         closeModal();
-      };
+    };
 
-      function handleButtonClick() {
+    function handleButtonClick() {
         handleClose();
-      };
+    };
 
     return (
         <div className="modal_overlay" onClick={handleClose}>
@@ -15,9 +15,9 @@ export default function Modal({ closeModal, showModal }) {
                 <h2>Скачать направляющие</h2>
                 <p>{`для ${showModal.title}`}</p>
                 <div className="modal_buttonContainer">
-                    <a href={showModal.urlJpeg} onClick={handleButtonClick}>Jpeg</a>
-                    <a href={showModal.urlPsd} onClick={handleButtonClick}>Psd</a>
-                    <a href={showModal.urlIndd} onClick={handleButtonClick}>Indd</a>
+                    <a href={showModal.urlJpeg} download target="_blank" onClick={handleButtonClick} rel="noreferrer">Jpeg</a>
+                    <a href={showModal.urlPsd} download target="_blank" onClick={handleButtonClick} rel="noreferrer">Psd</a>
+                    <a href={showModal.urlIndd} download target="_blank"  onClick={handleButtonClick} rel="noreferrer">Indd</a>
                 </div>
             </div>
         </div>

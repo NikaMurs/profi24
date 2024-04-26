@@ -37,6 +37,7 @@
     color: white;
     text-decoration: none;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .modal_buttonContainer a:hover {
