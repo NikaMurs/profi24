@@ -463,15 +463,17 @@ async def get_info_users(db: AsyncSession,
     if user:
         if type_info == "info":
             user_full_info = {
-                "country": user.country,
-                "city": user.city,
-                "street": user.street,
-                "profession": user.profession,
-                "countBook": user.countBook,
-                "site": user.site,
-                "vk": user.vk,
-                "telegram": user.telegram,
-                "whatsapp": user.whatsapp
+                "info": {
+                    "country": user.country,
+                    "city": user.city,
+                    "street": user.street,
+                    "profession": user.profession,
+                    "countBook": user.countBook,
+                    "site": user.site,
+                    "vk": user.vk,
+                    "telegram": user.telegram,
+                    "whatsapp": user.whatsapp
+                }
             }
             return user_full_info
         elif type_info == "orderHistory":
