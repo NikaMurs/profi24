@@ -1,4 +1,7 @@
 import React from 'react';
+import getCookie from '../../../functions/getCookie';
+import fetchTest from '../../../functions/fetchTest';
+import getTableEndpoint from '../../functions/getTableEndpoint';
 
 export default function DownloadImgButton({ el, ind, imgType, data, setData, tableType }) {
 
@@ -11,23 +14,40 @@ export default function DownloadImgButton({ el, ind, imgType, data, setData, tab
     }
 
     function handleFileSelect(event) {
+        const updatedData = [...data];
+
         const file = event.target.files[0];
         if (!file) return;
 
         const formData = new FormData();
-        formData.append('image', file);
+        formData.append('img', file);
 
-        const postData = {
-            tableType: tableType,
-            productId: el.id,
-            [imgType]: formData,
-        };
 
-        console.log(postData) // Отправить пост запрос (тип таблицы (tableType) -> айди продукта(el.id) -> url
-
-        const updatedData = [...data];
-        updatedData[ind][imgType] = 'url...'
-        setData(updatedData)
+        if (getCookie('authorization')) {
+            fetchTest();
+            fetch(`${process.env.REACT_APP_URL}/admin/${getTableEndpoint(tableType)}/upload_photo/?tableType=${tableType}&id=${el.id}&tableName=${imgType}`, {
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Bearer ${getCookie('authorization')}`,
+                },
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Ошибка запроса");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    updatedData[ind][imgType] = data.url
+                    console.log(updatedData[ind])
+                    console.log(imgType)
+                    setData(updatedData)
+                })
+                .catch(error => {
+                    console.error("Ошибка при обработке ответа:", error);
+                });
+        }
     }
 
     return (

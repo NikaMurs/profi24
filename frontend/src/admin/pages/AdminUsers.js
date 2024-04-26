@@ -21,7 +21,7 @@ export default function AdminOrders() {
 
     useEffect(() => {
         fetchTest()
-        fetch(`${process.env.REACT_APP_URL}/admin/management/users`, { //ПОМЕНЯТЬ ЭТУ ХУЙНЮ!
+        fetch(`${process.env.REACT_APP_URL}/admin/users`, {
             headers: {
                 Authorization: `Bearer ${getCookie('authorization')}`
             }
