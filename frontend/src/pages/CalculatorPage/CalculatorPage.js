@@ -275,7 +275,7 @@ export default function CalculatorPage() {
 
     function getMaxCount() {
         data.bas.forEach((el, ind) => {
-            if (el.id === selectedValues.bas.id) {
+            if (el.id === selectedValues.bas?.id) {
                 setMaxCount(data.bas[ind].maxCount)
             }
         })
@@ -303,13 +303,16 @@ export default function CalculatorPage() {
                     <p className="calculatorHeaderCenterText ">{data?.title}</p>
                     {data?.calculatorSettings.map((el) => {
                         return (
-                            <p key={el.id} className={`calculatorHeaderCenterText ${selectedPosition === el.id ? 'calculatorHeaderCenterTextSelect' : ''}`} id={el.id}>
-                                {selectedValues === null ? <></> :
-                                    el.id === 'cnt' ? 'Выбрать' :
-                                        selectedValues[el.id] === (undefined) ? 'Выбрать' :
-                                            selectedValues[el.id].title
-                                }
-                            </p>
+                            <label className="calculatorHeaderCenterRadio" key={el.id}>
+                                <input type="radio" id={el.id} name="centerLeft" checked={selectedPosition === el.id} onChange={handleRadioChange} />
+                                <p key={el.id} className={`calculatorHeaderCenterText ${selectedPosition === el.id ? 'calculatorHeaderCenterTextSelect' : ''}`} id={el.id}>
+                                    {selectedValues === null ? <></> :
+                                        el.id === 'cnt' ? 'Выбрать' :
+                                            selectedValues[el.id] === (undefined) ? 'Выбрать' :
+                                                selectedValues[el.id].title
+                                    }
+                                </p>
+                            </label>
                         )
                     })}
                 </div>

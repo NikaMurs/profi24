@@ -4,12 +4,6 @@ import { useEffect, useState } from 'react'
 import fetchTest from '../../functions/fetchTest'
 
 export default function ProductsPage() {
-    // Калькулятор делает запрос ??? (get, product-id)
-    // Обработка ответа запроса
-    // заполняются поля калькулятора исходя из ответа на запрос
-    // прикрутить выбор снизу
-    // переделать окна выбора под реакт
-
     const [data, setData] = useState(null);
 
     useEffect(() => {
