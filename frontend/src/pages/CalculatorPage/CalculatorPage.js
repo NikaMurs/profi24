@@ -3,10 +3,11 @@ import './calculatorPage.css'
 import formatPrice from '../../functions/formatPrice';
 import Modal from '../../components/Modal/Modal';
 import fetchTest from '../../functions/fetchTest';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export default function CalculatorPage() {
     const { productId } = useParams();
+    const navigate = useNavigate();
 
     const [data, setData] = useState(null)
     const [selectedPosition, setSelectedPosition] = useState('for');
@@ -34,6 +35,29 @@ export default function CalculatorPage() {
                 console.log("Ошибка при обработке ответа: /test", error);
             });
     }, [])
+
+    useEffect(() => {
+        if (selectedValues) {
+            selectedValues.tco = undefined
+            setSelectedValues(prev => ({
+                ...prev,
+                ...prev.tco = undefined
+            }))
+        }
+    }, [selectedValues?.for])
+
+    useEffect(() => {
+        setNumberOfSpreads(1)
+        if (selectedValues) {
+            setSelectedValues(prev => ({
+                ...prev,
+                ...prev.cnt = {
+                    numberOfSpreads: numberOfSpreads,
+                    numberOfBooks: numberOfBooks
+                }
+            }))
+        }
+    }, [selectedValues?.bas])
 
     useEffect(() => {
         if (data) {
@@ -285,7 +309,7 @@ export default function CalculatorPage() {
         <main>
             <div className="calculatorHeader">
                 <div className="calculatorHeaderLeft">
-                    <label className="calculatorHeaderLeftRadio">
+                    <label className="calculatorHeaderLeftRadio" onClick={() => { navigate('/products') }}>
                         <input type="radio" disabled />
                         <p>Технология печати</p>
                     </label>
@@ -300,7 +324,7 @@ export default function CalculatorPage() {
                 </div>
 
                 <div className="calculatorHeaderCenter">
-                    <p className="calculatorHeaderCenterText ">{data?.title}</p>
+                    <p className="calculatorHeaderCenterText " onClick={() => { navigate('/products') }}>{data?.title}</p>
                     {data?.calculatorSettings.map((el) => {
                         return (
                             <label className="calculatorHeaderCenterRadio" key={el.id}>
