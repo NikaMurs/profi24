@@ -59,10 +59,10 @@ async def save_photo_in_db(db: AsyncSession,
 
     if product_data:
         if hasattr(product_data, tableName):
-            setattr(product_data, tableName, 'http://5.35.84.51:8080/' + path)
+            setattr(product_data, tableName, 'https://backend.profibook.pro/' + path)
             await db.commit()
             await db.close()
-            return {'url': 'http://5.35.84.51:8080/' + path}
+            return {'url': 'https://backend.profibook.pro/' + path}
         else:
             raise ValueError(f"Invalid field name: {tableName}")
     else:
