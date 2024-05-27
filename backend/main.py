@@ -16,9 +16,12 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://profibook.pro/",
-        "http://profibook.pro/",
-        "https://backend.profibook.pro/",
+        "https://profibook.pro",
+        "https://profibook.pro:8000",
+        "http://profibook.pro",
+        "http://profibook.pro:8000",
+        "https://backend.profibook.pro",
+        "https://backend.profibook.pro:8000",
         "http://localhost",
         "http://localhost:8080",
         "http://localhost:3000",
