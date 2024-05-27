@@ -18,6 +18,7 @@ app.add_middleware(
     allow_origins=[
         "https://profibook.pro/",
         "http://profibook.pro/",
+        "https://backend.profibook.pro/",
         "http://localhost",
         "http://localhost:8080",
         "http://localhost:3000",
