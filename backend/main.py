@@ -26,7 +26,8 @@ app.add_middleware(
         "http://5.35.84.51:8080",
         "http://profi24test.profi24.beget.tech",
         "https://api.profibook.pro",
-        "https://api.profibook.pro:8080"
+        "https://api.profibook.pro:8080",
+        "https://profibook.pro/"
     ],
     allow_credentials=True,
     allow_methods=["*"],
