@@ -16,6 +16,8 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        "https://profibook.pro/",
+        "http://profibook.pro/",
         "http://localhost",
         "http://localhost:8080",
         "http://localhost:3000",
@@ -27,7 +29,6 @@ app.add_middleware(
         "http://profi24test.profi24.beget.tech",
         "https://api.profibook.pro",
         "https://api.profibook.pro:8080",
-        "https://profibook.pro/"
     ],
     allow_credentials=True,
     allow_methods=["*"],
