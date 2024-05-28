@@ -29,7 +29,7 @@
     margin-top: 20px;
 }
 
-.modal_buttonContainer a {
+.modal_buttonContainer div {
     width: 75px;
     text-align: center;
     padding: 5px;
@@ -40,6 +40,6 @@
     cursor: pointer;
 }
 
-.modal_buttonContainer a:hover {
+.modal_buttonContainer div:hover {
     background-color: #843971;
 }
