@@ -1,0 +1,156 @@
+.uploadWrapper {
+    margin: 50px;
+}
+
+.uploadCardTitle {
+    display: block;
+    width: 300px;
+    height: 40px;
+    background-color: #EEE9ED;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.uploadCardTitle h1 {
+    padding-top: 10px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    color: #505050;
+    text-align: center;
+}
+
+.uploadCardContent {
+    background: #EEE9ED;
+    border-top-left-radius: 0;
+    border-radius: 11px;
+    border-top-left-radius: 0;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.uploadCardContentClose {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 28px;
+    height: 28px;
+    background: unset;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    cursor: pointer;
+    border: none;
+    background-image: url("../../../public/svg/orderTitleButtonClose.svg");
+    background-image: url("../../../public/svg/orderTitleButtonClose.svg");
+}
+
+.uploadCardContentClose:hover {
+    background-image: url("../../../public/svg/orderTitleButtonCloseHover.svg");
+}
+
+.uploadCardContentLeft {
+    padding: 25px;
+}
+
+.uploadCardContentLeftButtons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.uploadCardContentButton {
+    padding-left: 40px;
+    padding-right: 40px;
+    border: 1px solid #5A1F4B;
+    height: 45px;
+    background: #5A1F4B;
+    border-radius: 35px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    color: #FFFFFF;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 300ms;
+}
+
+.uploadCardContentButton:hover {
+    background: #FFFFFF;
+    color: #5A1F4B;
+    border: #591E4A 1px solid;
+}
+
+.uploadCardContentLeftText {
+    margin-top: 55px;
+}
+
+.uploadCardContentLeftText h2 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    color: #282828;
+}
+
+.uploadCardContentLeftText p {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #585858;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.uploadCardContentLeftText ol {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #585858;
+    padding-left: 20px;
+}
+
+.uploadCardContentLeftFooter {
+    display: flex;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    gap: 20px;
+}
+
+.uploadCardContentRight {
+    width: 30%;
+    margin-right: 85px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.uploadCardContentRightTitle {
+    width: 100%;
+    text-align: center;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    color: #585858;
+}
+
+.uploadCardContentRightProgressWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.uploadCardContentRightProgress {
+    width: 80%;
+    height: 500px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+}
+
+.hide {
+    display: none;
+}

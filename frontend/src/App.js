@@ -19,11 +19,12 @@ import moment from 'moment';
 import { useSelector } from 'react-redux'
 import 'moment/locale/ru';
 import getCookie from './functions/getCookie';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { userActions } from './redux/userReducer';
 import { useDispatch } from 'react-redux';
 import LkEditPage from './pages/LkEditPage/LkEditPage';
 import fetchTest from './functions/fetchTest';
+import UploadPage from './pages/Upload/UploadPage';
 
 
 moment.locale('ru');
@@ -58,10 +59,41 @@ function App() {
 
 
 
+  const FileUpload = () => {
+    const [file, setFile] = useState(null);
+    const [userId, setUserId] = useState('user1'); // Пример пользовательского ID
+
+    const handleFileChange = (e) => {
+      setFile(e.target.files[0]);
+    };
+
+    const handleUpload = async () => {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('userId', userId);
+
+      const response = await fetch('https://profibook.pro/api/upload.php', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+      alert(result.message);
+    };
+
+    return (
+      <div>
+        <input type="file" onChange={handleFileChange} />
+        <button onClick={handleUpload}>Upload</button>
+      </div>
+    );
+  };
 
 
   return (
     <Routes>
+      <Route path='/test' element={<FileUpload />} />
+
       <Route path='/' element={<MainLayout><MainPage /></MainLayout>} />
       <Route path='/products' element={<MainLayout><ProductsPage /></MainLayout>} />
       <Route path='/balance' element={<UserIsLoged><MainLayout><BalancePage /></MainLayout></UserIsLoged>} />
@@ -70,6 +102,9 @@ function App() {
       <Route path='/lk/edit' element={<UserIsLoged><MainLayout><LkEditPage /></MainLayout></UserIsLoged>} />
       <Route path='/registration' element={<RegistrationPage />} />
       <Route path='/calculator/:productId' element={<MainLayout><CalculatorPage /></MainLayout>} />
+
+      <Route path='/upload' element={<UploadPage />} />
+
 
       <Route path='/admin' element={<Navigate to='/admin/orders' />} />
       <Route path='/admin/orders' element={<AdminOrders />} />
