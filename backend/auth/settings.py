@@ -6,8 +6,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from auth.password import get_password_hash
 from models import User
 from schemas import UserCreate, Message, UserInfo
-from database import get_async_session, async_session_maker, test_connection
+from database import get_async_session, async_session_maker, test_connection, engine
 from config import SECRET
+from sqlalchemy.orm import sessionmaker
 
 manager = LoginManager(SECRET,
                        "/login",
@@ -16,15 +17,14 @@ manager = LoginManager(SECRET,
 
 
 @manager.user_loader()
-async def get_user(telephone: str):
+async def get_user(telephone: str,
+                   db: AsyncSession):
     """
     Функция для получения пользователя
     """
-    async with async_session_maker() as session:
-        await test_connection(session=session)
-        data = await session.execute(select(User).filter(User.telephone == telephone))
-        result = data.scalars().first()
-        return result
+    data = await db.execute(select(User).filter(User.telephone == telephone))
+    result = data.scalars().first()
+    return result
 
 
 async def get_admin_user(user=Depends(manager)):

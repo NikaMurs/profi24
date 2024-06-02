@@ -56,3 +56,9 @@ class UserFullInfo(BaseModel):
     vk: Optional[str] = None
     telegram: Optional[str] = None
     whatsapp: Optional[str] = None
+
+
+class UserLogin(BaseModel):
+    """Поля для авторизации"""
+    telephone: str
+    password: str
