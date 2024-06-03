@@ -24,7 +24,7 @@ import { userActions } from './redux/userReducer';
 import { useDispatch } from 'react-redux';
 import LkEditPage from './pages/LkEditPage/LkEditPage';
 import fetchTest from './functions/fetchTest';
-import UploadPage from './pages/Upload/UploadPage';
+import UploadPage from './pages/UploadPage/UploadPage';
 
 
 moment.locale('ru');
