@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom';
 import EXIF from 'exif-js';
 import './uploadPage.css';
+import { validate } from 'uuid';
 
 export default function UploadPage() {
     const location = useLocation();
@@ -15,14 +16,39 @@ export default function UploadPage() {
     const [images, setImages] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [validateFinished, setValidationFinished] = useState(false);
 
     const handleUploadButtonClick = () => {
         fileInputRef.current.click();
     };
 
+    useEffect(() => {
+        if (validateFinished) {
+            let flag = true;
+            images.forEach((el) => {
+                const isDpiValid = el.dpiX === '300';
+                const isColorSpaceValid = el.colorSpace === 'sRGB';
+                const isSizeValid =
+                    checkSize(el.dimensions, parameters.blockSize) ||
+                    checkSize(el.dimensions, parameters.coverSize);
+                if (!(isDpiValid && isColorSpaceValid && isSizeValid)) {
+                    flag = false;
+                }
+            })
+
+            if (flag) {
+                console.log('Поменять текст модалки на - идет загрузка, и начать грузить фотки на сервер')
+            } else {
+                console.log('Написать в модалке о том, что не все заебись, и показать таблицу')
+            }
+        }
+    }, [validateFinished])
+
     const handleFileChange = async (event) => {
         setShowModal(true);
-        setProgress(0)
+        setProgress(0);
+        setImages([]);
+        setValidationFinished(false);
         const files = event.target.files;
         const fileArray = Array.from(files);
         const totalFiles = fileArray.length;
@@ -34,6 +60,7 @@ export default function UploadPage() {
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
         setShowModal(false);
+        setValidationFinished(true);
     };
 
     const processFileChunk = (fileChunk) => {
@@ -90,6 +117,16 @@ export default function UploadPage() {
         console.log(parameters);
     }, [parameters]);
 
+    const checkSize = (dimensions, targetSize) => {
+        const [width, height] = dimensions.split('x').map(Number);
+        const [targetWidth, targetHeight] = targetSize.split('x').map(Number);
+
+        return (
+            (Math.abs(width - targetWidth) <= 2 && Math.abs(height - targetHeight) <= 2) ||
+            (Math.abs(width - targetHeight) <= 2 && Math.abs(height - targetWidth) <= 2)
+        );
+    };
+
     const TableRow = ({ el, ind }) => {
         const getDpiCheck = (dpiX) => {
             return dpiX === '300' ? '✓' : '✗';
@@ -97,16 +134,6 @@ export default function UploadPage() {
 
         const getColorSpaceCheck = (colorSpace) => {
             return colorSpace === 'sRGB' ? '✓' : '✗';
-        };
-
-        const checkSize = (dimensions, targetSize) => {
-            const [width, height] = dimensions.split('x').map(Number);
-            const [targetWidth, targetHeight] = targetSize.split('x').map(Number);
-
-            return (
-                (Math.abs(width - targetWidth) <= 2 && Math.abs(height - targetHeight) <= 2) ||
-                (Math.abs(width - targetHeight) <= 2 && Math.abs(height - targetWidth) <= 2)
-            );
         };
 
         const isDpiValid = el.dpiX === '300';
