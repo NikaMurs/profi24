@@ -25,18 +25,26 @@ export default function UploadPage() {
     useEffect(() => {
         if (validateFinished) {
             let flag = true;
+            let blockCount = 0;
+            let coverCount = 0;
             images.forEach((el) => {
                 const isDpiValid = el.dpiX === '300';
                 const isColorSpaceValid = el.colorSpace === 'sRGB';
                 const isSizeValid =
                     checkSize(el.dimensions, parameters.blockSize) ||
                     checkSize(el.dimensions, parameters.coverSize);
+                if (checkSize(el.dimensions, parameters.blockSize)) {
+                    blockCount++
+                }
+                if (checkSize(el.dimensions, parameters.coverSize)) {
+                    coverCount++
+                }
                 if (!(isDpiValid && isColorSpaceValid && isSizeValid)) {
                     flag = false;
                 }
             })
 
-            if (flag) {
+            if (flag) { // Добавит еще проверка по количеству
                 console.log('Поменять текст модалки на - идет загрузка, и начать грузить фотки на сервер')
             } else {
                 console.log('Написать в модалке о том, что не все заебись, и показать таблицу')
