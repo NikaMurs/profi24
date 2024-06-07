@@ -64,13 +64,14 @@ function App() {
     const [userId, setUserId] = useState('user1'); // Пример пользовательского ID
 
     const handleFileChange = (e) => {
-      setFile(e.target.files[0]);
+      setFile(e.target.files[0])
     };
 
     const handleUpload = async () => {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('userId', userId);
+      formData.append('userId', 12);
+      formData.append('orderUuid', 123123123);
 
       const response = await fetch('https://profibook.pro/api/upload.php', {
         method: 'POST',

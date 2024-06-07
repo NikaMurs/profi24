@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import EXIF from 'exif-js';
 import './uploadPage.css';
-import { validate } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function UploadPage() {
     const location = useLocation();
@@ -11,6 +11,7 @@ export default function UploadPage() {
     const parameters = location.state;
     const user = useSelector((state) => state.user);
     const userId = user.id;
+    const orderUuid = uuidv4();
 
     const fileInputRef = useRef(null);
     const [images, setImages] = useState([]);
@@ -19,6 +20,10 @@ export default function UploadPage() {
     const [validateFinished, setValidationFinished] = useState(false);
     const [error, setError] = useState([]);
     const [errorModalVisible, setErrorModalVisible] = useState(false);
+    const [files, setFiles] = useState([]);
+    const [uploadProgress, setUploadProgress] = useState({ uploaded: 0, total: 0 });
+    const [uploadModalVisible, setUploadModalVisible] = useState(false);
+    const [uploadError, setUploadError] = useState(null);
 
     const handleUploadButtonClick = () => {
         fileInputRef.current.click();
@@ -30,6 +35,7 @@ export default function UploadPage() {
             let flag = true;
             let blockCount = 0;
             let coverCount = 0;
+
             images.forEach((el) => {
                 const isDpiValid = el.dpiX === '300';
                 const isColorSpaceValid = el.colorSpace === 'sRGB';
@@ -52,17 +58,47 @@ export default function UploadPage() {
                 setErrorModalVisible(true);
             }
 
-            if (blockCount !== ((parameters.cnt.numberOfSpreads - 1) * parameters.cnt.numberOfBooks)) {
+            if (blockCount !== (parameters.cnt.numberOfSpreads * parameters.cnt.numberOfBooks)) {
                 setError((prevErrors) => [...prevErrors, `Загружено разворотов: ${blockCount} | Ожидалось: ${(parameters.cnt.numberOfSpreads) * parameters.cnt.numberOfBooks}`]);
                 setErrorModalVisible(true);
+                flag = false;
             }
 
             if (coverCount !== parameters.cnt.numberOfBooks) {
                 setError((prevErrors) => [...prevErrors, `Загружено обложек: ${coverCount} | Ожидалось: ${parameters.cnt.numberOfBooks}`]);
                 setErrorModalVisible(true);
+                flag = false;
             }
 
-            //ЕСЛИ НИКАКИХ ОШИБОК НЕТ, ТО НАЧАТЬ ЗАГРУЗКУ НА СЕРВЕР
+            if (flag) {
+                setUploadProgress({ uploaded: 0, total: files.length });
+                setUploadModalVisible(true);
+
+                files.forEach((file, index) => {
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('userId', userId);
+                    formData.append('orderUuid', orderUuid);
+
+                    fetch('https://profibook.pro/api/upload.php', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            setUploadProgress((prevProgress) => ({
+                                ...prevProgress,
+                                uploaded: prevProgress.uploaded + 1,
+                            }));
+                        })
+                        .catch((error) => {
+                            setUploadError('Ошибка при загрузке файла: ' + file.name);
+                            console.error('Error uploading file:', error);
+                        });
+                });
+            }
         }
     }, [validateFinished]);
 
@@ -70,6 +106,7 @@ export default function UploadPage() {
         setShowModal(true);
         setProgress(0);
         setImages([]);
+        setFiles([]);
         setValidationFinished(false);
         const files = event.target.files;
         const fileArray = Array.from(files);
@@ -83,6 +120,7 @@ export default function UploadPage() {
         }
         setShowModal(false);
         setValidationFinished(true);
+        setFiles(fileArray);
     };
 
     const processFileChunk = (fileChunk) => {
@@ -143,10 +181,7 @@ export default function UploadPage() {
         const [width, height] = dimensions.split('x').map(Number);
         const [targetWidth, targetHeight] = targetSize.split('x').map(Number);
 
-        return (
-            (Math.abs(width - targetWidth) <= 2 && Math.abs(height - targetHeight) <= 2) ||
-            (Math.abs(width - targetHeight) <= 2 && Math.abs(height - targetWidth) <= 2)
-        );
+        return (Math.abs(width - targetWidth) <= 2 && Math.abs(height - targetHeight) <= 2);
     };
 
     const TableRow = ({ el, ind }) => {
@@ -170,11 +205,11 @@ export default function UploadPage() {
 
         return (
             <tr style={{ backgroundColor: isDpiValid && isColorSpaceValid && isSizeValid ? '#c8e6c9' : '#ffcdd2' }}>
-                <td style={{ width: '40px' }}>{ind + 1}</td>
-                <td style={{ width: '220px' }}>{el.name}</td>
-                <td style={{ width: '100px' }}>{parameters.blockSize}</td>
-                <td style={{ width: '100px' }}>{parameters.coverSize}</td>
-                <td style={{ width: '100px' }}>{el.dimensions}</td>
+                <td>{ind + 1}</td>
+                <td>{el.name}</td>
+                <td>{parameters.blockSize}</td>
+                <td>{parameters.coverSize}</td>
+                <td style={getCellStyle(isSizeValid)}>{el.dimensions}</td>
                 <td style={getCellStyle(isDpiValid)}>{getDpiCheck(el.dpiX)}</td>
                 <td style={getCellStyle(isColorSpaceValid)}>{getColorSpaceCheck(el.colorSpace)}</td>
             </tr>
@@ -190,9 +225,27 @@ export default function UploadPage() {
                     </button>
                     <div className="errorModalContent">
                         <h2>Ошибка</h2>
-                        {errorMessage.map((el) => {
-                            return <p>{el}</p>
+                        {errorMessage.map((el, index) => {
+                            return <p key={index}>{el}</p>
                         })}
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const UploadProgressModal = ({ progress, total, error }) => {
+        return (
+            <div className="uploadModal_overlay">
+                <div className="uploadModal" onClick={(e) => e.stopPropagation()}>
+                    <div className="uploadModalContent">
+                        <h2>{error ? 'Ошибка при загрузке' : 'Загрузка файлов...'}</h2>
+                        {error ? (
+                            <p style={{color: 'red'}}>{error}</p>
+                        ) : (
+                            <p>Загружено {progress} из {total} файлов</p>
+                        )}
+                        <progress value={progress} max={total} />
                     </div>
                 </div>
             </div>
@@ -240,6 +293,14 @@ export default function UploadPage() {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {uploadModalVisible && (
+                <UploadProgressModal
+                    progress={uploadProgress.uploaded}
+                    total={uploadProgress.total}
+                    error={uploadError}
+                />
             )}
 
             {errorModalVisible && <ErrorModal errorMessage={error} onClose={() => setErrorModalVisible(false)} />}
