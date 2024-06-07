@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import EXIF from 'exif-js';
 import './uploadPage.css';
@@ -17,6 +17,8 @@ export default function UploadPage() {
     const [showModal, setShowModal] = useState(false);
     const [progress, setProgress] = useState(0);
     const [validateFinished, setValidationFinished] = useState(false);
+    const [error, setError] = useState([]);
+    const [errorModalVisible, setErrorModalVisible] = useState(false);
 
     const handleUploadButtonClick = () => {
         fileInputRef.current.click();
@@ -24,6 +26,7 @@ export default function UploadPage() {
 
     useEffect(() => {
         if (validateFinished) {
+            setError([]);
             let flag = true;
             let blockCount = 0;
             let coverCount = 0;
@@ -34,23 +37,34 @@ export default function UploadPage() {
                     checkSize(el.dimensions, parameters.blockSize) ||
                     checkSize(el.dimensions, parameters.coverSize);
                 if (checkSize(el.dimensions, parameters.blockSize)) {
-                    blockCount++
+                    blockCount++;
                 }
                 if (checkSize(el.dimensions, parameters.coverSize)) {
-                    coverCount++
+                    coverCount++;
                 }
                 if (!(isDpiValid && isColorSpaceValid && isSizeValid)) {
                     flag = false;
                 }
-            })
+            });
 
-            if (flag) { // Добавит еще проверка по количеству
-                console.log('Поменять текст модалки на - идет загрузка, и начать грузить фотки на сервер')
-            } else {
-                console.log('Написать в модалке о том, что не все заебись, и показать таблицу')
+            if (!flag) {
+                setError((prevErrors) => [...prevErrors, 'Неправильные параметры изображений']);
+                setErrorModalVisible(true);
             }
+
+            if (blockCount !== ((parameters.cnt.numberOfSpreads - 1) * parameters.cnt.numberOfBooks)) {
+                setError((prevErrors) => [...prevErrors, `Загружено разворотов: ${blockCount} | Ожидалось: ${(parameters.cnt.numberOfSpreads) * parameters.cnt.numberOfBooks}`]);
+                setErrorModalVisible(true);
+            }
+
+            if (coverCount !== parameters.cnt.numberOfBooks) {
+                setError((prevErrors) => [...prevErrors, `Загружено обложек: ${coverCount} | Ожидалось: ${parameters.cnt.numberOfBooks}`]);
+                setErrorModalVisible(true);
+            }
+
+            //ЕСЛИ НИКАКИХ ОШИБОК НЕТ, ТО НАЧАТЬ ЗАГРУЗКУ НА СЕРВЕР
         }
-    }, [validateFinished])
+    }, [validateFinished]);
 
     const handleFileChange = async (event) => {
         setShowModal(true);
@@ -65,7 +79,7 @@ export default function UploadPage() {
             const fileChunk = fileArray.slice(i, i + 10);
             await processFileChunk(fileChunk);
             setProgress(((i + fileChunk.length) / totalFiles) * 100);
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
         }
         setShowModal(false);
         setValidationFinished(true);
@@ -167,6 +181,24 @@ export default function UploadPage() {
         );
     };
 
+    const ErrorModal = ({ errorMessage, onClose }) => {
+        return (
+            <div className="errorModal_overlay" onClick={onClose}>
+                <div className="errorModal" onClick={(e) => e.stopPropagation()}>
+                    <button className="modalCloseButton" onClick={onClose}>
+                        &times;
+                    </button>
+                    <div className="errorModalContent">
+                        <h2>Ошибка</h2>
+                        {errorMessage.map((el) => {
+                            return <p>{el}</p>
+                        })}
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     return (
         <>
             <div id="over"></div>
@@ -210,22 +242,27 @@ export default function UploadPage() {
                 </div>
             )}
 
-            <table id="out_table" style={{ fontSize: '12px' }}>
-                <tbody id="out_table">
-                    <tr style={{ backgroundColor: '#ECECEC' }}>
-                        <td style={{ width: '40px' }}>№</td>
-                        <td style={{ width: '220px' }}>Имя</td>
-                        <td style={{ width: '100px' }}>Целевой размер разворота</td>
-                        <td style={{ width: '100px' }}>Целевой размер обложки</td>
-                        <td style={{ width: '100px' }}>Размер загруженного файла</td>
-                        <td style={{ width: '100px' }}>Разрешение(300 DPI)</td>
-                        <td style={{ width: '70px' }}>Цветовой профиль</td>
-                    </tr>
-                    {images.map((el, ind) => (
-                        <TableRow el={el} ind={ind} key={ind} />
-                    ))}
-                </tbody>
-            </table>
+            {errorModalVisible && <ErrorModal errorMessage={error} onClose={() => setErrorModalVisible(false)} />}
+
+            {error.length !== 0 ?
+                <table id="out_table" style={{ fontSize: '12px' }}>
+                    <tbody id="out_table">
+                        <tr style={{ backgroundColor: '#ECECEC' }}>
+                            <td style={{ width: '40px' }}>№</td>
+                            <td style={{ width: '220px' }}>Имя</td>
+                            <td style={{ width: '100px' }}>Целевой размер разворота</td>
+                            <td style={{ width: '100px' }}>Целевой размер обложки</td>
+                            <td style={{ width: '100px' }}>Размер загруженного файла</td>
+                            <td style={{ width: '100px' }}>Разрешение(300 DPI)</td>
+                            <td style={{ width: '70px' }}>Цветовой профиль</td>
+                        </tr>
+                        {images.map((el, ind) => (
+                            <TableRow el={el} ind={ind} key={ind} />
+                        ))}
+                    </tbody>
+                </table>
+                :
+                <></>}
         </>
     );
 }

@@ -198,3 +198,52 @@
 .uploadModal p {
     font-size: 16px;
 }
+
+.errorModal_overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.errorModal{
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #591e4a;
+    border-radius: 5px;
+    position: relative;
+}
+
+.errorModal h2{
+    color: #e40d0d;
+}
+
+.errorModal h2 {
+    text-align: center;
+    font-size: 36px;
+}
+
+.errorModalContent p{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.modalCloseButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modalCloseButton:hover {
+    color: #e40d0d;
+}

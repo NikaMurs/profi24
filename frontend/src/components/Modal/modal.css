@@ -18,7 +18,8 @@
     border-radius: 5px;
 }
 
-.modal_content h2, p{
+.modal_content h2, 
+.errorModal p{
     margin: 0;
 }
 
