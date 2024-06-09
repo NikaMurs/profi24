@@ -50,7 +50,7 @@ async def login(response: Response,
     telephone = data.username
     password = data.password
 
-    user = await get_user(telephone=telephone, db=db)
+    user = await get_user(telephone=telephone)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     elif verify_password(password, user.hashed_password):

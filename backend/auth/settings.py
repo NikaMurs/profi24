@@ -17,14 +17,15 @@ manager = LoginManager(SECRET,
 
 
 @manager.user_loader()
-async def get_user(telephone: str,
-                   db: AsyncSession):
+async def get_user(telephone: str):
     """
     Функция для получения пользователя
     """
-    data = await db.execute(select(User).filter(User.telephone == telephone))
-    result = data.scalars().first()
-    return result
+    async with async_session_maker() as session:
+        await test_connection(session=session)
+        data = await session.execute(select(User).filter(User.telephone == telephone))
+        result = data.scalars().first()
+        return result
 
 
 async def get_admin_user(user=Depends(manager)):
