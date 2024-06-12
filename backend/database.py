@@ -3,11 +3,11 @@ from typing import AsyncGenerator
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
-from config import MYSQL_SERVER, USER, PASSWORD, MYSQL_DATABASE
+from config import SERVER, USER, PASSWORD, DATABASE
 from models import *
 
 
-DATABASE_URL = f"postgresql+asyncpg://{USER}:{PASSWORD}@{MYSQL_SERVER}/{MYSQL_DATABASE}"
+DATABASE_URL = f"postgresql+asyncpg://{USER}:{PASSWORD}@{SERVER}/{DATABASE}"
 
 
 class Base(DeclarativeBase):

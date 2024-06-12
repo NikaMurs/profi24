@@ -6,8 +6,8 @@ load_dotenv(find_dotenv())
 # Переменные для боевой БД
 USER = getenv("PS_USERNAME")
 PASSWORD = getenv("PS_PASSWORD")
-MYSQL_DATABASE = getenv("PS_NAME_SERVER")
-MYSQL_SERVER = getenv("PS_ADDRESS_SERVER")
+DATABASE = getenv("PS_NAME_SERVER")
+SERVER = getenv("PS_ADDRESS_SERVER")
 
 
 # Переменные для тестовой БД
