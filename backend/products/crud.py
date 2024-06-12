@@ -5,7 +5,7 @@ from models import Pro, Var01, Format, Pap, Bas, Tco, Nco, User
 
 
 async def get_product_list(db: AsyncSession):
-    data = await db.execute(select(Pro).filter(Pro.isActive == 1))
+    data = await db.execute(select(Pro).filter(Pro.isActive == True))
     data = data.scalars().all()
 
     if not data:
@@ -43,7 +43,7 @@ async def get_var_table(db: AsyncSession,
                Var01.text3,
                Var01.notes)
         .join(Pro)
-        .where(Pro.id == id).where(Var01.isActive == 1)
+        .where(Pro.id == id).where(Var01.isActive == True)
     )
 
     result = await db.execute(query)
@@ -77,7 +77,7 @@ async def get_format_table(db: AsyncSession,
                Format.size,
                Format.notes)
         .join(Pro)
-        .where(Pro.id == id).where(Format.isActive == 1)
+        .where(Pro.id == id).where(Format.isActive == True)
     )
 
     result = await db.execute(query)
@@ -107,7 +107,7 @@ async def get_paper_table(db: AsyncSession,
                Pap.text3,
                Pap.notes)
         .join(Pro)
-        .where(Pro.id == id).where(Pap.isActive == 1)
+        .where(Pro.id == id).where(Pap.isActive == True)
     )
 
     result = await db.execute(query)
@@ -139,7 +139,7 @@ async def get_bas_table(db: AsyncSession,
                Bas.text3,
                Bas.notes)
         .join(Pro)
-        .where(Pro.id == id).where(Bas.isActive == 1)
+        .where(Pro.id == id).where(Bas.isActive == True)
     )
 
     result = await db.execute(query)
@@ -171,7 +171,7 @@ async def get_tco_table(db: AsyncSession,
                Tco.text3,
                Tco.notes)
         .join(Pro)
-        .where(Pro.id == id).where(Tco.isActive == 1)
+        .where(Pro.id == id).where(Tco.isActive == True)
     )
 
     result = await db.execute(query)
@@ -200,7 +200,7 @@ async def get_nco_table(db: AsyncSession,
                Nco.guides_psd,
                Nco.guides_indd)
         .join(Pro)
-        .where(Pro.id == id).where(Nco.isActive == 1)
+        .where(Pro.id == id).where(Nco.isActive == True)
     )
 
     result = await db.execute(query)

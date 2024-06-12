@@ -7,7 +7,7 @@ from config import MYSQL_SERVER, USER, PASSWORD, MYSQL_DATABASE
 from models import *
 
 
-DATABASE_URL = f"mysql+aiomysql://{USER}:{PASSWORD}@{MYSQL_SERVER}/{MYSQL_DATABASE}"
+DATABASE_URL = f"postgresql+asyncpg://{USER}:{PASSWORD}@{MYSQL_SERVER}/{MYSQL_DATABASE}"
 
 
 class Base(DeclarativeBase):

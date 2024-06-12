@@ -4,10 +4,11 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
 # Переменные для боевой БД
-USER = getenv("USER_NAME_2")
-PASSWORD = getenv("PASSWORD_2")
-MYSQL_DATABASE = getenv("DATABASE_NAME_2")
-MYSQL_SERVER = getenv("HOST_2")
+USER = getenv("PS_USERNAME")
+PASSWORD = getenv("PS_PASSWORD")
+MYSQL_DATABASE = getenv("PS_NAME_SERVER")
+MYSQL_SERVER = getenv("PS_ADDRESS_SERVER")
+
 
 # Переменные для тестовой БД
 TEST_USER = getenv("TEST_USER_NAME")

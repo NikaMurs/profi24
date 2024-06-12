@@ -35,7 +35,7 @@ class User(Base):
     whatsapp: Mapped[str] = mapped_column(String(200), default="")
     money: Mapped[float] = mapped_column(Float, default=0)
     bonus: Mapped[int] = mapped_column(Integer, default=0)
-    bonusStatus: Mapped[str] = mapped_column(Enum("Base", "Bronze", "Silver", "Gold"), default="Base")
+    bonusStatus: Mapped[str] = mapped_column(Enum("Base", "Bronze", "Silver", "Gold", name='bonusstatusenum'), default="Base")
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=True)
     is_superuser: Mapped[bool] = mapped_column(Boolean, nullable=True)
     is_verified: Mapped[bool] = mapped_column(Boolean, nullable=True)
