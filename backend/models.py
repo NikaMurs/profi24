@@ -52,7 +52,7 @@ class Pro(Base):
     __table_args__ = {'extend_existing': True}
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    isActive: Mapped[bool] = mapped_column(Boolean, nullable=False, default=0)
+    isActive: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     title: Mapped[str] = mapped_column(String(100), nullable=False, default="")
     shortTitle: Mapped[str] = mapped_column(String(50), nullable=False, default="")
     img: Mapped[str] = mapped_column(String(600), nullable=False, default="")

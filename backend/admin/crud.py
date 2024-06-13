@@ -10,7 +10,7 @@ from models import Pro, Var01, Format, Pap, Bas, Tco, Nco, User
 
 
 async def get_product_list(db: AsyncSession):
-    data = select(Pro)
+    data = select(Pro).order_by(Pro.id)
     result = await db.execute(data)
     products = result.scalars().all()
 
@@ -201,6 +201,7 @@ async def get_var_table(db: AsyncSession,
                Var01.notes)
         .join(Pro)
         .where(Pro.id == product_id)
+        .order_by(Var01.id)
     )
 
     result = await db.execute(query)
@@ -235,6 +236,7 @@ async def get_format_table(db: AsyncSession,
                Format.notes)
         .join(Pro)
         .where(Pro.id == product_id)
+        .order_by(Format.id)
     )
 
     result = await db.execute(query)
@@ -265,6 +267,7 @@ async def get_paper_table(db: AsyncSession,
                Pap.notes)
         .join(Pro)
         .where(Pro.id == product_id)
+        .order_by(Pap.id)
     )
 
     result = await db.execute(query)
@@ -297,6 +300,7 @@ async def get_bas_table(db: AsyncSession,
                Bas.notes)
         .join(Pro)
         .where(Pro.id == product_id)
+        .order_by(Bas.id)
     )
 
     result = await db.execute(query)
@@ -329,6 +333,7 @@ async def get_tco_table(db: AsyncSession,
                Tco.notes)
         .join(Pro)
         .where(Pro.id == product_id)
+        .order_by(Tco.id)
     )
 
     result = await db.execute(query)
@@ -358,6 +363,7 @@ async def get_nco_table(db: AsyncSession,
                Nco.guides_indd)
         .join(Pro)
         .where(Pro.id == product_id)
+        .order_by(Nco.id)
     )
 
     result = await db.execute(query)
@@ -396,7 +402,7 @@ async def get_users_list(db: AsyncSession) -> Dict[str, List[Dict[str, Any]]]:
                User.communicationRating,
                User.pickinessRating,
                User.mistakesCount)
-    )
+    ).order_by(User.id)
 
     result = await db.execute(query)
     data = result.all()

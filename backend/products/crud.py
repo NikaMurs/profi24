@@ -1,6 +1,6 @@
 from typing import List, Dict
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, asc
 from models import Pro, Var01, Format, Pap, Bas, Tco, Nco, User
 
 
@@ -43,7 +43,7 @@ async def get_var_table(db: AsyncSession,
                Var01.text3,
                Var01.notes)
         .join(Pro)
-        .where(Pro.id == id).where(Var01.isActive == True)
+        .where(Pro.id == id).where(Var01.isActive == True).order_by(Var01.id)
     )
 
     result = await db.execute(query)
@@ -77,7 +77,7 @@ async def get_format_table(db: AsyncSession,
                Format.size,
                Format.notes)
         .join(Pro)
-        .where(Pro.id == id).where(Format.isActive == True)
+        .where(Pro.id == id).where(Format.isActive == True).order_by(Format.id)
     )
 
     result = await db.execute(query)
@@ -107,7 +107,7 @@ async def get_paper_table(db: AsyncSession,
                Pap.text3,
                Pap.notes)
         .join(Pro)
-        .where(Pro.id == id).where(Pap.isActive == True)
+        .where(Pro.id == id).where(Pap.isActive == True).order_by(Pap.id)
     )
 
     result = await db.execute(query)
@@ -139,7 +139,7 @@ async def get_bas_table(db: AsyncSession,
                Bas.text3,
                Bas.notes)
         .join(Pro)
-        .where(Pro.id == id).where(Bas.isActive == True)
+        .where(Pro.id == id).where(Bas.isActive == True).order_by(Bas.id)
     )
 
     result = await db.execute(query)
@@ -171,7 +171,7 @@ async def get_tco_table(db: AsyncSession,
                Tco.text3,
                Tco.notes)
         .join(Pro)
-        .where(Pro.id == id).where(Tco.isActive == True)
+        .where(Pro.id == id).where(Tco.isActive == True).order_by(Tco.id)
     )
 
     result = await db.execute(query)
@@ -200,7 +200,7 @@ async def get_nco_table(db: AsyncSession,
                Nco.guides_psd,
                Nco.guides_indd)
         .join(Pro)
-        .where(Pro.id == id).where(Nco.isActive == True)
+        .where(Pro.id == id).where(Nco.isActive == True).order_by(Nco.id)
     )
 
     result = await db.execute(query)
