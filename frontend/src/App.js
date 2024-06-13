@@ -57,43 +57,8 @@ function App() {
     }
   }, [])
 
-
-
-  const FileUpload = () => {
-    const [file, setFile] = useState(null);
-    const [userId, setUserId] = useState('user1'); // Пример пользовательского ID
-
-    const handleFileChange = (e) => {
-      setFile(e.target.files[0])
-    };
-
-    const handleUpload = async () => {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('userId', 12);
-      formData.append('orderUuid', 123123123);
-
-      const response = await fetch('https://profibook.pro/api/upload.php', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
-      alert(result.message);
-    };
-
-    return (
-      <div>
-        <input type="file" onChange={handleFileChange} />
-        <button onClick={handleUpload}>Upload</button>
-      </div>
-    );
-  };
-
-
   return (
     <Routes>
-      <Route path='/test' element={<FileUpload />} />
 
       <Route path='/' element={<MainLayout><MainPage /></MainLayout>} />
       <Route path='/products' element={<MainLayout><ProductsPage /></MainLayout>} />
