@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import './calculatorPage.css';
 import formatPrice from '../../functions/formatPrice';
 import Modal from '../../components/Modal/Modal';
-import fetchTest from '../../functions/fetchTest';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const CalculatorHeader = ({
@@ -93,7 +92,6 @@ const CalculatorPage = () => {
     const [maxCount, setMaxCount] = useState(1);
 
     useEffect(() => {
-        fetchTest();
         fetch(`${process.env.REACT_APP_URL}/productInfo/?id=${productId}`)
             .then(response => response.json())
             .then(data => setData(data.product))

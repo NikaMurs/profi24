@@ -1,6 +1,5 @@
 import React from 'react';
 import getCookie from '../../../functions/getCookie';
-import fetchTest from '../../../functions/fetchTest';
 import getTableEndpoint from '../../functions/getTableEndpoint';
 
 export default function DownloadImgButton({ el, ind, imgType, data, setData, tableType }) {
@@ -24,7 +23,6 @@ export default function DownloadImgButton({ el, ind, imgType, data, setData, tab
 
 
         if (getCookie('authorization')) {
-            fetchTest();
             fetch(`${process.env.REACT_APP_URL}/admin/${getTableEndpoint(tableType)}/upload_photo/?tableType=${tableType}&id=${el.id}&tableName=${imgType}`, {
                 method: 'PATCH',
                 headers: {
@@ -40,8 +38,6 @@ export default function DownloadImgButton({ el, ind, imgType, data, setData, tab
                 })
                 .then(data => {
                     updatedData[ind][imgType] = data.url
-                    console.log(updatedData[ind])
-                    console.log(imgType)
                     setData(updatedData)
                 })
                 .catch(error => {

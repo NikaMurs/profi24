@@ -15,7 +15,6 @@ import ChangeIsActive from '../components/editTables/ChangeIsActiveButton'
 import OnAddNewProductButtons from '../components/editTables/OnAddNewProductButtons'
 import DeleteProductButton from '../components/editTables/DeleteProductButton'
 import DownloadImgButton from '../components/editTables/DownloadImgButton'
-import fetchTest from '../../functions/fetchTest'
 import getCookie from '../../functions/getCookie'
 import { useDispatch } from 'react-redux'
 import { userActions } from '../../redux/userReducer'
@@ -33,7 +32,6 @@ export default function AdminManagement() {
 
     useEffect(() => {
         if (getCookie('authorization')) {
-            fetchTest();
             fetch(`${process.env.REACT_APP_URL}/admin/management/adminProductList`, {
                 headers: {
                     Authorization: `Bearer ${getCookie('authorization')}`
@@ -57,7 +55,6 @@ export default function AdminManagement() {
     useEffect(() => {
         if (selectedProduct !== null) {
             dispatch(userActions.setAdminSelectedPro(selectedProduct))
-            fetchTest()
             fetch(`${process.env.REACT_APP_URL}/admin/management/adminProductInfo?id=${selectedProduct}`, {
                 headers: {
                     Authorization: `Bearer ${getCookie('authorization')}`

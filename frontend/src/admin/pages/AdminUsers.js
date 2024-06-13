@@ -1,7 +1,6 @@
 import '../style.css'
 import Header from '../components/Header'
 import { useEffect, useState } from 'react';
-import fetchTest from '../../functions/fetchTest';
 import ModalAdmin from '../components/ModalAdmin-users';
 import OrdersTable from '../components/OrdersTable';
 import getCookie from '../../functions/getCookie';
@@ -20,7 +19,6 @@ export default function AdminOrders() {
 
 
     useEffect(() => {
-        fetchTest()
         fetch(`${process.env.REACT_APP_URL}/admin/users`, {
             headers: {
                 Authorization: `Bearer ${getCookie('authorization')}`

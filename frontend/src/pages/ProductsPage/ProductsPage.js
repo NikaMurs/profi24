@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom'
 import './productsPage.css'
 import { useEffect, useState } from 'react'
-import fetchTest from '../../functions/fetchTest'
 
 export default function ProductsPage() {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        fetchTest();
         fetch(`${process.env.REACT_APP_URL}/productsList`)
             .then(response => {
                 if (!response.ok) {

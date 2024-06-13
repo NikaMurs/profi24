@@ -23,7 +23,6 @@ import { useEffect, useState } from 'react';
 import { userActions } from './redux/userReducer';
 import { useDispatch } from 'react-redux';
 import LkEditPage from './pages/LkEditPage/LkEditPage';
-import fetchTest from './functions/fetchTest';
 import UploadPage from './pages/UploadPage/UploadPage';
 
 
@@ -36,7 +35,6 @@ function App() {
   useEffect(() => {
     if (getCookie('authorization')) {
 
-      fetchTest();
       fetch(`${process.env.REACT_APP_URL}/`, {
         headers: {
           Authorization: `Bearer ${getCookie('authorization')}`

@@ -1,4 +1,3 @@
-import fetchTest from "../../../functions/fetchTest";
 import getCookie from "../../../functions/getCookie";
 
 export default function DeleteProductButton({ selectedProduct, setSelectedProduct, data, setData, tableType }) {
@@ -15,7 +14,6 @@ export default function DeleteProductButton({ selectedProduct, setSelectedProduc
                     };
 
                     if (getCookie('authorization')) {
-                        fetchTest();
                         fetch(`${process.env.REACT_APP_URL}/admin/management`, {
                             method: 'DELETE',
                             headers: {
