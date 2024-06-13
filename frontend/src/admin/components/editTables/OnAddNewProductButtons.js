@@ -1,4 +1,3 @@
-import fetchTest from "../../../functions/fetchTest";
 import getCookie from "../../../functions/getCookie";
 import { useSelector } from 'react-redux'
 
@@ -29,7 +28,6 @@ export default function OnAddNewProductButtons({ isAddingNewProduct, setIsAdding
 
 
         if (getCookie('authorization')) {
-            fetchTest();
             fetch(`${process.env.REACT_APP_URL}/admin/management`, {
                 method: 'POST',
                 headers: {

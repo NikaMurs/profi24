@@ -49,7 +49,7 @@ export default function TableVar({ productInfo }) {
 
     return (
         <div id="table6">
-            <h3 className="tablesTitle">Варианты обложки (VAR-01)</h3>
+            <h3 className="tablesTitle">Варианты обложки (VAR)</h3>
             <table id="table_var01">
                 <tbody id="var01_tbody">
                     <tr style={{ backgroundColor: '#ECECEC' }}>

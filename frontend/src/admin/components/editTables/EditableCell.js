@@ -1,6 +1,5 @@
 import { useState } from "react";
 import getCookie from "../../../functions/getCookie";
-import fetchTest from "../../../functions/fetchTest";
 import getTableEndpoint from "../../functions/getTableEndpoint";
 
 
@@ -26,7 +25,6 @@ export default function EditableCell({ width, type, data, setData, el, ind, tabl
     }
 
     function handleDoubleClick(e) {
-
         const updatedIsEditing = [isEditing];
         updatedIsEditing[type] = true;
 
@@ -45,20 +43,28 @@ export default function EditableCell({ width, type, data, setData, el, ind, tabl
 
     function handleBlur(e) {
         if (isChanged) {
+            let newValue = editedText;
+
+            if ((type === 'price') || (type === 'basePrice') || (type === 'maxCount') || (type === 'mistakesCount') || (type === 'multiplier')) {
+                newValue = parseInt(editedText)
+            }
+            if ((type === 'width') || (type === 'weight')) {
+                newValue = parseFloat(e.target.value)
+            }
+
             const updatedData = [...data];
-            updatedData[ind][type] = editedText;
+            updatedData[ind][type] = newValue;
 
             if (!el.isNew) {
                 const postData = {
                     tableType: tableType,
                     id: el.id,
                     updatedFields: {
-                        [type]: editedText
+                        [type]: newValue
                     }
                 };
 
                 if (getCookie('authorization')) {
-                    fetchTest();
                     fetch(`${process.env.REACT_APP_URL}/admin/${getTableEndpoint(tableType)}`, {
                         method: 'PATCH',
                         headers: {

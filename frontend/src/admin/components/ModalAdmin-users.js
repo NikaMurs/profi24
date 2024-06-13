@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import getCookie from '../../functions/getCookie';
-import fetchTest from '../../functions/fetchTest';
 
 const ModalAdmin = ({ isOpen, onClose, modalMode, modalUserId, modalUserName }) => {
     const [data, setData] = useState('');
@@ -31,7 +30,6 @@ const ModalAdmin = ({ isOpen, onClose, modalMode, modalUserId, modalUserName }) 
             const lowerCaseMode = makeFirstLetterLowerCase(modalMode);
 
             if (getCookie('authorization')) {
-                fetchTest();
                 fetch(`${process.env.REACT_APP_URL}/admin/users/info/?id=${modalUserId}&type=${lowerCaseMode}`, {
                     headers: {
                         Authorization: `Bearer ${getCookie('authorization')}`,
@@ -65,7 +63,6 @@ const ModalAdmin = ({ isOpen, onClose, modalMode, modalUserId, modalUserName }) 
         };
 
         if (getCookie('authorization')) {
-            fetchTest();
             fetch(`${process.env.REACT_APP_URL}/admin/users`, {
                 method: 'PATCH',
                 headers: {
@@ -81,7 +78,7 @@ const ModalAdmin = ({ isOpen, onClose, modalMode, modalUserId, modalUserName }) 
                     return response.json();
                 })
                 .then(data => {
-
+                    onClose();
                 })
                 .catch(error => {
                     console.error("Ошибка при обработке ответа:", error);

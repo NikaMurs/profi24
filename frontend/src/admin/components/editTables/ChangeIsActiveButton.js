@@ -1,4 +1,3 @@
-import fetchTest from "../../../functions/fetchTest";
 import getCookie from "../../../functions/getCookie";
 import getTableEndpoint from "../../functions/getTableEndpoint";
 
@@ -20,7 +19,6 @@ export default function ChangeIsActive({ el, ind, data, setData, tableType }) {
             };
 
             if (getCookie('authorization')) {
-                fetchTest();
                 fetch(`${process.env.REACT_APP_URL}/admin/${getTableEndpoint(tableType)}`, {
                     method: 'PATCH',
                     headers: {
