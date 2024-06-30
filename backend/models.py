@@ -1,3 +1,6 @@
+import time
+import uuid
+
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import (Integer,
@@ -6,7 +9,8 @@ from sqlalchemy import (Integer,
                         Boolean,
                         Float,
                         Enum,
-                        Text, ForeignKey)
+                        Text,
+                        ForeignKey)
 
 metadata = MetaData()
 
@@ -181,3 +185,56 @@ class Nco(Base):
     guides_psd: Mapped[str] = mapped_column(String(600), nullable=False, default="")
     guides_indd: Mapped[str] = mapped_column(String(600), nullable=False, default="")
     pro_id: Mapped[int] = mapped_column(Integer, ForeignKey('pro.id'))
+
+
+def generate_uuid():
+    return str(uuid.uuid4())
+
+class Order(Base):
+    """Заказ"""
+    __tablename__ = 'order'
+    __table_args__ = {'extend_existing': True}
+
+    uuid: Mapped[str] = mapped_column(String, primary_key=True, nullable=False)
+    id: Mapped[int] = mapped_column(Integer, default=0)
+    status: Mapped[int] = mapped_column(Integer, default=0)
+    ready_persent: Mapped[int] = mapped_column(Integer, default=0)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey('user.id'))
+    is_master: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_slave: Mapped[bool] = mapped_column(Boolean, default=False)
+    description: Mapped[str] = mapped_column(String)
+    price: Mapped[float] = mapped_column(Float)
+    date_start: Mapped[float] = mapped_column(Float)
+    date_finished: Mapped[float] = mapped_column(Float)
+    weight: Mapped[float] = mapped_column(Float, default=0.0)
+    track_number: Mapped[str] = mapped_column(String, default='')
+    comment: Mapped[str] = mapped_column(String)
+    name: Mapped[str] = mapped_column(String)
+
+    @property
+    def userId(self):
+        return self.user_id
+
+    @property
+    def readyPersent(self):
+        return self.ready_persent
+
+    @property
+    def isMaster(self):
+        return self.is_master
+
+    @property
+    def isSlave(self):
+        return self.is_slave
+
+    @property
+    def dateStart(self):
+        return self.date_start
+
+    @property
+    def dateFinished(self):
+        return self.date_finished
+
+    @property
+    def trackNumber(self):
+        return self.track_number

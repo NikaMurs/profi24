@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from auth.router import auth_router
 from api.router import user_router
 from admin.router import admin_router
+from orders.router import order_router
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from products.router import product_router
@@ -43,5 +44,6 @@ app.include_router(auth_router, tags=["auth"])
 app.include_router(user_router, tags=["user"])
 app.include_router(admin_router, tags=["admin"], prefix="/admin")
 app.include_router(product_router, tags=["product"])
+app.include_router(order_router, tags=["order"])
 
 app.mount("/media", StaticFiles(directory='media'), name='media')
