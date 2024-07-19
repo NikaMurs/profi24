@@ -44,6 +44,6 @@ app.include_router(auth_router, tags=["auth"])
 app.include_router(user_router, tags=["user"])
 app.include_router(admin_router, tags=["admin"], prefix="/admin")
 app.include_router(product_router, tags=["product"])
-app.include_router(order_router, tags=["order"])
+app.include_router(order_router, tags=["order"], prefix='/order')
 
 app.mount("/media", StaticFiles(directory='media'), name='media')

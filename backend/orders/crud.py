@@ -1,6 +1,9 @@
+import json
+import os
+import shutil
 from typing import Dict
 
-from fastapi import HTTPException
+from fastapi import HTTPException, UploadFile, File
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import Order
 from orders.schemas import CreateOrder
@@ -60,3 +63,17 @@ async def create_new_order(db: AsyncSession,
         raise HTTPException(status_code=400, detail=str(error))
     finally:
         await db.close()
+
+
+async def save_photo_order(db: AsyncSession,
+                           data,
+                           img: UploadFile = File(...)):
+    orderUuid = data["orderUuid"]
+    userId = data["userId"]
+    path = f'temp/{userId}/{orderUuid}'
+
+    print(path)
+    # with open(path, 'wb+') as buffer:
+    #     shutil.copyfileobj(img.file, buffer)
+
+    return path

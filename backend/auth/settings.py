@@ -3,7 +3,7 @@ from fastapi import HTTPException, status, Depends
 from fastapi_login import LoginManager
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from auth.password import get_password_hash
+from auth.password import get_password_hash, verify_password
 from models import User
 from schemas import UserCreate, Message, UserInfo
 from database import get_async_session, async_session_maker, test_connection, engine
@@ -90,10 +90,15 @@ async def forgot_password(db: AsyncSession,
     user = await db.execute(select(User).where(User.telephone == telephone))
     user = user.scalars().first()
     if user:
-        new_password = get_password_hash(password)
-        user.hashed_password = new_password
-        await db.commit()
-        return True
+        check_verify_password = verify_password(password, user.hashed_password)
+        if check_verify_password:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                detail="The password is the same as the old one")
+        else:
+            new_password = get_password_hash(password)
+            user.hashed_password = new_password
+            await db.commit()
+            return True
     else:
         return None
 

@@ -1,3 +1,4 @@
+from fastapi import UploadFile, File
 from models import generate_uuid
 from typing import Optional
 from pydantic import BaseModel, Field
@@ -44,3 +45,9 @@ class OrderResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class OrderPhoto(BaseModel):
+
+    userId: int
+    orderUuid: str
