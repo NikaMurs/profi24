@@ -1,10 +1,13 @@
 import shutil
 
 from models import Pro
-from fastapi import APIRouter, status, Depends, HTTPException, UploadFile, File
+from fastapi import APIRouter, status, Depends, HTTPException, UploadFile, File, Body, Query
 from auth.settings import manager, get_user_info_start, get_admin_user
-from typing import Dict, Any, List, Optional
-
+from typing import Dict, Any, List, Optional, Annotated
+from admin.exemples import (example_create_product,
+                            example_delete_product,
+                            example_upload_product,
+                            example_upload_user)
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_async_session, test_connection
@@ -25,7 +28,10 @@ from admin.crud import (get_product_list,
                         get_users_list,
                         update_users,
                         get_info_users)
-from admin.schemas import Product, EditProduct, ProductView
+from admin.schemas import (CreateProductResponses,
+                           DeleteProductResponses,
+                           UpdateProductResponses,
+                           UpdateUserResponses)
 
 admin_router = APIRouter()
 
@@ -59,9 +65,12 @@ async def get_product_list_info(user=Depends(get_admin_user),
 
 @admin_router.patch('/management/upload_photo/',
                     status_code=status.HTTP_200_OK)
-async def save_file_for_product(tableType: str,
-                                id: int,
-                                tableName: str,
+async def save_file_for_product(tableType: Annotated[str, Query(example="bas")],
+                                id: Annotated[int, Query(example=1)],
+                                tableName: Annotated[str, Query(
+                                    description="Название столбца из таблицы, в который укажится путь до файла",
+                                    example="img"
+                                )],
                                 img: UploadFile = File(...),
                                 user=Depends(get_admin_user),
                                 db: AsyncSession = Depends(get_async_session)):
@@ -72,9 +81,14 @@ async def save_file_for_product(tableType: str,
 
 
 @admin_router.post("/management/",
-                   response_model=Dict,
+                   response_model=CreateProductResponses,
                    status_code=status.HTTP_201_CREATED)
-async def create_product(info: Dict,
+async def create_product(info: Annotated[
+        Dict,
+        Body(
+            openapi_examples=example_create_product,
+        ),
+    ],
                          user=Depends(get_admin_user),
                          db: AsyncSession = Depends(get_async_session)):
 
@@ -84,17 +98,28 @@ async def create_product(info: Dict,
 
 
 @admin_router.patch("/management/",
-                    response_model=Dict,
+                    response_model=UpdateProductResponses,
                     status_code=status.HTTP_200_OK)
-async def update_product_route(info: Dict,
+async def update_product_route(info: Annotated[
+        Dict,
+        Body(
+            openapi_examples=example_upload_product,
+        ),
+    ],
                                user=Depends(get_admin_user),
                                db: AsyncSession = Depends(get_async_session)):
     await update_product(db, info)
     return {"message": "Product updated successfully"}
 
 
-@admin_router.delete("/management/")
-async def delete_product_route(info: Dict,
+@admin_router.delete("/management/",
+                     response_model=DeleteProductResponses)
+async def delete_product_route(info: Annotated[
+        Dict,
+        Body(
+            openapi_examples=example_delete_product,
+        ),
+    ],
                                user=Depends(get_admin_user),
                                db: AsyncSession = Depends(get_async_session)):
     await delete_product(db, info)
@@ -137,9 +162,14 @@ async def get_full_users_list(user=Depends(get_admin_user),
 
 
 @admin_router.patch("/users/",
-                    response_model=Dict,
+                    response_model=UpdateUserResponses,
                     status_code=status.HTTP_200_OK)
-async def update_users_route(info: Dict,
+async def update_users_route(info: Annotated[
+        Dict,
+        Body(
+            openapi_examples=example_upload_user,
+        ),
+    ],
                              user=Depends(get_admin_user),
                              db: AsyncSession = Depends(get_async_session)):
     data = await update_users(db, info)

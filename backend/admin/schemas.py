@@ -1,7 +1,27 @@
 from typing import Optional
 
 from fastapi import File, UploadFile
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+
+
+class CreateProductResponses(BaseModel):
+    """Ответ на создание полей продукта"""
+    id: int
+
+
+class DeleteProductResponses(BaseModel):
+    """Ответ на удаление продукта"""
+    message: str = Field(examples=["Product deleted successfully"])
+
+
+class UpdateProductResponses(BaseModel):
+    """Ответ на изменение полей продукта"""
+    message: str = Field(examples=["Product updated successfully"])
+
+
+class UpdateUserResponses(BaseModel):
+    """Ответ на изменение полей пользователя"""
+    message: str = Field(examples=["User updated successfully"])
 
 
 class Product(BaseModel):
