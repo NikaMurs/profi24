@@ -1,0 +1,50 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "fio": "Вахренев Аким Андреевич",
+            "phone": "89113159119",
+            "mail": "akeem3159119@gmail.com",
+
+            "telegram": "t.me/qwe",
+            "whatsapp": "w.me/qwe",
+
+            "country": "Россия",
+            "city": "Кудрово",
+            "balance": 6000.00,
+            "deposited": 11000.00,
+            "debited": 4000.00,
+            "balanceBonus": 500,
+            "depositedBonus": 700,
+            "debitedBonus": 200,
+            "refund": 1000.00,
+            "bonusStatus": "Bronze",
+            "communicationRating": "Заебись",
+            "pickinessRating": "слепой",
+            "mistakesCount": 2
+        },
+        {
+            "id": 2,
+            "fio": "Храмко Павел Дмитриевич",
+            "phone": "89006572413",
+            "mail": "iport234@gmail.com",
+
+            "telegram": "",
+            "whatsapp": "",
+
+            "country": "",
+            "city": "",
+            "balance": 0.00,
+            "deposited": 0.00,
+            "debited": 0.00,
+            "balanceBonus": 0,
+            "depositedBonus": 0,
+            "debitedBonus": 0,
+            "refund": 0.00,
+            "bonusStatus": "Base",
+            "communicationRating": "",
+            "pickinessRating": "",
+            "mistakesCount": 0
+        }
+    ]
+}

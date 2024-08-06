@@ -1,0 +1,133 @@
+{
+    "orders": {
+        "inWork": [
+            {
+                "uuid": "df199d02-dda9-4690-928a-b412feb4622e",
+                "status": 0,
+                "readyPersent": 0,
+                "userId": 8,
+                "id": 0,
+                "isMaster": false,
+                "isSlave": false,
+                "description": "Самостоятельный заказ без картинок",
+                "price": 10000.00,
+                "dateStart": 1689715928023,
+                "dateFinished": 0,
+                "weight": 0,
+                "trackNumber": "",
+                "comment": "",
+                "name": "Название заказа"
+            },
+            {
+                "uuid": "ki199d02-rsa9-4690-928a-b412feb46j30",
+                "status": 1,
+                "readyPersent": 0,
+                "userId": 8,
+                "id": 0,
+                "isMaster": false,
+                "isSlave": false,
+                "description": "Самостоятельный заказ",
+                "price": 10000.00,
+                "dateStart": 1689715928023,
+                "dateFinished": 0,
+                "weight": 0,
+                "trackNumber": "",
+                "comment": "",
+                "name": "Название заказа"
+            },
+            {
+                "uuid": "5fdaec06-7d94-43cf-b9a9-b582ca2ebdf9",
+                "status": 1,
+                "readyPersent": 0,
+                "userId": 8,
+                "id": 0,
+                "isMaster": true,
+                "slaves": [
+                    "2b9dd56d-9f00-4785-94c1-8a7c347581ba",
+                    "ccaff877-3453-4338-8261-4516fdb908ec"
+                ],
+                "isSlave": false,
+                "description": "Мастер заказ",
+                "price": 12000.00,
+                "dateStart": 1699715928023,
+                "dateFinished": 0,
+                "weight": 0,
+                "trackNumber": "",
+                "comment": "",
+                "name": "Название заказа"
+            },
+            {
+                "uuid": "2b9dd56d-9f00-4785-94c1-8a7c347581ba",
+                "status": 1,
+                "readyPersent": 0,
+                "userId": 8,
+                "id": 0,
+                "isMaster": false,
+                "isSlave": true,
+                "master": "5fdaec06-7d94-43cf-b9a9-b582ca2ebdf9",
+                "description": "Дочерний заказ 1",
+                "price": 9000.00,
+                "dateStart": 1709715928023,
+                "dateFinished": 0,
+                "weight": 0,
+                "trackNumber": "",
+                "comment": "",
+                "name": "Название заказа"
+            },
+            {
+                "uuid": "ccaff877-3453-4338-8261-4516fdb908ec",
+                "status": 1,
+                "readyPersent": 0,
+                "userId": 8,
+                "id": 0,
+                "isMaster": false,
+                "isSlave": true,
+                "master": "5fdaec06-7d94-43cf-b9a9-b582ca2ebdf9",
+                "description": "Дочерний заказ 2",
+                "price": 7000.00,
+                "dateStart": 1719715928023,
+                "dateFinished": 0,
+                "weight": 0,
+                "trackNumber": "",
+                "comment": "",
+                "name": "Название заказа"
+            }
+        ],
+        "inPrint": [
+            {
+                "status": 2,
+                "readyPersent": 20,
+                "userId": 8,
+                "id": 2,
+                "isMaster": false,
+                "isSlave": false,
+                "description": "Обычный заказ в работе",
+                "price": 7500.00,
+                "dateStart": 1729715928023,
+                "dateFinished": 0,
+                "weight": 0,
+                "trackNumber": "",
+                "comment": "",
+                "name": "Название заказа"
+            }
+        ],
+        "history": [
+            {
+                "status": 3,
+                "readyPersent": 100,
+                "userId": 8,
+                "id": 1,
+                "isMaster": false,
+                "isSlave": false,
+                "description": "Обычный заказ в истории",
+                "price": 12500.00,
+                "dateStart": 1739715928023,
+                "dateFinished": 1738715928023,
+                "weight": 2,
+                "trackNumber": "PG3734DNRNK",
+                "comment": "",
+                "name": "Название заказа"
+            }
+        ]
+    }
+}

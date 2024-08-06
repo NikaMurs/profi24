@@ -1,0 +1,26 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "title": "Фотопечать Lay-Flat",
+            "img": "https://masterpiecer-images.s3.yandex.net/42974ba7896711eea30656181a0358a2:upscaled"
+        },
+        {
+            "id": 2,
+            "title": "Полиграфическая",
+            "img": "https://masterpiecer-images.s3.yandex.net/101a462e8e7111eeb9311e5d9776cfa6:upscaled"
+        },
+        {
+            "id": 3,
+            "title": "Тест3"
+        },
+        {
+            "id": 4,
+            "title": "Тест4"
+        },
+        {
+            "id": 5,
+            "title": "Тест5"
+        }
+    ]
+}

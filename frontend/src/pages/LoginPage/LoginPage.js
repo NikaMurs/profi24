@@ -2,42 +2,72 @@ import './loginPage.css'
 import getCookie from '../../functions/getCookie'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import formatPhoneNumber from '../../functions/formatPhoneNumber';
+import jsonToUrlEncoded from '../../functions/jsonToUrlEncoded';
+import setCookie from '../../functions/setCookie';
 
 export default function LoginPage() {
+    const [login, setLogin] = useState('');
+    const [password, setPassword] = useState('');
+
     const navigate = useNavigate();
 
+
     useEffect(() => {
-        if (getCookie('isUserLoged')) {
-            if (getCookie('isUserLoged') === 'true') {
-                navigate('/lk')
-            }
+        if (getCookie('authorization')) {
+            navigate('/lk')
         }
     }, [])
 
-    function handleChange(e) {
-        switch (e.currentTarget.name) {
-            case 'login':
-                setLogin(e.currentTarget.value)
-                break
-            case 'password':
-                setPassword(e.currentTarget.value)
-                break
-            default:
-                break
+    function onChangePhone(e) {
+        let { value } = e.target;
+
+        let formattedPhoneNumber = value.replace(/[^\d+]/g, '');
+        if (value.includes('+')) {
+            formattedPhoneNumber = formattedPhoneNumber.substring(0, 12);
+        } else {
+            formattedPhoneNumber = formattedPhoneNumber.substring(0, 11);
         }
+
+        setLogin(formattedPhoneNumber)
+    }
+
+    function onChangePassword(e) {
+        setPassword(e.currentTarget.value)
     }
 
     function handleClick() {
-        if (login === '123' && password === '456') {
-            document.cookie = "isUserLoged=true; path=/;"
-            navigate('/lk')
-        } else {
-            alert('Неверные данные')
-        }
+        const postData = {
+            username: formatPhoneNumber(login),
+            password: password
+        };
+
+        if (postData.username.length < 11) { alert('Вы не заполнили поле: Телефон'); return };
+        if (postData.password === '') { alert('Вы не заполнили поле: Пароль'); return };
+
+        fetch(`${process.env.REACT_APP_URL}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: jsonToUrlEncoded(postData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка соединения');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setCookie('authorization', data.access_token, 3)
+                navigate(0)
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+                alert('Произошла ошибка')
+            });
     }
 
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
 
     return (
         <div className="signInCenter">
@@ -47,8 +77,8 @@ export default function LoginPage() {
                 </div>
                 <div className="signInMain">
                     <form>
-                        <input className="signInFormInput phoneIcon" type="text" name="login" id="login" placeholder="введите номер телефона..." value={login} onChange={handleChange} />
-                        <input className="signInFormInput passwordIcon" type="password" name="password" id="" placeholder="пароль..." value={password} onChange={handleChange} />
+                        <input className="signInFormInput phoneIcon" type="text" name="login" id="login" placeholder="введите номер телефона..." value={login} onChange={onChangePhone} />
+                        <input className="signInFormInput passwordIcon" type="password" name="password" id="" placeholder="пароль..." value={password} onChange={onChangePassword} />
                     </form>
 
                     <div className="signInPasswordWindow">

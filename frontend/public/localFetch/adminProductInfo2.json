@@ -1,0 +1,93 @@
+{
+    "title": "Полиграфическая",
+    "for": [
+        {
+            "isActive": true,
+            "id": 1,
+            "title": "20x20",
+            "img":  "url1",
+            "price": 75,
+            "basePrice": 10,
+            "guideLinesJpeg": "",
+            "guideLinesPsd": "",
+            "guideLinesIndd": "",
+            "text1": "1111",
+            "text2": "2222",
+            "text3": "3333",
+            "size": "4800x2400",
+            "notes": "Примечание"
+        }
+    ],
+    "pap": [
+        {
+            "isActive": true,
+            "id": 1,
+            "title": "Глянцевая Fuji Gloss",
+            "shortTitle": "Fuji Gloss",
+            "img":  "url1",
+            "width": 0.12,
+            "text1": "1111",
+            "text2": "2222",
+            "text3": "3333",
+            "notes": "Примечание"
+        }
+    ],
+    "bas": [
+        {
+            "isActive": true,
+            "id": 1,
+            "title": "Без основы",
+            "img":  "url1",
+            "width": 0.01,
+            "weight": 0.25,
+            "price": 1,
+            "maxCount": 30,
+            "text1": "1111",
+            "text2": "2222",
+            "text3": "3333",
+            "notes": "Примечание"
+        }
+    ],
+    "tco": [
+        {
+            "isActive": true,
+            "id": 1,
+            "title": "Натуральная ткань",
+            "shortTitle": "Ткань",
+            "indicatorFormat": "1,2,3,4",
+            "multiplier": 21,
+            "width": 0.11,
+            "img":  "url1",
+            "text1": "1111",
+            "text2": "2222",
+            "text3": "3333",
+            "notes": "Примечание"
+        }
+    ],
+    "var": [
+        {
+            "isActive": true,
+            "id": 1,
+            "title": "Глянцевая лам",
+            "shortTitle": "Глян лам",
+            "img":  "url1",
+            "text1": "1111",
+            "text2": "2222",
+            "text3": "3333",
+            "notes": "Примечание"
+        }
+    ],
+    "nco": [
+        {
+            "isActive": true,
+            "id": 1,
+            "format": "20x20",
+            "width": 6,
+            "size": "5551x2953",
+            "weight": 10,
+            "guideLinesJpeg": "url1",
+            "guideLinesPsd": "url2",
+            "guideLinesIndd": "url3"
+        }
+    ]
+}

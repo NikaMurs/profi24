@@ -5,6 +5,7 @@
     top: 0;
     left: 0;
     display: flex;
+    align-items: center;
     align-content: center;
     justify-content: center;
     overflow: auto;
@@ -80,6 +81,7 @@
 }
 
 .registrateButton {
+    cursor: pointer;
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 400;
@@ -119,6 +121,7 @@
 }
 
 .registrateFooterInput+label {
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     user-select: none;
