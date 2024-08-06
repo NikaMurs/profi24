@@ -1,4 +1,10 @@
 # created by virtualenv automatically
-*venv
+*../venv/
 *Lib
+*../.idea/
+*__pycache__/
 *Scripts
+*.idea
+backend/.env
+.gitignore
+venv

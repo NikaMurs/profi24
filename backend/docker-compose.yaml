@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: postgres_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: profi24_new_base_ps
+      POSTGRES_PASSWORD: lKV7*JgciYFr
+      POSTGRES_DB: profi24_new_base_ps
+    ports:
+      - "5432:5432"
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: profi24@profi24Ps.ru
+      PGADMIN_DEFAULT_PASSWORD: lKV7*JgciYFr
+    ports:
+      - "5050:80"
