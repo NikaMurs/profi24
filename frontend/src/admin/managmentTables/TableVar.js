@@ -1,34 +1,63 @@
+import { useEffect, useState } from 'react';
 import '../style.css'
+import SelectProductButton from '../components/SelectProductButton';
+import ChangeIsActive from '../components/editTables/ChangeIsActiveButton';
+import EditableCell from '../components/editTables/EditableCell';
+import AddNewProductButton from '../components/editTables/AddNewProductButton';
+import DeleteProductButton from '../components/editTables/DeleteProductButton';
+import OnAddNewProductButtons from '../components/editTables/OnAddNewProductButtons';
+import DownloadImgButton from '../components/editTables/DownloadImgButton';
 
-export default function TableVar() {
+export default function TableVar({ productInfo }) {
+    const tableType = 'var';
+    const [data, setData] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [isAddingNewProduct, setIsAddingNewProduct] = useState(false);
 
-    function TableRow() {
+    useEffect(()=>{
+        setData(productInfo[tableType])
+    }, [productInfo])
+
+    function TableRow({ el, ind }) {
         return (
-            <tr>
-                <td style={{ width: '30px' }}><button class="tableButton tableButton_blueCheck"></button></td>
-                <td style={{ width: '30px' }}>1</td>
-                <td style={{ width: '30px' }}><button className='tableButton tableButton_greenButton' /></td>
-                <td style={{ width: '30px' }}>1</td>
-                <td style={{ width: '200px' }}>УФ-лак</td>
-                <td style={{ width: '80px' }}>Лак</td>
-                <td style={{ width: '60px', borderCollapse: 'collapse' }}><button style={{ width: '50%' }} className='tableButton tableButton_greenCheck' /><button style={{ width: '50%' }} className='tableButton tableButton_greyDowland' /></td>
-                <td style={{ width: '120px' }}>1111</td>
-                <td style={{ width: '120px' }}>2222</td>
-                <td style={{ width: '120px' }}>3333</td>
-                <td style={{ width: '380px' }}>Примечание</td>
+            <tr style={el.isNew ? { border: '3px solid #66CC33' } : {}}>
+                <td style={{ width: '30px' }}>
+                    <SelectProductButton el={el} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} />
+                </td>
+                <td style={{ width: '30px' }}>{ind + 1}</td>
+                <td style={{ width: '30px' }}>
+                    <ChangeIsActive el={el} ind={ind} data={data} setData={setData} tableType={tableType} />
+                </td>
+
+                <td style={{ width: '30px' }}>{el.id}</td>
+
+                <EditableCell width={'200px'} type={'title'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'80px'} type={'shortTitle'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+
+
+                <td style={{ width: '60px' }}>
+                    <DownloadImgButton el={el} imgType='img' ind={ind} data={data} setData={setData} tableType={tableType} />
+                </td>
+
+                <EditableCell width={'120px'} type={'text1'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'120px'} type={'text2'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'120px'} type={'text3'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
+                <EditableCell width={'380px'} type={'notes'} data={data} setData={setData} el={el} ind={ind} tableType={tableType} />
             </tr>
         )
     }
 
     return (
         <div id="table6">
-            <h3 class="tablesTitle">Варианты обложки (VAR-01)</h3>
+            <h3 className="tablesTitle">Варианты обложки (VAR)</h3>
             <table id="table_var01">
                 <tbody id="var01_tbody">
                     <tr style={{ backgroundColor: '#ECECEC' }}>
-                        <td style={{ width: '30px' }}><button class="tableButton tableButton_greenPlus" style={{ backgroundColor: '#ECECEC' }}></button>
+                        <td style={{ width: '30px' }}>
+                            <AddNewProductButton isAddingNewProduct={isAddingNewProduct} setIsAddingNewProduct={setIsAddingNewProduct} data={data} setData={setData} />
                         </td>
-                        <td style={{ width: '30px' }}><button class="tableButton tableButton_redTrash" style={{ backgroundColor: '#ECECEC' }} ></button>
+                        <td style={{ width: '30px' }}>
+                            <DeleteProductButton selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} data={data} setData={setData} tableType={tableType} />
                         </td>
                         <td style={{ width: '30px' }}>Вкл</td>
                         <td style={{ width: '30px' }}>Арт</td>
@@ -40,9 +69,12 @@ export default function TableVar() {
                         <td style={{ width: '120px' }}>Текст 3</td>
                         <td style={{ width: '380px' }}>Прим.</td>
                     </tr>
-                    <TableRow />
+                    {data.map((el, ind) => {
+                        return <TableRow el={el} ind={ind} key={`var_${el.id}`} />
+                    })}
                 </tbody>
             </table>
+            <OnAddNewProductButtons isAddingNewProduct={isAddingNewProduct} setIsAddingNewProduct={setIsAddingNewProduct} data={data} setData={setData} tableType={tableType} />
         </div>
     )
 }

@@ -15,7 +15,7 @@
 
 .lkTopLeft {
     display: flex;
-    width: 45%;
+    width: 35%;
 }
 
 .lkTopButtons {
@@ -51,14 +51,14 @@
 }
 
 .lkTopRight {
-    width: 50%;
+    width: 60%;
     position: relative;
 }
 
 
 .lkTopLogOut button {
     position: absolute;
-    top: 35px;
+    top: 20px;
     right: 0px;
     font-family: 'Raleway';
     font-style: normal;
@@ -77,6 +77,7 @@
 
 .lkTopUser {
     width: 100%;
+    margin-bottom: 30px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -92,9 +93,13 @@
     color: rgba(49, 69, 87, 0.8);
 }
 
+.lkTopUserText {
+    width: calc(100% - 400px);
+    margin-left: 25px;
+}
+
 .lkTopUser p {
-    text-align: center;
-    width: 100%;
+    text-align: left;
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 500;
@@ -103,17 +108,66 @@
     margin: 5px;
 }
 
+.lkButtonEditUserInfo {
+    background: #314557;
+    border: 1px solid #314557;
+    border-radius: 35px;
+    color: #FFFFFF;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    height: 45px;
+    cursor: pointer;
+    transition: 300ms;
+    width: 50%;
+    margin-top: 15px;
+}
+
+.lkButtonEditUserInfo:hover {
+    color: #314557;
+    background-color: #FFFFFF;
+    border: #314557 1px solid;
+}
+
 .lkTopUserMedal {
     width: 80px;
     height: 90px;
-    background-image: url(../../../public/svg/MedalBronze.svg);
     background-repeat: no-repeat;
     background-position: center;
-    margin-bottom: 20px;
+    margin-top: 8px;
 }
 
-.lkTopUserStatus {
-    color: #864A00;
+.lkTopUserMedalIcon_Base {
+    background-image: url(../../../public/svg/MedalBase.svg);
+}
+
+.lkTopUserMedalIcon_Bronze {
+    background-image: url(../../../public/svg/MedalBronze.svg);
+}
+
+.lkTopUserMedalIcon_Silver {
+    background-image: url(../../../public/svg/MedalSilver.svg);
+}
+
+.lkTopUserMedalIcon_Gold {
+    background-image: url(../../../public/svg/MedalGold.svg);
+}
+
+.lkTopUserStatus_Base {
+    color: #b1b1b1;
+}
+
+.lkTopUserStatus_Bronze {
+    color: #9d5600;
+}
+
+.lkTopUserStatus_Silver {
+    color: #a29f9e;
+}
+
+.lkTopUserStatus_Gold {
+    color: #cba500;
 }
 
 .lkTopAccount {
@@ -121,7 +175,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
 }
 
 .lkTopAccount p {
@@ -163,10 +216,12 @@
 }
 
 .lkFooter {
+    width: 100%;
     margin-top: 60px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 50px;
 }
 
 .lkFooterButtons {
@@ -174,20 +229,4 @@
     width: 100%;
     display: flex;
     justify-content: space-evenly;
-}
-
-.lkFooterContent {
-    width: 100%;
-    margin-top: 60px;
-    margin-bottom: 180px;
-}
-
-.lkFooterContent p {
-    width: 100%;
-    text-align: center;
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    color: rgba(49, 69, 87, 0.8);
 }

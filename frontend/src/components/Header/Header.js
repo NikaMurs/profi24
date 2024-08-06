@@ -24,7 +24,7 @@ export default function Header() {
                 </svg>
                 <nav className="headerMenu">
                     <NavLink className={({ isActive }) => isActiveFunc(isActive)} to="/">Главная</NavLink>
-                    <NavLink className={({ isActive }) => isActiveFunc(isActive)} to="/products">Продукты</NavLink>
+                    <NavLink className={({ isActive }) => isActiveFunc(isActive)} to="/products">Калькулятор</NavLink>
                     <NavLink className={({ isActive }) => isActiveFunc(isActive)} to="/balance">Баланс</NavLink>
                     <NavLink className={({ isActive }) => isActiveFunc(isActive)} to="/support">Поддержка</NavLink>
                     {user.isLogin ?

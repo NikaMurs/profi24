@@ -9,36 +9,72 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 
 import MainLayout from './components/MainLayout/MainLayout';
-import AdminOrders from './admin/AdminOrders';
-import AdminUsers from './admin/AdminUsers'
-import AdminManagement from './admin/AdminManagement';
-import AdminInvoice from './admin/AdminInvoice';
-import AdminLogin from './admin/AdminLogin';
-import AdminIsLoged from './admin/components/AdminIsLoged';
+import AdminOrders from './admin/pages/AdminOrders';
+import AdminUsers from './admin/pages/AdminUsers'
+import AdminManagement from './admin/pages/AdminManagement';
+import AdminInvoice from './admin/pages/AdminInvoice';
 import CalculatorPage from './pages/CalculatorPage/CalculatorPage';
 import UserIsLoged from './functions/UserIsLoged';
+import moment from 'moment';
+import { useSelector } from 'react-redux'
+import 'moment/locale/ru';
+import getCookie from './functions/getCookie';
+import { useEffect, useState } from 'react';
+import { userActions } from './redux/userReducer';
+import { useDispatch } from 'react-redux';
+import LkEditPage from './pages/LkEditPage/LkEditPage';
+import UploadPage from './pages/UploadPage/UploadPage';
+
+
+moment.locale('ru');
+
 
 function App() {
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (getCookie('authorization')) {
 
+      fetch(`${process.env.REACT_APP_URL}/`, {
+        headers: {
+          Authorization: `Bearer ${getCookie('authorization')}`
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Ошибка запроса");
+          }
+          return response.json();
+        })
+        .then(data => {
+          dispatch(userActions.setUser(data.user))
+        })
+        .catch(error => {
+          console.error("Ошибка при обработке ответа:", error);
+        });
+    }
+  }, [])
 
   return (
     <Routes>
+
       <Route path='/' element={<MainLayout><MainPage /></MainLayout>} />
       <Route path='/products' element={<MainLayout><ProductsPage /></MainLayout>} />
-      <Route path='/balance' element={<MainLayout><BalancePage /></MainLayout>} />
+      <Route path='/balance' element={<UserIsLoged><MainLayout><BalancePage /></MainLayout></UserIsLoged>} />
       <Route path='/support' element={<MainLayout><SupportPage /></MainLayout>} />
       <Route path='/lk' element={<UserIsLoged><MainLayout><LkPage /></MainLayout></UserIsLoged>} />
-      <Route path='/login' element={<LoginPage />} />
+      <Route path='/lk/edit' element={<UserIsLoged><MainLayout><LkEditPage /></MainLayout></UserIsLoged>} />
       <Route path='/registration' element={<RegistrationPage />} />
-      <Route path='/calculator' element={<MainLayout><CalculatorPage /></MainLayout>} />
+      <Route path='/calculator/:productId' element={<MainLayout><CalculatorPage /></MainLayout>} />
 
-      <Route path='/admin' element={<AdminIsLoged><Navigate to='/admin/orders' /></AdminIsLoged>} />
-      <Route path='/admin/orders' element={<AdminIsLoged><AdminOrders /></AdminIsLoged>} />
-      <Route path='/admin/users' element={<AdminIsLoged><AdminUsers /></AdminIsLoged>} />
-      <Route path='/admin/management' element={<AdminIsLoged><AdminManagement /></AdminIsLoged>} />
-      <Route path='/admin/invoice' element={<AdminIsLoged><AdminInvoice /></AdminIsLoged>} />
-      <Route path='/admin/login' element={<AdminLogin />} />
+      <Route path='/upload' element={<UploadPage />} />
+
+
+      <Route path='/admin' element={<Navigate to='/admin/orders' />} />
+      <Route path='/admin/orders' element={<AdminOrders />} />
+      <Route path='/admin/users' element={<AdminUsers />} />
+      <Route path='/admin/management' element={<AdminManagement />} />
+      <Route path='/admin/invoice' element={<AdminInvoice />} />
 
     </Routes>
   );

@@ -1,19 +1,49 @@
 import { Link } from 'react-router-dom'
 import './productsPage.css'
+import { useEffect, useState } from 'react'
 
 export default function ProductsPage() {
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_URL}/productsList`)
+            .then(response => {
+                if (!response.ok) {
+                    console.log("Ошибка запроса /test");
+                }
+                return response.json();
+            })
+            .then(data => {
+                setData(data.products)
+            })
+            .catch(error => {
+                console.log("Ошибка при обработке ответа: /test", error);
+            });
+    }, [])
+
+    const chunkArray = (array, size) => {
+        const chunkedArray = [];
+        for (let i = 0; i < array.length; i += size) {
+            chunkedArray.push(array.slice(i, i + size));
+        }
+        return chunkedArray;
+    };
 
     return (
-        <div className="contentCards">
-            <div className="contentCardsLine">
-                <Link className='contentCard' to='/'>Фотопечать Lay-Flat</Link>
-                <Link className='contentCard' to='/'>Полиграфическая</Link>
-                <Link className='contentCard' to='/'>Полиграфическая</Link>
-            </div>
-            <div className="contentCardsLine">
-                <Link className='contentCard' to='/'>Фотопечать Lay-Flat</Link>
-                <Link className='contentCard' to='/'>Полиграфическая</Link>
-            </div>
-        </div>
+        <>
+            {data === null ? <></> :
+                <div className="contentCards">
+                    {chunkArray(data, 3).map((group, index) => (
+                        <div key={index} className="contentCardsLine">
+                            {group.map(product => (
+                                <Link key={product.id} className='contentCard' to={`/calculator/${product.id}`}>
+                                    <div className="backgroundImage" style={{ backgroundImage: `url('${product.img}')` }} />
+                                    <span>{product.title}</span>
+                                </Link>))}
+                        </div>
+                    ))}
+                </div>
+            }
+        </>
     )
 }

@@ -1,40 +1,40 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isLogin: true,
-    surname: 'Вахренев',
-    name: 'Аким',
-    secondName: 'Андреевич',
-    money: 10000,
-    bonus: 500,
+    isLogin: false,
+    id: '',
+    surname: '',
+    name: '',
+    secondName: '',
+    money: 0.00,
+    bonus: 0,
     bonusStatus: 'bronze',
-    orders: [
-        {
-            statusText: '',
-            statusPersent: 0,
-            id: 0,
-            LinkedwithID: [0],
-            description: '',
-            price: '',
-            dateStart: 0,
-            dateFinished: 0,
-            weight: 0,
-            trackNumber: 0,
-            comment: '',
-        }
-    ]
-
 }
 
-export const userReducer = createSlice({
+const { reducer, actions } = createSlice({
     name: 'user',
     initialState: initialState,
     reducers: {
         setUser: (state, action) => {
-
+            state.isLogin = true;
+            state.id = action.payload.id;
+            state.surname = action.payload.first_name;
+            state.name = action.payload.name;
+            state.secondName = action.payload.secondName;
+            state.money = action.payload.money;
+            state.bonus = action.payload.bonus;
+            state.bonusStatus = action.payload.bonusStatus;
         },
-        unsetUser: (state, action) => {
 
+        setAdminSelectedPro: (state, action) => {
+            state.selectedPro = action.payload;
+        },
+
+        unsetUser: (state, action) => {
+            Object.assign(state, initialState);
         }
     }
 })
+
+export { actions as userActions };
+export { reducer as userReducer };
